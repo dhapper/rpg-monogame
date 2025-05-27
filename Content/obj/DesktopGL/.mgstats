@@ -1,0 +1,3 @@
+Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
+"c:/Users/Dhaarshan. P/Desktop/main/Coding/VS projects/C#/MonoGame/rpg/Content/galleryFont.spritefont","c:/Users/Dhaarshan. P/Desktop/main/Coding/VS projects/C#/MonoGame/rpg/Content/bin/DesktopGL/gameFont.xnb","FontDescriptionProcessor","SpriteFontContent",2065,70681,0.1696367
+"c:/Users/Dhaarshan. P/Desktop/main/Coding/VS projects/C#/MonoGame/rpg/Content/player.png","c:/Users/Dhaarshan. P/Desktop/main/Coding/VS projects/C#/MonoGame/rpg/Content/bin/DesktopGL/player.xnb","TextureProcessor","Texture2DContent",2531,79885,0.0304274
