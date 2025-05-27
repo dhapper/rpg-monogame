@@ -27,6 +27,16 @@ public class Game1 : Game
         base.Initialize();
     }
 
+    TileRenderer tileRenderer;
+    TileMap map;
+    int[,] mapData = new int[,]
+    {
+        { 0, 1, 2, 1},
+        { 0, 0, 0, 0},
+        { 1, 1, 1, 1},
+        { 0, 0, 0, 0}
+    };
+
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -37,6 +47,14 @@ public class Game1 : Game
         _entityManager = new EntityManager();
         _gameInitializer = new GameInitializer(_entityManager, _spriteBatch, _assetStore);
         _gameInitializer.Initialize();
+
+
+        int tileSize = 16;
+        Texture2D tileset = Content.Load<Texture2D>("tilesheet");
+        var tileDefs = TileUtils.LoadTiles(tileSize, tileSize, tileset.Width, tileset.Height);
+        map = new TileMap(mapData, tileSize, tileSize);
+        tileRenderer = new TileRenderer(_spriteBatch, tileset, tileDefs);
+
     }
 
     protected override void Update(GameTime gameTime)
@@ -48,6 +66,10 @@ public class Game1 : Game
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
+        _spriteBatch.Begin();
+        tileRenderer.Draw(map);
+        _spriteBatch.End();
+
         _gameInitializer.Draw();
         base.Draw(gameTime);
     }

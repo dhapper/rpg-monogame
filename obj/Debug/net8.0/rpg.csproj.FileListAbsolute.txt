@@ -32,3 +32,4 @@ C:\Users\Dhaarshan. P\Desktop\main\Coding\VS projects\C#\MonoGame\rpg\obj\Debug\
 C:\Users\Dhaarshan. P\Desktop\main\Coding\VS projects\C#\MonoGame\rpg\obj\Debug\net8.0\ref\rpg.dll
 C:\Users\Dhaarshan. P\Desktop\main\Coding\VS projects\C#\MonoGame\rpg\bin\Debug\net8.0\Content\player.xnb
 C:\Users\Dhaarshan. P\Desktop\main\Coding\VS projects\C#\MonoGame\rpg\obj\Debug\net8.0\rpg.sourcelink.json
+C:\Users\Dhaarshan. P\Desktop\main\Coding\VS projects\C#\MonoGame\rpg\bin\Debug\net8.0\Content\tilesheet.xnb
