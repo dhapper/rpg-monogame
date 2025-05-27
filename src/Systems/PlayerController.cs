@@ -28,6 +28,18 @@ public class PlayerController
             xSpeed = -_speed;
         if (_inputSystem.IsKeyDown(Keys.Right))
             xSpeed = _speed;
+        if (_inputSystem.IsKeyDown(Keys.D0))
+        {
+            Animation anim = _player.GetComponent<Animation>();
+            anim.Row = 0;
+            anim.FrameDuration = 0.2f;
+        }
+        if (_inputSystem.IsKeyDown(Keys.D3))
+        {
+            Animation anim = _player.GetComponent<Animation>();
+            anim.Row = 3;
+            anim.FrameDuration = 0.1f;
+        }
 
         var position = _player.GetComponent<Position>();
         position.X += xSpeed;

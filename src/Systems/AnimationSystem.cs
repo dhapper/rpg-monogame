@@ -33,7 +33,7 @@ public class AnimationSystem
 
                 sprite.SourceRectangle = new Rectangle(
                     animation.CurrentFrame * frameWidth,
-                    rect.Y,
+                    animation.Row * frameHeight,
                     frameWidth,
                     frameHeight);
 
