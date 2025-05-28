@@ -1,11 +1,11 @@
 using Microsoft.Xna.Framework;
 
-public struct Position
+public struct PositionComponent
 {
     public float X, Y;
     public int Width, Height;
 
-    public Position(float x, float y, int width = 16, int height = 16)
+    public PositionComponent(float x, float y, int width = 16, int height = 16)
     {
         X = x;
         Y = y;

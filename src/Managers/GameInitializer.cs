@@ -34,13 +34,13 @@ public class GameInitializer
         // Create Player
         PlayerEntity = PlayerFactory.CreatePlayer(100, 100, _entityManager, _assets.PlayerTexture);
 
-        PlayerController = new PlayerController(PlayerEntity, _inputSystem, Constants.Player.Speed, _entityManager.Entities);
+        PlayerController = new PlayerController(PlayerEntity, _inputSystem, _entityManager.Entities);
         RenderSystem = new RenderSystem(_spriteBatch, _entityManager);
         AnimationSystem = new AnimationSystem(_entityManager);
 
         // Create an Entity
         npc = PlayerFactory.CreatePlayer(200, 200, _entityManager, _assets.PlayerTexture);
-        npc.GetComponent<Sprite>().Color = Color.Red;
+        npc.GetComponent<SpriteComponent>().Color = Color.Red;
 
     }
 

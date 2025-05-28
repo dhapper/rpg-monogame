@@ -1,4 +1,4 @@
-public class Animation
+public class AnimationComponent
 {
     public int FrameCount { get; set; }
     public int CurrentFrame { get; set; }
@@ -7,7 +7,7 @@ public class Animation
 
     public int Row { get; set; } = 0;
 
-    public Animation(int frameCount, float frameDuration)
+    public AnimationComponent(int frameCount, float frameDuration)
     {
         FrameCount = frameCount;
         FrameDuration = frameDuration;

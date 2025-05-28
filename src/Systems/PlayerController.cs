@@ -1,5 +1,3 @@
-// File: Systems/PlayerController.cs
-using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -7,81 +5,66 @@ using Microsoft.Xna.Framework.Input;
 public class PlayerController
 {
     private Entity _player;
-    private InputSystem _inputSystem;
-    private int _speed;
 
-    // private TileMap _map;
-    // private Tile[] _tiles;
+    private InputSystem _inputSystem;
+    private CollisionSystem _collisionSystem;
+    private MovementSystem _movementSystem;
+
+    private int _speed = 4;
     private List<Entity> _entities;
 
-    public PlayerController(Entity player, InputSystem inputSystem, int speed, List<Entity> entities)
+    private bool[] dir;
+
+    public PlayerController(Entity player, InputSystem inputSystem, List<Entity> entities)
     {
         _player = player;
         _inputSystem = inputSystem;
-        _speed = speed;
         _entities = entities;
+        _collisionSystem = new CollisionSystem(_player, _entities);
+        _movementSystem = new MovementSystem();
 
-        // _map = map;
-        // _tiles = tiles;
+        dir = [false, false, false, false];
     }
 
     public void Update()
     {
-        int xSpeed = 0;
-        int ySpeed = 0;
+        resetDirVars();
 
-        if (_inputSystem.IsKeyDown(Keys.Up))
-            ySpeed = -_speed;
-        if (_inputSystem.IsKeyDown(Keys.Down))
-            ySpeed = _speed;
-        if (_inputSystem.IsKeyDown(Keys.Left))
-            xSpeed = -_speed;
-        if (_inputSystem.IsKeyDown(Keys.Right))
-            xSpeed = _speed;
+        if (_inputSystem.IsKeyDown(Keys.Up) || _inputSystem.IsKeyDown(Keys.W))
+            dir[Constants.Directions.Up] = true;
+
+        if (_inputSystem.IsKeyDown(Keys.Down) || _inputSystem.IsKeyDown(Keys.S))
+            dir[Constants.Directions.Down] = true;
+
+        if (_inputSystem.IsKeyDown(Keys.Left) || _inputSystem.IsKeyDown(Keys.A))
+            dir[Constants.Directions.Left] = true;
+
+        if (_inputSystem.IsKeyDown(Keys.Right) || _inputSystem.IsKeyDown(Keys.D))
+            dir[Constants.Directions.Right] = true;
+
         if (_inputSystem.IsKeyDown(Keys.D0))
         {
-            Animation anim = _player.GetComponent<Animation>();
+            AnimationComponent anim = _player.GetComponent<AnimationComponent>();
             anim.Row = 0;
             anim.FrameDuration = 0.2f;
         }
         if (_inputSystem.IsKeyDown(Keys.D3))
         {
-            Animation anim = _player.GetComponent<Animation>();
+            AnimationComponent anim = _player.GetComponent<AnimationComponent>();
             anim.Row = 3;
             anim.FrameDuration = 0.1f;
         }
 
-        var position = _player.GetComponent<Position>();
-        float newX = position.X + xSpeed;
-        float newY = position.Y + ySpeed;
-        Rectangle newHitbox = new Rectangle(
-            (int)newX,
-            (int)newY,
-            (int)(position.Width * Constants.ScaleFactor),
-            (int)(position.Height * Constants.ScaleFactor));
-        if (!IsSolid(newHitbox))
-        {
-            position.X = newX;
-            position.Y = newY;
-            var collision = _player.GetComponent<Collision>();
-            collision.UpdateHitbox(position);
-        }
-
-        _player.AddComponent(position);
+        Vector2 speedVector = _movementSystem.CalculateSpeed(_speed, dir);
+        _collisionSystem.Move(speedVector.X, speedVector.Y);
     }
 
-    private bool IsSolid(Rectangle hitbox)
+    private void resetDirVars()
     {
-        foreach (var entity in _entities)
-        {
-            if(entity.Equals(_player)) { continue; }
-
-            if (entity.HasComponent<Collision>() && entity.GetComponent<Collision>().IsSolid)
-                if (hitbox.Intersects(entity.GetComponent<Collision>().Hitbox))
-                {
-                    return true;
-                }
-        }
-        return false;
+        dir[Constants.Directions.Up] = false;
+        dir[Constants.Directions.Down] = false;
+        dir[Constants.Directions.Left] = false;
+        dir[Constants.Directions.Right] = false;
     }
+
 }

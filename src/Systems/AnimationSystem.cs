@@ -12,10 +12,10 @@ public class AnimationSystem
 
     public void Update(GameTime gameTime)
     {
-        foreach (var entity in _entityManager.EntitiesWithComponents<Animation, Sprite>())
+        foreach (var entity in _entityManager.EntitiesWithComponents<AnimationComponent, SpriteComponent>())
         {
-            var animation = entity.GetComponent<Animation>();
-            var sprite = entity.GetComponent<Sprite>();
+            var animation = entity.GetComponent<AnimationComponent>();
+            var sprite = entity.GetComponent<SpriteComponent>();
 
             animation.Timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
