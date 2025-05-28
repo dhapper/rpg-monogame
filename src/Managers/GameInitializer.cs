@@ -13,16 +13,16 @@ public class GameInitializer
     public RenderSystem RenderSystem { get; private set; }
     public AnimationSystem AnimationSystem { get; private set; }
 
-    public TileMap _map;
-    public Tile[] _tiles;
+    // public TileMap _map;
+    // public Tile[] _tiles;
 
-    public GameInitializer(EntityManager entityManager, SpriteBatch spriteBatch, AssetStore assets, TileMap map, Tile[] tiles)
+    public GameInitializer(EntityManager entityManager, SpriteBatch spriteBatch, AssetStore assets)
     {
         _entityManager = entityManager;
         _assets = assets;
         _spriteBatch = spriteBatch;
-        _map = map;
-        _tiles = tiles;
+        // _map = map;
+        // _tiles = tiles;
     }
 
     public void Initialize()
@@ -32,7 +32,7 @@ public class GameInitializer
         // Create Player
         PlayerEntity = PlayerFactory.CreatePlayer(_entityManager, _assets.PlayerTexture);
 
-        PlayerController = new PlayerController(PlayerEntity, _inputSystem, Constants.Player.Speed, _map, _tiles);
+        PlayerController = new PlayerController(PlayerEntity, _inputSystem, Constants.Player.Speed);
         RenderSystem = new RenderSystem(_spriteBatch, _entityManager);
         AnimationSystem = new AnimationSystem(_entityManager);
     }

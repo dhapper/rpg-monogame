@@ -9,17 +9,17 @@ public class PlayerController
     private InputSystem _inputSystem;
     private int _speed;
 
-    private TileMap _map;
-    private Tile[] _tiles;
+    // private TileMap _map;
+    // private Tile[] _tiles;
 
-    public PlayerController(Entity player, InputSystem inputSystem, int speed, TileMap map, Tile[] tiles)
+    public PlayerController(Entity player, InputSystem inputSystem, int speed)
     {
         _player = player;
         _inputSystem = inputSystem;
         _speed = speed;
 
-        _map = map;
-        _tiles = tiles;
+        // _map = map;
+        // _tiles = tiles;
     }
 
     public void Update()
@@ -52,36 +52,36 @@ public class PlayerController
         float newX = position.X + xSpeed;
         float newY = position.Y + ySpeed;
         Rectangle newHitbox = new Rectangle((int)newX, (int)newY, position.Width, position.Height);
-        if (!IsSolid(newHitbox))
-        {
+        // if (!IsSolid(newHitbox))
+        // {
             position.X = newX;
             position.Y = newY;
-        }
+        // }
 
         _player.AddComponent(position);
     }
 
-    private bool IsSolid(Rectangle hitbox)
-    {
-        int leftTile = hitbox.Left / _map.TileWidth;
-        int rightTile = hitbox.Right / _map.TileWidth;
-        int topTile = hitbox.Top / _map.TileHeight;
-        int bottomTile = hitbox.Bottom / _map.TileHeight;
+    // private bool IsSolid(Rectangle hitbox)
+    // {
+    //     int leftTile = hitbox.Left / _map.TileWidth;
+    //     int rightTile = hitbox.Right / _map.TileWidth;
+    //     int topTile = hitbox.Top / _map.TileHeight;
+    //     int bottomTile = hitbox.Bottom / _map.TileHeight;
 
-        for (int y = topTile; y <= bottomTile; y++)
-        {
-            for (int x = leftTile; x <= rightTile; x++)
-            {
-                if (x < 0 || y < 0 || x >= _map.Width || y >= _map.Height) continue;
+    //     for (int y = topTile; y <= bottomTile; y++)
+    //     {
+    //         for (int x = leftTile; x <= rightTile; x++)
+    //         {
+    //             if (x < 0 || y < 0 || x >= _map.Width || y >= _map.Height) continue;
 
-                int tileId = _map.Tiles[x, y];
-                if (tileId < 0 || tileId >= _tiles.Length) continue;
+    //             int tileId = _map.Tiles[x, y];
+    //             if (tileId < 0 || tileId >= _tiles.Length) continue;
 
-                if (_tiles[tileId].IsSolid)
-                    return true;
-            }
-        }
+    //             if (_tiles[tileId].IsSolid)
+    //                 return true;
+    //         }
+    //     }
 
-        return false;
-    }
+    //     return false;
+    // }
 }
