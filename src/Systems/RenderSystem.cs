@@ -30,11 +30,31 @@ public class RenderSystem
                     sprite.Color,
                     0f,
                     Vector2.Zero,
-                    position.Scale,
+                    Constants.ScaleFactor,
                     SpriteEffects.None,
                     0f);
+                DrawHitbox(_spriteBatch, entity.GetComponent<Position>());
             }
         }
         _spriteBatch.End();
     }
+
+    public void DrawHitbox(SpriteBatch spriteBatch, Position position)
+    {
+        Texture2D whitePixel = new Texture2D(spriteBatch.GraphicsDevice, 1, 1);
+        whitePixel.SetData(new[] { Color.White });
+
+        Rectangle rect = position.GetHitbox();
+        Color color = Color.Red;
+
+        // Top
+        spriteBatch.Draw(whitePixel, new Rectangle(rect.Left, rect.Top, rect.Width, 1), color);
+        // Bottom
+        spriteBatch.Draw(whitePixel, new Rectangle(rect.Left, rect.Bottom, rect.Width, 1), color);
+        // Left
+        spriteBatch.Draw(whitePixel, new Rectangle(rect.Left, rect.Top, 1, rect.Height), color);
+        // Right
+        spriteBatch.Draw(whitePixel, new Rectangle(rect.Right, rect.Top, 1, rect.Height), color);
+    }
+
 }

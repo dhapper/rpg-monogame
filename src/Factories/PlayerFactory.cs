@@ -6,11 +6,8 @@ public static class PlayerFactory
     {
         var player = entityManager.CreateEntity();
 
-        int spriteWidth = 19;
-        int spriteHeight = 21;
-
-        player.AddComponent(new Position(100, 100));
-        player.AddComponent(new Sprite(texture, new Rectangle(0, 0, spriteWidth, spriteHeight)) { Color = Color.Red });
+        player.AddComponent(new Position(100, 100, Constants.Player.Width, Constants.Player.Height));
+        player.AddComponent(new Sprite(texture, new Rectangle(0, 0, Constants.Player.Width, Constants.Player.Height)) { Color = Color.Red });
         player.AddComponent(new Animation(frameCount: 4, frameDuration: 0.2f));
 
         return player;

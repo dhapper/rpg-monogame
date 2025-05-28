@@ -1,4 +1,5 @@
 // File: Systems/PlayerController.cs
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
@@ -8,11 +9,17 @@ public class PlayerController
     private InputSystem _inputSystem;
     private int _speed;
 
-    public PlayerController(Entity player, InputSystem inputSystem, int speed)
+    private TileMap _map;
+    private Tile[] _tiles;
+
+    public PlayerController(Entity player, InputSystem inputSystem, int speed, TileMap map, Tile[] tiles)
     {
         _player = player;
         _inputSystem = inputSystem;
         _speed = speed;
+
+        _map = map;
+        _tiles = tiles;
     }
 
     public void Update()
@@ -42,9 +49,39 @@ public class PlayerController
         }
 
         var position = _player.GetComponent<Position>();
-        position.X += xSpeed;
-        position.Y += ySpeed;
+        float newX = position.X + xSpeed;
+        float newY = position.Y + ySpeed;
+        Rectangle newHitbox = new Rectangle((int)newX, (int)newY, position.Width, position.Height);
+        if (!IsSolid(newHitbox))
+        {
+            position.X = newX;
+            position.Y = newY;
+        }
 
         _player.AddComponent(position);
+    }
+
+    private bool IsSolid(Rectangle hitbox)
+    {
+        int leftTile = hitbox.Left / _map.TileWidth;
+        int rightTile = hitbox.Right / _map.TileWidth;
+        int topTile = hitbox.Top / _map.TileHeight;
+        int bottomTile = hitbox.Bottom / _map.TileHeight;
+
+        for (int y = topTile; y <= bottomTile; y++)
+        {
+            for (int x = leftTile; x <= rightTile; x++)
+            {
+                if (x < 0 || y < 0 || x >= _map.Width || y >= _map.Height) continue;
+
+                int tileId = _map.Tiles[x, y];
+                if (tileId < 0 || tileId >= _tiles.Length) continue;
+
+                if (_tiles[tileId].IsSolid)
+                    return true;
+            }
+        }
+
+        return false;
     }
 }

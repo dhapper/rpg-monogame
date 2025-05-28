@@ -26,7 +26,7 @@ public class AnimationSystem
 
                 // Update the sprite's source rectangle to show the current frame
 
-                Rectangle rect = sprite.SourceRectangle ?? new Rectangle(0, 0, 10, 10);
+                Rectangle rect = sprite.SourceRectangle ?? new Rectangle(0, 0, 0, 0);
 
                 int frameWidth = rect.Width;
                 int frameHeight = rect.Height;

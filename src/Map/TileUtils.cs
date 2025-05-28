@@ -11,8 +11,10 @@ public class TileUtils
         {
             for (int x = 0; x < tilesetWidth / tileWidth; x++)
             {
+                int tileId = y * (tilesetWidth / tileWidth) + x;
+                bool isSolid = tileId == 2;
                 Rectangle rect = new Rectangle(x * tileWidth, y * tileHeight, tileWidth, tileHeight);
-                tiles.Add(new Tile(rect));
+                tiles.Add(new Tile(rect, isSolid));
             }
         }
 

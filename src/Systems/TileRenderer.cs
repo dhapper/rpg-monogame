@@ -16,6 +16,7 @@ public class TileRenderer
 
     public void Draw(TileMap tileMap)
     {
+
         for (int y = 0; y < tileMap.Height; y++)
         {
             for (int x = 0; x < tileMap.Width; x++)
@@ -24,9 +25,23 @@ public class TileRenderer
                 if (tileId < 0) continue; // Skip empty or invalid
 
                 var tile = _tileDefinitions[tileId];
-                var position = new Vector2(x * tileMap.TileWidth, y * tileMap.TileHeight);
-                _spriteBatch.Draw(_tileset, position, tile.SourceRect, Color.White);
+                var position = new Vector2(x * tileMap.TileWidth * Constants.ScaleFactor, y * tileMap.TileHeight * Constants.ScaleFactor);
+                _spriteBatch.Draw(
+                    _tileset,
+                    position,
+                    tile.SourceRect,
+                    Color.White,
+                    0f,
+                    Vector2.Zero,
+                    Constants.ScaleFactor,
+                    SpriteEffects.None,
+                    0f);
             }
         }
+    }
+
+    public void DrawHitbox(SpriteBatch spriteBatch, Position position)
+    {
+        // spriteBatch
     }
 }
