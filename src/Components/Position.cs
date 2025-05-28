@@ -13,5 +13,5 @@ public struct Position
         Height = height;
     }
 
-    public Rectangle GetHitbox() => new((int)X, (int)Y, (int) (Width * Constants.ScaleFactor), (int) (Height * Constants.ScaleFactor));
+    // public Rectangle GetHitbox() => new((int)X, (int)Y, (int) (Width * Constants.ScaleFactor), (int) (Height * Constants.ScaleFactor));
 }

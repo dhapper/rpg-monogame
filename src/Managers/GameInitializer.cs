@@ -13,6 +13,8 @@ public class GameInitializer
     public RenderSystem RenderSystem { get; private set; }
     public AnimationSystem AnimationSystem { get; private set; }
 
+    public Entity npc { get; private set; }
+
     // public TileMap _map;
     // public Tile[] _tiles;
 
@@ -30,11 +32,16 @@ public class GameInitializer
         _inputSystem = new InputSystem();
 
         // Create Player
-        PlayerEntity = PlayerFactory.CreatePlayer(_entityManager, _assets.PlayerTexture);
+        PlayerEntity = PlayerFactory.CreatePlayer(100, 100, _entityManager, _assets.PlayerTexture);
 
-        PlayerController = new PlayerController(PlayerEntity, _inputSystem, Constants.Player.Speed);
+        PlayerController = new PlayerController(PlayerEntity, _inputSystem, Constants.Player.Speed, _entityManager.Entities);
         RenderSystem = new RenderSystem(_spriteBatch, _entityManager);
         AnimationSystem = new AnimationSystem(_entityManager);
+
+        // Create an Entity
+        npc = PlayerFactory.CreatePlayer(200, 200, _entityManager, _assets.PlayerTexture);
+        npc.GetComponent<Sprite>().Color = Color.Red;
+
     }
 
     public void Update(GameTime gameTime)

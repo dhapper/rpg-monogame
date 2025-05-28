@@ -5,6 +5,7 @@ public class EntityManager
 {
     private int _nextId = 0;
     private List<Entity> _entities = new();
+    public List<Entity> Entities => _entities;
 
     public Entity CreateEntity()
     {

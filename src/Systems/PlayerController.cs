@@ -1,5 +1,6 @@
 // File: Systems/PlayerController.cs
 using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
@@ -11,12 +12,14 @@ public class PlayerController
 
     // private TileMap _map;
     // private Tile[] _tiles;
+    private List<Entity> _entities;
 
-    public PlayerController(Entity player, InputSystem inputSystem, int speed)
+    public PlayerController(Entity player, InputSystem inputSystem, int speed, List<Entity> entities)
     {
         _player = player;
         _inputSystem = inputSystem;
         _speed = speed;
+        _entities = entities;
 
         // _map = map;
         // _tiles = tiles;
@@ -51,37 +54,34 @@ public class PlayerController
         var position = _player.GetComponent<Position>();
         float newX = position.X + xSpeed;
         float newY = position.Y + ySpeed;
-        Rectangle newHitbox = new Rectangle((int)newX, (int)newY, position.Width, position.Height);
-        // if (!IsSolid(newHitbox))
-        // {
+        Rectangle newHitbox = new Rectangle(
+            (int)newX,
+            (int)newY,
+            (int)(position.Width * Constants.ScaleFactor),
+            (int)(position.Height * Constants.ScaleFactor));
+        if (!IsSolid(newHitbox))
+        {
             position.X = newX;
             position.Y = newY;
-        // }
+            var collision = _player.GetComponent<Collision>();
+            collision.UpdateHitbox(position);
+        }
 
         _player.AddComponent(position);
     }
 
-    // private bool IsSolid(Rectangle hitbox)
-    // {
-    //     int leftTile = hitbox.Left / _map.TileWidth;
-    //     int rightTile = hitbox.Right / _map.TileWidth;
-    //     int topTile = hitbox.Top / _map.TileHeight;
-    //     int bottomTile = hitbox.Bottom / _map.TileHeight;
+    private bool IsSolid(Rectangle hitbox)
+    {
+        foreach (var entity in _entities)
+        {
+            if(entity.Equals(_player)) { continue; }
 
-    //     for (int y = topTile; y <= bottomTile; y++)
-    //     {
-    //         for (int x = leftTile; x <= rightTile; x++)
-    //         {
-    //             if (x < 0 || y < 0 || x >= _map.Width || y >= _map.Height) continue;
-
-    //             int tileId = _map.Tiles[x, y];
-    //             if (tileId < 0 || tileId >= _tiles.Length) continue;
-
-    //             if (_tiles[tileId].IsSolid)
-    //                 return true;
-    //         }
-    //     }
-
-    //     return false;
-    // }
+            if (entity.HasComponent<Collision>() && entity.GetComponent<Collision>().IsSolid)
+                if (hitbox.Intersects(entity.GetComponent<Collision>().Hitbox))
+                {
+                    return true;
+                }
+        }
+        return false;
+    }
 }
