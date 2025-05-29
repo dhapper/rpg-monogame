@@ -12,59 +12,58 @@ public class AnimationSystem
 
     public void SetAnimation(Entity entity, AnimationConfig config)
     {
-        var animation = entity.GetComponent<AnimationComponent>();
+        var anim = entity.GetComponent<AnimationComponent>();
 
-        if (animation.Row != config.Row)
+        if (anim.Row != config.Row)
         {
-            animation.Row = config.Row;
-            animation.FrameCount = config.FrameCount;
-            animation.FrameDuration = config.FrameDuration;
-            animation.CurrentFrame = 0;
-            animation.Timer = 0f;
+            anim.Row = config.Row;
+            anim.FrameCount = config.FrameCount;
+            anim.FrameDuration = config.FrameDuration;
+            anim.CurrentFrame = 0;
+            anim.Timer = 0f;
 
-            UpdateSourceRectNow(entity);
+            UpdateSourceRect(entity);
         }
     }
 
-    private void UpdateSourceRectNow(Entity entity)
+    private void UpdateSourceRect(Entity entity)
     {
-        var animation = entity.GetComponent<AnimationComponent>();
+        var anim = entity.GetComponent<AnimationComponent>();
         var sprite = entity.GetComponent<SpriteComponent>();
-        Rectangle rect = sprite.SourceRectangle ?? new Rectangle(0, 0, 32, 32); // fallback
+        Rectangle rect = sprite.SourceRectangle ?? new Rectangle(0, 0, 0, 0);
 
         sprite.SourceRectangle = new Rectangle(
-            animation.CurrentFrame * rect.Width,
-            animation.Row * rect.Height,
+            anim.CurrentFrame * rect.Width,
+            anim.Row * rect.Height,
             rect.Width,
             rect.Height);
     }
 
-
     public void Update(GameTime gameTime)
-{
-    foreach (var entity in _entityManager.EntitiesWithComponents<AnimationComponent, SpriteComponent>())
     {
-        var animation = entity.GetComponent<AnimationComponent>();
-        var sprite = entity.GetComponent<SpriteComponent>();
-
-        animation.Timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-        if (animation.Timer >= animation.FrameDuration)
+        foreach (var entity in _entityManager.EntitiesWithComponents<AnimationComponent, SpriteComponent>())
         {
-            animation.Timer -= animation.FrameDuration;
-            animation.CurrentFrame = (animation.CurrentFrame + 1) % animation.FrameCount;
+            var animation = entity.GetComponent<AnimationComponent>();
+            var sprite = entity.GetComponent<SpriteComponent>();
 
-            Rectangle rect = sprite.SourceRectangle ?? new Rectangle(0, 0, 32, 32);
+            animation.Timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            sprite.SourceRectangle = new Rectangle(
-                animation.CurrentFrame * rect.Width,
-                animation.Row * rect.Height,
-                rect.Width,
-                rect.Height);
+            if (animation.Timer >= animation.FrameDuration)
+            {
+                animation.Timer -= animation.FrameDuration;
+                animation.CurrentFrame = (animation.CurrentFrame + 1) % animation.FrameCount;
 
-            Console.WriteLine($"Frame: {animation.CurrentFrame}, Rect: {sprite.SourceRectangle}");
+                Rectangle rect = sprite.SourceRectangle ?? new Rectangle(0, 0, 32, 32);
+
+                sprite.SourceRectangle = new Rectangle(
+                    animation.CurrentFrame * rect.Width,
+                    animation.Row * rect.Height,
+                    rect.Width,
+                    rect.Height);
+
+                Console.WriteLine($"Frame: {animation.CurrentFrame}, Rect: {sprite.SourceRectangle}");
+            }
         }
     }
-}
 
 }

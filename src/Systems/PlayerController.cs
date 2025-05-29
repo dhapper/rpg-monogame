@@ -16,21 +16,19 @@ public class PlayerController
     private List<Entity> _entities;
 
     private bool[] dir;
-    private int lastDir;
+    private int lastDir = -1;
 
     public PlayerController(Entity player, InputSystem inputSystem, AnimationSystem animationSystem, List<Entity> entities)
     {
         _player = player;
         _inputSystem = inputSystem;
-        _animationSystem = animationSystem;
         _entities = entities;
         _collisionSystem = new CollisionSystem(_player, _entities);
         _movementSystem = new MovementSystem();
+        _animationSystem = animationSystem;
 
         dir = [false, false, false, false];
     }
-
-    private bool firstFrame;
 
     public void Update()
     {
@@ -41,7 +39,6 @@ public class PlayerController
 
         if (_inputSystem.IsKeyDown(Keys.Up) || _inputSystem.IsKeyDown(Keys.W))
         {
-            // anim.UpdateAnimation(Constants.Player.Animations.WalkUp);
             _animationSystem.SetAnimation(_player, Constants.Player.Animations.WalkUp);
             dir[Constants.Directions.Up] = true;
             lastDir = Constants.Directions.Up;
@@ -49,54 +46,37 @@ public class PlayerController
         }
         if (_inputSystem.IsKeyDown(Keys.Down) || _inputSystem.IsKeyDown(Keys.S))
         {
-            _animationSystem.SetAnimation(_player, Constants.Player.Animations.WalkUp);
+            _animationSystem.SetAnimation(_player, Constants.Player.Animations.WalkDown);
             dir[Constants.Directions.Down] = true;
             lastDir = Constants.Directions.Down;
             isMoving = true;
         }
         if (_inputSystem.IsKeyDown(Keys.Left) || _inputSystem.IsKeyDown(Keys.A))
         {
-            _animationSystem.SetAnimation(_player, Constants.Player.Animations.WalkUp);
+            _animationSystem.SetAnimation(_player, Constants.Player.Animations.WalkLeft);
             dir[Constants.Directions.Left] = true;
             lastDir = Constants.Directions.Left;
             isMoving = true;
         }
         if (_inputSystem.IsKeyDown(Keys.Right) || _inputSystem.IsKeyDown(Keys.D))
         {
-            _animationSystem.SetAnimation(_player, Constants.Player.Animations.WalkUp);
+            _animationSystem.SetAnimation(_player, Constants.Player.Animations.WalkLeft);
             dir[Constants.Directions.Right] = true;
             lastDir = Constants.Directions.Right;
             isMoving = true;
         }
 
-        if (!isMoving)
+        if (!isMoving && lastDir != -1)
         {
-            _animationSystem.SetAnimation(_player, Constants.Player.Animations.IdleDown);
+            if (lastDir == Constants.Directions.Up)
+                _animationSystem.SetAnimation(_player, Constants.Player.Animations.IdleUp);
+            else if (lastDir == Constants.Directions.Left)
+                _animationSystem.SetAnimation(_player, Constants.Player.Animations.IdleLeft);
+            else if (lastDir == Constants.Directions.Right)
+                _animationSystem.SetAnimation(_player, Constants.Player.Animations.IdleLeft);
+            else
+                _animationSystem.SetAnimation(_player, Constants.Player.Animations.IdleDown);
         }
-
-        // if (isMoving)
-        // {
-        //     if (dir[Constants.Directions.Up])
-        //         anim.UpdateAnimation(Constants.Player.Animations.WalkUp);
-        //     else if (dir[Constants.Directions.Down])
-        //         anim.UpdateAnimation(Constants.Player.Animations.WalkDown);
-        //     else if (dir[Constants.Directions.Left])
-        //         anim.UpdateAnimation(Constants.Player.Animations.WalkLeft);
-        //     else if (dir[Constants.Directions.Right])
-        //         anim.UpdateAnimation(Constants.Player.Animations.WalkLeft);
-        // }
-
-        // if (!_movementSystem.Moving)
-        // {
-        //     if (lastDir == Constants.Directions.Up)
-        //         _player.GetComponent<AnimationComponent>().UpdateAnimation(Constants.Player.Animations.IdleUp);
-        //     else if (lastDir == Constants.Directions.Left)
-        //         _player.GetComponent<AnimationComponent>().UpdateAnimation(Constants.Player.Animations.IdleLeft);
-        //     else if (lastDir == Constants.Directions.Right)
-        //         _player.GetComponent<AnimationComponent>().UpdateAnimation(Constants.Player.Animations.IdleLeft);
-        //     else
-        //         _player.GetComponent<AnimationComponent>().UpdateAnimation(Constants.Player.Animations.IdleDown);
-        // }
 
 
 
