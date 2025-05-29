@@ -21,12 +21,6 @@ public class CollisionComponent
 
     public void UpdateHitbox(PositionComponent position)
     {
-        // Hitbox = new Rectangle(
-        //     (int)position.X,
-        //     (int)position.Y,
-        //     (int)(position.Width * Constants.ScaleFactor),
-        //     (int)(position.Height * Constants.ScaleFactor));
-
         Hitbox = new Rectangle(
             (int)(position.X + offsetX * Constants.ScaleFactor),
             (int)(position.Y + offsetY * Constants.ScaleFactor),

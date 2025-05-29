@@ -16,6 +16,7 @@ public class AssetStore
     public void LoadAll()
     {
         GameFont = _content.Load<SpriteFont>("gameFont");
-        PlayerTexture = _content.Load<Texture2D>("player");
+        // PlayerTexture = _content.Load<Texture2D>("player");
+        PlayerTexture = _content.Load<Texture2D>("custom_player_sheet");
     }
 }

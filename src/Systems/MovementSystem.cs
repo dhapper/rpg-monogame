@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 
 public class MovementSystem
 {
+
     public Vector2 CalculateSpeed(int speed, bool[] dir)
     {
 

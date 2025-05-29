@@ -33,3 +33,4 @@ C:\Users\Dhaarshan. P\Desktop\main\Coding\VS projects\C#\MonoGame\rpg\obj\Debug\
 C:\Users\Dhaarshan. P\Desktop\main\Coding\VS projects\C#\MonoGame\rpg\bin\Debug\net8.0\Content\player.xnb
 C:\Users\Dhaarshan. P\Desktop\main\Coding\VS projects\C#\MonoGame\rpg\obj\Debug\net8.0\rpg.sourcelink.json
 C:\Users\Dhaarshan. P\Desktop\main\Coding\VS projects\C#\MonoGame\rpg\bin\Debug\net8.0\Content\tilesheet.xnb
+C:\Users\Dhaarshan. P\Desktop\main\Coding\VS projects\C#\MonoGame\rpg\bin\Debug\net8.0\Content\custom_player_sheet.xnb

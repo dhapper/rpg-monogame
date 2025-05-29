@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -14,6 +15,7 @@ public class PlayerController
     private List<Entity> _entities;
 
     private bool[] dir;
+    private int lastDir;
 
     public PlayerController(Entity player, InputSystem inputSystem, List<Entity> entities)
     {
@@ -26,34 +28,84 @@ public class PlayerController
         dir = [false, false, false, false];
     }
 
+    private bool firstFrame;
+
     public void Update()
     {
         resetDirVars();
+        bool isMoving = false;
+
+        var anim = _player.GetComponent<AnimationComponent>();
 
         if (_inputSystem.IsKeyDown(Keys.Up) || _inputSystem.IsKeyDown(Keys.W))
+        {
+            anim.UpdateAnimation(Constants.Player.Animations.WalkUp);
             dir[Constants.Directions.Up] = true;
-
+            lastDir = Constants.Directions.Up;
+            isMoving = true;
+        }
         if (_inputSystem.IsKeyDown(Keys.Down) || _inputSystem.IsKeyDown(Keys.S))
+        {
+            anim.UpdateAnimation(Constants.Player.Animations.WalkDown);
             dir[Constants.Directions.Down] = true;
-
+            lastDir = Constants.Directions.Down;
+            isMoving = true;
+        }
         if (_inputSystem.IsKeyDown(Keys.Left) || _inputSystem.IsKeyDown(Keys.A))
+        {
+            anim.UpdateAnimation(Constants.Player.Animations.WalkLeft);
             dir[Constants.Directions.Left] = true;
-
+            lastDir = Constants.Directions.Left;
+            isMoving = true;
+        }
         if (_inputSystem.IsKeyDown(Keys.Right) || _inputSystem.IsKeyDown(Keys.D))
+        {
+            anim.UpdateAnimation(Constants.Player.Animations.WalkLeft);
             dir[Constants.Directions.Right] = true;
+            lastDir = Constants.Directions.Right;
+            isMoving = true;
+        }
 
-        if (_inputSystem.IsKeyDown(Keys.D0))
+        if (!isMoving)
         {
-            AnimationComponent anim = _player.GetComponent<AnimationComponent>();
-            anim.Row = 0;
-            anim.FrameDuration = 0.2f;
+            anim.UpdateAnimation(Constants.Player.Animations.IdleDown);
         }
+
+        // if (isMoving)
+        // {
+        //     if (dir[Constants.Directions.Up])
+        //         anim.UpdateAnimation(Constants.Player.Animations.WalkUp);
+        //     else if (dir[Constants.Directions.Down])
+        //         anim.UpdateAnimation(Constants.Player.Animations.WalkDown);
+        //     else if (dir[Constants.Directions.Left])
+        //         anim.UpdateAnimation(Constants.Player.Animations.WalkLeft);
+        //     else if (dir[Constants.Directions.Right])
+        //         anim.UpdateAnimation(Constants.Player.Animations.WalkLeft);
+        // }
+
+        // if (!_movementSystem.Moving)
+        // {
+        //     if (lastDir == Constants.Directions.Up)
+        //         _player.GetComponent<AnimationComponent>().UpdateAnimation(Constants.Player.Animations.IdleUp);
+        //     else if (lastDir == Constants.Directions.Left)
+        //         _player.GetComponent<AnimationComponent>().UpdateAnimation(Constants.Player.Animations.IdleLeft);
+        //     else if (lastDir == Constants.Directions.Right)
+        //         _player.GetComponent<AnimationComponent>().UpdateAnimation(Constants.Player.Animations.IdleLeft);
+        //     else
+        //         _player.GetComponent<AnimationComponent>().UpdateAnimation(Constants.Player.Animations.IdleDown);
+        // }
+
+
+
+
+        if (_inputSystem.IsKeyDown(Keys.D1))
+            _player.GetComponent<AnimationComponent>().UpdateAnimation(Constants.Player.Animations.IdleDown);
+        if (_inputSystem.IsKeyDown(Keys.D2))
+            _player.GetComponent<AnimationComponent>().UpdateAnimation(Constants.Player.Animations.WalkDown);
         if (_inputSystem.IsKeyDown(Keys.D3))
-        {
-            AnimationComponent anim = _player.GetComponent<AnimationComponent>();
-            anim.Row = 3;
-            anim.FrameDuration = 0.1f;
-        }
+            _player.GetComponent<AnimationComponent>().UpdateAnimation(Constants.Player.Animations.RunDown);
+        if (_inputSystem.IsKeyDown(Keys.D4))
+            _player.GetComponent<AnimationComponent>().UpdateAnimation(Constants.Player.Animations.AxeLeft);
 
         Vector2 speedVector = _movementSystem.CalculateSpeed(_speed, dir);
         _collisionSystem.Move(speedVector.X, speedVector.Y);

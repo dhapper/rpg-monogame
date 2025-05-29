@@ -6,9 +6,9 @@ public static class PlayerFactory
     {
         var player = entityManager.CreateEntity();
 
-        player.AddComponent(new PositionComponent(x, y, Constants.Player.Width, Constants.Player.Height));
-        player.AddComponent(new SpriteComponent(texture, new Rectangle(0, 0, Constants.Player.Width, Constants.Player.Height)) { Color = Color.White });
-        player.AddComponent(new AnimationComponent(frameCount: 4, frameDuration: 0.2f));
+        player.AddComponent(new PositionComponent(x, y, Constants.Player.SpriteSize, Constants.Player.SpriteSize));
+        player.AddComponent(new SpriteComponent(texture, new Rectangle(0, 0, Constants.Player.SpriteSize, Constants.Player.SpriteSize)) { Color = Color.White });
+        player.AddComponent(new AnimationComponent(Constants.Player.Animations.IdleDown, player.GetComponent<SpriteComponent>()));
         player.AddComponent(new CollisionComponent(
             player.GetComponent<PositionComponent>(),
             Constants.Player.XOffset,

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>C:/Users/Dhaarshan. P/Desktop/main/Coding/VS projects/C#/MonoGame/rpg/Content/player.png</SourceFile>
-  <SourceTime>2025-05-26T18:59:14.0687837-04:00</SourceTime>
-  <DestFile>C:/Users/Dhaarshan. P/Desktop/main/Coding/VS projects/C#/MonoGame/rpg/Content/bin/DesktopGL/Content/player.xnb</DestFile>
-  <DestTime>2025-05-29T14:57:49.5501536-04:00</DestTime>
+  <SourceFile>C:/Users/Dhaarshan. P/Desktop/main/Coding/VS projects/C#/MonoGame/rpg/Content/custom_player_sheet.png</SourceFile>
+  <SourceTime>2025-05-29T12:42:53.6368046-04:00</SourceTime>
+  <DestFile>C:/Users/Dhaarshan. P/Desktop/main/Coding/VS projects/C#/MonoGame/rpg/Content/bin/DesktopGL/Content/custom_player_sheet.xnb</DestFile>
+  <DestTime>2025-05-29T14:57:49.4740542-04:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2025-04-05T06:10:54-04:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
