@@ -6,12 +6,12 @@ public class GameInitializer
     private EntityManager _entityManager;
     private AssetStore _assets;
     private InputSystem _inputSystem;
+    private AnimationSystem _animationSystem;
     private SpriteBatch _spriteBatch;
 
     public Entity PlayerEntity { get; private set; }
     public PlayerController PlayerController { get; private set; }
     public RenderSystem RenderSystem { get; private set; }
-    public AnimationSystem AnimationSystem { get; private set; }
 
     public Entity npc { get; private set; }
 
@@ -31,12 +31,13 @@ public class GameInitializer
     {
         _inputSystem = new InputSystem();
 
+        RenderSystem = new RenderSystem(_spriteBatch, _entityManager);
+        _animationSystem = new AnimationSystem(_entityManager);
+
         // Create Player
         PlayerEntity = PlayerFactory.CreatePlayer(100, 100, _entityManager, _assets.PlayerTexture);
 
-        PlayerController = new PlayerController(PlayerEntity, _inputSystem, _entityManager.Entities);
-        RenderSystem = new RenderSystem(_spriteBatch, _entityManager);
-        AnimationSystem = new AnimationSystem(_entityManager);
+        PlayerController = new PlayerController(PlayerEntity, _inputSystem, _animationSystem, _entityManager.Entities);
 
         // Create an Entity
         npc = PlayerFactory.CreatePlayer(200, 200, _entityManager, _assets.PlayerTexture);
@@ -48,7 +49,7 @@ public class GameInitializer
     {
         _inputSystem.Update();
         PlayerController.Update();
-        AnimationSystem.Update(gameTime);
+        _animationSystem.Update(gameTime);
     }
 
     public void Draw()
