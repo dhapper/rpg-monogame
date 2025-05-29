@@ -15,6 +15,8 @@ public static class Constants
         public const int HitboxWidth = 16;
         public const int HitboxHeight = 30;
 
+        public const int Speed = 4;
+
         public static class Animations
         {
             // Row, FrameCount, Duration

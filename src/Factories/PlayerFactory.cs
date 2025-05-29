@@ -15,6 +15,7 @@ public static class PlayerFactory
             Constants.Player.YOffset,
             Constants.Player.HitboxWidth, 
             Constants.Player.HitboxHeight));
+        player.AddComponent(new MovementComponent(Constants.Player.Speed));
         
 
         return player;
