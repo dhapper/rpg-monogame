@@ -5,6 +5,7 @@ public class AssetStore
 {
     public SpriteFont GameFont { get; private set; }
     public Texture2D PlayerTexture { get; private set; }
+    public Texture2D TileSheet;
 
     private ContentManager _content;
 
@@ -16,7 +17,7 @@ public class AssetStore
     public void LoadAll()
     {
         GameFont = _content.Load<SpriteFont>("gameFont");
-        // PlayerTexture = _content.Load<Texture2D>("player");
         PlayerTexture = _content.Load<Texture2D>("custom_player_sheet");
+        TileSheet = _content.Load<Texture2D>("tilesheet");
     }
 }

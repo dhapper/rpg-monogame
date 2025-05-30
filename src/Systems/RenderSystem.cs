@@ -18,14 +18,31 @@ public class RenderSystem
         _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
         foreach (var entity in _entityManager.GetEntities())
         {
-            if (entity.HasComponent<PositionComponent>() && entity.HasComponent<SpriteComponent>())
+
+            // var position = entity.GetComponent<PositionComponent>();
+            // var sprite = entity.GetComponent<SpriteComponent>();
+            // var animation = entity.GetComponent<AnimationComponent>();
+
+            if (entity.HasComponent<TileComponent>())
             {
+                var position = entity.GetComponent<PositionComponent>();
+                var sprite = entity.GetComponent<SpriteComponent>();
 
-                if (entity.HasComponent<CollisionComponent>() && entity.GetComponent<CollisionComponent>().isSolid)
-                {
-                    DrawHitbox(_spriteBatch, entity.GetComponent<CollisionComponent>().Hitbox);
-                }
+                _spriteBatch.Draw(
+                    sprite.Texture,
+                    new Vector2(position.X, position.Y),
+                    sprite.SourceRectangle,
+                    sprite.Color,
+                    0f,
+                    Vector2.Zero,
+                    Constants.ScaleFactor,
+                    SpriteEffects.None,
+                    0f);
+            }
 
+            // temp fix
+            if (entity.HasComponent<PositionComponent>() && entity.HasComponent<SpriteComponent>() && !entity.HasComponent<TileComponent>())
+            {
                 var position = entity.GetComponent<PositionComponent>();
                 var sprite = entity.GetComponent<SpriteComponent>();
                 var animation = entity.GetComponent<AnimationComponent>();
@@ -33,7 +50,7 @@ public class RenderSystem
                 // Console.WriteLine($"Drawing at ({position.X},{position.Y}) with rect: {sprite.SourceRectangle}");
 
                 SpriteEffects effects = animation.IsMirrored ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-                
+
                 _spriteBatch.Draw(
                     sprite.Texture,
                     new Vector2(position.X, position.Y),
@@ -44,6 +61,11 @@ public class RenderSystem
                     Constants.ScaleFactor,
                     effects,
                     0f);
+            }
+
+            // hitboxes
+            if (entity.HasComponent<CollisionComponent>()) {
+                DrawHitbox(_spriteBatch, entity.GetComponent<CollisionComponent>().Hitbox);
             }
         }
         _spriteBatch.End();
@@ -59,11 +81,11 @@ public class RenderSystem
         // Top
         spriteBatch.Draw(whitePixel, new Rectangle(hitbox.Left, hitbox.Top, hitbox.Width, 1), color);
         // Bottom
-        spriteBatch.Draw(whitePixel, new Rectangle(hitbox.Left, hitbox.Bottom, hitbox.Width, 1), color);
+        spriteBatch.Draw(whitePixel, new Rectangle(hitbox.Left, hitbox.Bottom - 1, hitbox.Width, 1), color);
         // Left
         spriteBatch.Draw(whitePixel, new Rectangle(hitbox.Left, hitbox.Top, 1, hitbox.Height), color);
         // Right
-        spriteBatch.Draw(whitePixel, new Rectangle(hitbox.Right, hitbox.Top, 1, hitbox.Height), color);
+        spriteBatch.Draw(whitePixel, new Rectangle(hitbox.Right - 1, hitbox.Top, 1, hitbox.Height), color);
 
     }
 
