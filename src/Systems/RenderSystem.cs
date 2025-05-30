@@ -28,7 +28,12 @@ public class RenderSystem
 
                 var position = entity.GetComponent<PositionComponent>();
                 var sprite = entity.GetComponent<SpriteComponent>();
-                Console.WriteLine($"Drawing at ({position.X},{position.Y}) with rect: {sprite.SourceRectangle}");
+                var animation = entity.GetComponent<AnimationComponent>();
+
+                // Console.WriteLine($"Drawing at ({position.X},{position.Y}) with rect: {sprite.SourceRectangle}");
+
+                SpriteEffects effects = animation.IsMirrored ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+                
                 _spriteBatch.Draw(
                     sprite.Texture,
                     new Vector2(position.X, position.Y),
@@ -37,7 +42,7 @@ public class RenderSystem
                     0f,
                     Vector2.Zero,
                     Constants.ScaleFactor,
-                    SpriteEffects.None,
+                    effects,
                     0f);
             }
         }

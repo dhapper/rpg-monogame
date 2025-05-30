@@ -48,7 +48,7 @@ public class PlayerController
         if (LeftKeyPressed)
             _animationSystem.SetAnimation(_player, Constants.Player.Animations.WalkLeft);
         if (RightKeyPressed)
-            _animationSystem.SetAnimation(_player, Constants.Player.Animations.WalkLeft);
+            _animationSystem.SetAnimation(_player, Constants.Player.Animations.WalkRight);
 
         // movement
         if (UpKeyPressed)
@@ -61,7 +61,7 @@ public class PlayerController
             InitMovement(Constants.Directions.Right);
 
 
-        // idle
+        // default idle
         if (!movement.IsMoving && movement.LastDir != -1)
         {
             if (movement.LastDir == Constants.Directions.Up)
@@ -69,7 +69,7 @@ public class PlayerController
             else if (movement.LastDir == Constants.Directions.Left)
                 _animationSystem.SetAnimation(_player, Constants.Player.Animations.IdleLeft);
             else if (movement.LastDir == Constants.Directions.Right)
-                _animationSystem.SetAnimation(_player, Constants.Player.Animations.IdleLeft);
+                _animationSystem.SetAnimation(_player, Constants.Player.Animations.IdleRight);
             else
                 _animationSystem.SetAnimation(_player, Constants.Player.Animations.IdleDown);
         }

@@ -22,19 +22,23 @@ public static class Constants
             // Row, FrameCount, Duration
             public static readonly AnimationConfig IdleDown = new AnimationConfig(0, 4, 1f);
             public static readonly AnimationConfig IdleUp = new AnimationConfig(1, 4, 1f);
-            public static readonly AnimationConfig IdleLeft = new AnimationConfig(2, 4, 1f);
+            public static readonly AnimationConfig IdleRight = new AnimationConfig(2, 4, 1f);
+            public static readonly AnimationConfig IdleLeft = new AnimationConfig(2, 4, 1f, true);
 
             public static readonly AnimationConfig WalkDown = new AnimationConfig(3, 6, 0.15f);
             public static readonly AnimationConfig WalkUp = new AnimationConfig(4, 6, 0.15f);
-            public static readonly AnimationConfig WalkLeft = new AnimationConfig(5, 6, 0.15f);
+            public static readonly AnimationConfig WalkRight = new AnimationConfig(5, 6, 0.15f);
+            public static readonly AnimationConfig WalkLeft = new AnimationConfig(5, 6, 0.15f, true);
 
             public static readonly AnimationConfig RunDown = new AnimationConfig(6, 6, 0.1f);
             public static readonly AnimationConfig RunUp = new AnimationConfig(7, 6, 0.1f);
-            public static readonly AnimationConfig RunLeft = new AnimationConfig(8, 6, 0.1f);
+            public static readonly AnimationConfig RunRight = new AnimationConfig(8, 6, 0.1f);
+            public static readonly AnimationConfig RunLeft = new AnimationConfig(8, 6, 0.1f, true);
 
             public static readonly AnimationConfig AxeDown = new AnimationConfig(9, 8, 0.1f);
             public static readonly AnimationConfig AxeUp = new AnimationConfig(10, 8, 0.1f);
-            public static readonly AnimationConfig AxeLeft = new AnimationConfig(11, 8, 0.1f);
+            public static readonly AnimationConfig AxeRight = new AnimationConfig(11, 8, 0.1f);
+            public static readonly AnimationConfig AxeLeft = new AnimationConfig(11, 8, 0.1f, true);
         }
     }
 

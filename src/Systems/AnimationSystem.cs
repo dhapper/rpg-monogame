@@ -19,6 +19,7 @@ public class AnimationSystem
             anim.Row = config.Row;
             anim.FrameCount = config.FrameCount;
             anim.FrameDuration = config.FrameDuration;
+            anim.IsMirrored = config.IsMirrored;
             anim.CurrentFrame = 0;
             anim.Timer = 0f;
 
