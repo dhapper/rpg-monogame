@@ -6,17 +6,12 @@ using Microsoft.Xna.Framework.Input;
 public class PlayerController
 {
     private Entity _player;
-
     private InputSystem _inputSystem;
     private CollisionSystem _collisionSystem;
     private MovementSystem _movementSystem;
     private AnimationSystem _animationSystem;
-
-    // private int _speed = 4;
     private List<Entity> _entities;
-
-    private bool[] dir;
-    // private int lastDir = -1;
+    private bool[] dir = [false, false, false, false];
 
     public PlayerController(Entity player, InputSystem inputSystem, AnimationSystem animationSystem, List<Entity> entities)
     {
@@ -26,8 +21,6 @@ public class PlayerController
         _collisionSystem = new CollisionSystem(_player, _entities);
         _movementSystem = new MovementSystem();
         _animationSystem = animationSystem;
-
-        dir = [false, false, false, false];
     }
 
     public void Update()
@@ -39,15 +32,36 @@ public class PlayerController
 
         movement.IsMoving = false;
 
-        if (_inputSystem.IsKeyDown(Keys.Up) || _inputSystem.IsKeyDown(Keys.W))
-            InitAnimation(Constants.Directions.Up, Constants.Player.Animations.WalkUp);
-        if (_inputSystem.IsKeyDown(Keys.Down) || _inputSystem.IsKeyDown(Keys.S))
-            InitAnimation(Constants.Directions.Down, Constants.Player.Animations.WalkDown);
-        if (_inputSystem.IsKeyDown(Keys.Left) || _inputSystem.IsKeyDown(Keys.A))
-            InitAnimation(Constants.Directions.Left, Constants.Player.Animations.WalkLeft);
-        if (_inputSystem.IsKeyDown(Keys.Right) || _inputSystem.IsKeyDown(Keys.D))
-            InitAnimation(Constants.Directions.Right, Constants.Player.Animations.WalkLeft);
+        bool UpKeyPressed = _inputSystem.IsKeyDown(Keys.Up) || _inputSystem.IsKeyDown(Keys.W);
+        bool DownKeyPressed = _inputSystem.IsKeyDown(Keys.Down) || _inputSystem.IsKeyDown(Keys.S);
+        bool LeftKeyPressed = _inputSystem.IsKeyDown(Keys.Left) || _inputSystem.IsKeyDown(Keys.A);
+        bool RightKeyPressed = _inputSystem.IsKeyDown(Keys.Right) || _inputSystem.IsKeyDown(Keys.D);
 
+        // animation
+        if (!LeftKeyPressed && !RightKeyPressed)
+        {
+            if (UpKeyPressed)
+                _animationSystem.SetAnimation(_player, Constants.Player.Animations.WalkUp);
+            if (DownKeyPressed)
+                _animationSystem.SetAnimation(_player, Constants.Player.Animations.WalkDown);
+        }
+        if (LeftKeyPressed)
+            _animationSystem.SetAnimation(_player, Constants.Player.Animations.WalkLeft);
+        if (RightKeyPressed)
+            _animationSystem.SetAnimation(_player, Constants.Player.Animations.WalkLeft);
+
+        // movement
+        if (UpKeyPressed)
+            InitMovement(Constants.Directions.Up);
+        if (DownKeyPressed)
+            InitMovement(Constants.Directions.Down);
+        if (LeftKeyPressed)
+            InitMovement(Constants.Directions.Left);
+        if (RightKeyPressed)
+            InitMovement(Constants.Directions.Right);
+
+
+        // idle
         if (!movement.IsMoving && movement.LastDir != -1)
         {
             if (movement.LastDir == Constants.Directions.Up)
@@ -60,26 +74,16 @@ public class PlayerController
                 _animationSystem.SetAnimation(_player, Constants.Player.Animations.IdleDown);
         }
 
-        // if (_inputSystem.IsKeyDown(Keys.D1))
-        //     _player.GetComponent<AnimationComponent>().UpdateAnimation(Constants.Player.Animations.IdleDown);
-        // if (_inputSystem.IsKeyDown(Keys.D2))
-        //     _player.GetComponent<AnimationComponent>().UpdateAnimation(Constants.Player.Animations.WalkDown);
-        // if (_inputSystem.IsKeyDown(Keys.D3))
-        //     _player.GetComponent<AnimationComponent>().UpdateAnimation(Constants.Player.Animations.RunDown);
-        // if (_inputSystem.IsKeyDown(Keys.D4))
-        //     _player.GetComponent<AnimationComponent>().UpdateAnimation(Constants.Player.Animations.AxeLeft);
-
         Vector2 speedVector = _movementSystem.CalculateSpeed(movement.Speed, dir);
         _collisionSystem.Move(speedVector.X, speedVector.Y);
     }
 
-    public void InitAnimation(int direction, AnimationConfig config)
+    public void InitMovement(int direction)
     {
         var movement = _player.GetComponent<MovementComponent>();
-        _animationSystem.SetAnimation(_player, config);
-        dir[direction] = true;
         movement.LastDir = direction;
         movement.IsMoving = true;
+        dir[direction] = true;
     }
 
     private void ResetDirVars()
