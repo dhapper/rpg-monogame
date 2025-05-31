@@ -8,6 +8,8 @@ public class GameInitializer
     private InputSystem _inputSystem;
     private AnimationSystem _animationSystem;
     private SpriteBatch _spriteBatch;
+    private GraphicsDevice _graphicsDevice;
+    private Camera2D _camera;
 
     public Entity PlayerEntity { get; private set; }
     public PlayerController PlayerController { get; private set; }
@@ -16,23 +18,22 @@ public class GameInitializer
 
     public Entity npc { get; private set; }
 
-    // public TileMap _map;
-    // public Tile[] _tiles;
+    public static bool ShowHitbox = false;
 
     public GameInitializer(EntityManager entityManager, SpriteBatch spriteBatch, AssetStore assets)
     {
         _entityManager = entityManager;
         _assets = assets;
         _spriteBatch = spriteBatch;
-        // _map = map;
-        // _tiles = tiles;
+        _graphicsDevice = _spriteBatch.GraphicsDevice;
     }
 
     public void Initialize()
     {
         _inputSystem = new InputSystem();
+        _camera = new Camera2D(_graphicsDevice.Viewport);
 
-        RenderSystem = new RenderSystem(_spriteBatch, _entityManager, _assets);
+        RenderSystem = new RenderSystem(_spriteBatch, _entityManager, _assets, _camera);
         _animationSystem = new AnimationSystem(_entityManager);
 
         MapSystem = new MapSystem(_entityManager, _assets);
@@ -40,7 +41,7 @@ public class GameInitializer
         // Create Player
         PlayerEntity = PlayerFactory.CreatePlayer(100, 100, _entityManager, _assets.PlayerTexture);
 
-        PlayerController = new PlayerController(PlayerEntity, _inputSystem, _animationSystem, _entityManager.Entities);
+        PlayerController = new PlayerController(PlayerEntity, _inputSystem, _animationSystem, _entityManager.Entities, _camera);
 
         // Create an Entity
         npc = PlayerFactory.CreatePlayer(50, 300, _entityManager, _assets.PlayerTexture);

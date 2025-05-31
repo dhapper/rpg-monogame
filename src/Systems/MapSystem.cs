@@ -126,43 +126,13 @@ public class MapSystem
                     int tilesInRow = sheetWidth / size;
                     int bgRow = background.Value / tilesInRow;
                     int bgCol = background.Value % tilesInRow;
-                    int xPos = bgCol * size; // Calculate x position based on column
-                    int yPos = bgRow * size; // Calculate y position based on row
+                    int xPos = bgCol * size;
+                    int yPos = bgRow * size;
                     Tile.GetComponent<TileComponent>().Background = new Rectangle(xPos, yPos, size, size);
                 }
 
             }
         }
-
-        // for (int row = 0; row < map_data.GetLength(0); row++)
-        // {
-        //     for (int col = 0; col < map_data.GetLength(1); col++)
-        //     {
-        //         int id = map_data[row, col];
-        //         Entity Tile = _entityManager.CreateEntity();
-
-        //         Tile.AddComponent(new TileComponent());
-        //         Tile.AddComponent(new PositionComponent(col * size * scale, row * size * scale, size, size));
-        //         int tilesPerRow = sheetWidth / size;
-        //         int x = id % tilesPerRow * size;
-        //         int y = id / tilesPerRow * size;
-        //         Tile.AddComponent(new SpriteComponent(_assetStore.TileSheet, new Rectangle(x, y, size, size)));
-
-        //         // // add hitbox
-        //         // if (Constants.Tile.defaultHitbox.Contains(id))
-        //         //     Tile.AddComponent(new CollisionComponent(Tile.GetComponent<PositionComponent>(), 0, 0, size, size));
-        //         // if(Constants.Tile.insetHitbox.Contains(id))
-        //         //     Tile.AddComponent(new CollisionComponent(Tile.GetComponent<PositionComponent>(), 1, 1, size-2, size-2));
-
-        //         // // add animations
-        //         // if (Constants.Tile.tileAnimations.ContainsKey(id))
-        //         //     Tile.AddComponent(new AnimationComponent(Constants.Tile.tileAnimations[id]));
-
-        //         if (Constants.Tile.)
-
-        //             map.Add(Tile);
-        //     }
-        // }
     }
 
     public class TileData

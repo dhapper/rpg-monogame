@@ -7,17 +7,20 @@ public class RenderSystem
     private SpriteBatch _spriteBatch;
     private EntityManager _entityManager;
     private AssetStore _assetStore;
+    private Camera2D _camera;
 
-    public RenderSystem(SpriteBatch spriteBatch, EntityManager entityManager, AssetStore assetStore)
+    public RenderSystem(SpriteBatch spriteBatch, EntityManager entityManager, AssetStore assetStore, Camera2D camera)
     {
         _spriteBatch = spriteBatch;
         _entityManager = entityManager;
         _assetStore = assetStore;
+        _camera = camera;
     }
 
     public void Draw()
     {
-        _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+        // _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+        _spriteBatch.Begin(transformMatrix: _camera.Transform, samplerState: SamplerState.PointClamp);
         foreach (var entity in _entityManager.GetEntities())
         {
             // tiles
@@ -49,7 +52,7 @@ public class RenderSystem
                 DrawEntity(entity);
 
             // hitboxes
-            if (entity.HasComponent<CollisionComponent>())
+            if (GameInitializer.ShowHitbox && entity.HasComponent<CollisionComponent>())
                 DrawHitbox(_spriteBatch, entity.GetComponent<CollisionComponent>().Hitbox);
         }
         _spriteBatch.End();
@@ -82,7 +85,7 @@ public class RenderSystem
 
         _spriteBatch.Draw(
             sprite.Texture,
-            new Vector2(position.X, position.Y),
+            new Vector2((int) position.X, (int) position.Y),
             sprite.SourceRectangle,
             sprite.Color,
             0f,

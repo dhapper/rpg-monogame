@@ -12,8 +12,9 @@ public class PlayerController
     private AnimationSystem _animationSystem;
     private List<Entity> _entities;
     private bool[] dir = [false, false, false, false];
+    private Camera2D _camera;
 
-    public PlayerController(Entity player, InputSystem inputSystem, AnimationSystem animationSystem, List<Entity> entities)
+    public PlayerController(Entity player, InputSystem inputSystem, AnimationSystem animationSystem, List<Entity> entities, Camera2D camera)
     {
         _player = player;
         _inputSystem = inputSystem;
@@ -21,6 +22,7 @@ public class PlayerController
         _collisionSystem = new CollisionSystem(_player, _entities);
         _movementSystem = new MovementSystem();
         _animationSystem = animationSystem;
+        _camera = camera;
     }
 
     public void Update()
@@ -43,6 +45,9 @@ public class PlayerController
             InitMovement(Constants.Directions.Left);
         if (RightKeyPressed && !LeftKeyPressed)
             InitMovement(Constants.Directions.Right);
+
+        if (_inputSystem.IsKeyDown(Keys.H))
+            GameInitializer.ShowHitbox = !GameInitializer.ShowHitbox;
 
         Vector2 speedVector = _movementSystem.CalculateSpeed(movement.Speed, dir);
         _collisionSystem.Move(speedVector.X, speedVector.Y);
@@ -72,6 +77,18 @@ public class PlayerController
             else
                 _animationSystem.SetAnimation(_player, Constants.Player.Animations.IdleDown);
         }
+
+
+        var pos = _player.GetComponent<PositionComponent>();
+        // int cameraX = (int)pos.X - (Constants.Player.XOffset + Constants.Player.HitboxWidth/2);
+        // int cameraY = (int)pos.Y - (Constants.Player.YOffset + Constants.Player.HitboxHeight/2);
+        // int cameraX = (int)pos.X + 100;
+        // int cameraY = (int)pos.Y + 100;
+        int cameraX = (int)(pos.X + Constants.ScaleFactor * (Constants.Player.XOffset + Constants.Player.HitboxWidth/2));
+        int cameraY = (int)(pos.Y + Constants.ScaleFactor * (Constants.Player.YOffset + Constants.Player.HitboxHeight/2));
+        _camera.Follow(new Vector2(cameraX, cameraY));
+
+
 
     }
 
