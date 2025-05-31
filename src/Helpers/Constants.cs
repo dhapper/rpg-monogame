@@ -47,16 +47,23 @@ public static class Constants
 
     public static class Tile
     {
-        public static int Stone = 0;
-        public static int Crate = 5;
-        public static int Water = 8;
+        public const int WalkableSheetIndex = 0;
+        public const int CollisionSheetIndex = 1;
+        public const int AnimationCollisionSheetIndex = 2;
 
-        public static int[] defaultHitbox = [Crate, Water];
-        public static int[] insetHitbox = [Stone];
+        public static int[] SolidSheets = { CollisionSheetIndex, AnimationCollisionSheetIndex };
+
+        public const int Water = 0;
+        public const int WaterEdgeMiddle = 1;
+        public const int WaterEdgeLeft = 2;
+        public const int WaterEdgeRight = 3;
 
         public static Dictionary<int, AnimationConfig> tileAnimations = new Dictionary<int, AnimationConfig>
         {
-            {Water, new AnimationConfig(1, 4, 0.1f)}
+            {Water, new AnimationConfig(0, 7, 0.1f)},
+            {WaterEdgeMiddle, new AnimationConfig(1, 4, 0.1f)},
+            {WaterEdgeLeft, new AnimationConfig(2, 4, 0.1f)},
+            {WaterEdgeRight, new AnimationConfig(3, 4, 0.1f)},
         };
 
     }

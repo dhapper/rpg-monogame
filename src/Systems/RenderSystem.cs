@@ -28,8 +28,8 @@ public class RenderSystem
                 DrawEntity(entity);
 
             // hitboxes
-            // if (entity.HasComponent<CollisionComponent>())
-            //     DrawHitbox(_spriteBatch, entity.GetComponent<CollisionComponent>().Hitbox);
+            if (entity.HasComponent<CollisionComponent>())
+                DrawHitbox(_spriteBatch, entity.GetComponent<CollisionComponent>().Hitbox);
         }
         _spriteBatch.End();
     }
