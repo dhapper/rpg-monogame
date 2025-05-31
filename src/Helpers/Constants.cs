@@ -1,4 +1,7 @@
 
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
+
 public static class Constants
 {
     public const float ScaleFactor = 4f;
@@ -42,6 +45,22 @@ public static class Constants
         }
     }
 
+    public static class Tile
+    {
+        public static int Stone = 0;
+        public static int Crate = 5;
+        public static int Water = 8;
+
+        public static int[] defaultHitbox = [Crate, Water];
+        public static int[] insetHitbox = [Stone];
+
+        public static Dictionary<int, AnimationConfig> tileAnimations = new Dictionary<int, AnimationConfig>
+        {
+            {Water, new AnimationConfig(1, 4, 0.1f)}
+        };
+
+    }
+
     public static class Directions
     {
         public const int Up = 0;
@@ -49,5 +68,5 @@ public static class Constants
         public const int Left = 2;
         public const int Right = 3;
     }
-    
+
 }

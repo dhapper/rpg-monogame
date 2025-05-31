@@ -26,10 +26,7 @@ public class PlayerController
     public void Update()
     {
         ResetDirVars();
-
-        var anim = _player.GetComponent<AnimationComponent>();
         var movement = _player.GetComponent<MovementComponent>();
-
         movement.IsMoving = false;
 
         bool UpKeyPressed = _inputSystem.IsKeyDown(Keys.Up) || _inputSystem.IsKeyDown(Keys.W);
@@ -37,7 +34,20 @@ public class PlayerController
         bool LeftKeyPressed = _inputSystem.IsKeyDown(Keys.Left) || _inputSystem.IsKeyDown(Keys.A);
         bool RightKeyPressed = _inputSystem.IsKeyDown(Keys.Right) || _inputSystem.IsKeyDown(Keys.D);
 
-        // animation
+        // movement
+        if (UpKeyPressed && !DownKeyPressed)
+            InitMovement(Constants.Directions.Up);
+        if (DownKeyPressed && !UpKeyPressed)
+            InitMovement(Constants.Directions.Down);
+        if (LeftKeyPressed && !RightKeyPressed)
+            InitMovement(Constants.Directions.Left);
+        if (RightKeyPressed && !LeftKeyPressed)
+            InitMovement(Constants.Directions.Right);
+
+        Vector2 speedVector = _movementSystem.CalculateSpeed(movement.Speed, dir);
+        _collisionSystem.Move(speedVector.X, speedVector.Y);
+
+        // walking animation
         if (!LeftKeyPressed && !RightKeyPressed)
         {
             if (UpKeyPressed)
@@ -50,19 +60,8 @@ public class PlayerController
         if (RightKeyPressed)
             _animationSystem.SetAnimation(_player, Constants.Player.Animations.WalkRight);
 
-        // movement
-        if (UpKeyPressed)
-            InitMovement(Constants.Directions.Up);
-        if (DownKeyPressed)
-            InitMovement(Constants.Directions.Down);
-        if (LeftKeyPressed)
-            InitMovement(Constants.Directions.Left);
-        if (RightKeyPressed)
-            InitMovement(Constants.Directions.Right);
-
-
         // default idle
-        if (!movement.IsMoving && movement.LastDir != -1)
+        if ((!movement.IsMoving && movement.LastDir != -1) || (speedVector.X == 0 && speedVector.Y == 0))
         {
             if (movement.LastDir == Constants.Directions.Up)
                 _animationSystem.SetAnimation(_player, Constants.Player.Animations.IdleUp);
@@ -74,8 +73,6 @@ public class PlayerController
                 _animationSystem.SetAnimation(_player, Constants.Player.Animations.IdleDown);
         }
 
-        Vector2 speedVector = _movementSystem.CalculateSpeed(movement.Speed, dir);
-        _collisionSystem.Move(speedVector.X, speedVector.Y);
     }
 
     public void InitMovement(int direction)

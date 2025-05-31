@@ -4,12 +4,14 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
+    <File>C:/Users/Dhaarshan. P/Desktop/main/Coding/VS projects/C#/MonoGame/rpg/Content/../../../../../../../Libresprite/tilesheet.png</File>
     <File>C:/Users/Dhaarshan. P/Desktop/main/Coding/VS projects/C#/MonoGame/rpg/Content/custom_player_sheet.png</File>
     <File>C:/Users/Dhaarshan. P/Desktop/main/Coding/VS projects/C#/MonoGame/rpg/Content/galleryFont.spritefont</File>
     <File>C:/Users/Dhaarshan. P/Desktop/main/Coding/VS projects/C#/MonoGame/rpg/Content/player.png</File>
     <File>C:/Users/Dhaarshan. P/Desktop/main/Coding/VS projects/C#/MonoGame/rpg/Content/tilesheet.png</File>
   </SourceFiles>
   <DestFiles>
+    <File>tilesheet.png</File>
     <File xsi:nil="true" />
     <File>gameFont.spritefont</File>
     <File xsi:nil="true" />
