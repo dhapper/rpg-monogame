@@ -6,11 +6,13 @@ public class RenderSystem
 {
     private SpriteBatch _spriteBatch;
     private EntityManager _entityManager;
+    private AssetStore _assetStore;
 
-    public RenderSystem(SpriteBatch spriteBatch, EntityManager entityManager)
+    public RenderSystem(SpriteBatch spriteBatch, EntityManager entityManager, AssetStore assetStore)
     {
         _spriteBatch = spriteBatch;
         _entityManager = entityManager;
+        _assetStore = assetStore;
     }
 
     public void Draw()
@@ -20,7 +22,26 @@ public class RenderSystem
         {
             // tiles
             if (entity.HasComponent<TileComponent>())
+            {
+                // bg of tile for transparent tiles
+                if (!entity.GetComponent<TileComponent>().Background.IsEmpty)
+                {
+                    var position = entity.GetComponent<PositionComponent>();
+                    var sprite = entity.GetComponent<SpriteComponent>();
+                    var tile = entity.GetComponent<TileComponent>();
+                    _spriteBatch.Draw(
+                        _assetStore.BackgroundTiles,
+                        new Vector2(position.X, position.Y),
+                        tile.Background,
+                        sprite.Color,
+                        0f,
+                        Vector2.Zero,
+                        Constants.ScaleFactor,
+                        SpriteEffects.None,
+                        0f);
+                }
                 DrawTile(entity);
+            }
 
             // entities
             // temp params

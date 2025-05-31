@@ -32,7 +32,7 @@ public class GameInitializer
     {
         _inputSystem = new InputSystem();
 
-        RenderSystem = new RenderSystem(_spriteBatch, _entityManager);
+        RenderSystem = new RenderSystem(_spriteBatch, _entityManager, _assets);
         _animationSystem = new AnimationSystem(_entityManager);
 
         MapSystem = new MapSystem(_entityManager, _assets);

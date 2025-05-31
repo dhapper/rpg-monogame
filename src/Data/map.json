@@ -1,8 +1,13 @@
 [
   [
+    { "type": 0, "id": 1, "background": 0 },
     { "type": 0, "id": 1 },
-    { "type": 0, "id": 1, "background": 0},
-    { "type": 0, "id": 2 }
+    { "type": 0, "id": 2, "background": 5 }
+  ],
+  [
+    { "type": 0, "id": 7 },
+    { "type": 0, "id": 7 },
+    { "type": 0, "id": 8, "background": 5 }
   ],
   [
     { "type": 2, "id": 1 },

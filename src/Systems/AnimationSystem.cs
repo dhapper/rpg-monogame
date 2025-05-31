@@ -62,7 +62,7 @@ public class AnimationSystem
                     rect.Width,
                     rect.Height);
 
-                Console.WriteLine($"Frame: {animation.CurrentFrame}, Rect: {sprite.SourceRectangle}");
+                // Console.WriteLine($"Frame: {animation.CurrentFrame}, Rect: {sprite.SourceRectangle}");
             }
         }
     }

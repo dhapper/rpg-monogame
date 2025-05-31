@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 public class TileComponent
 {
@@ -6,7 +7,7 @@ public class TileComponent
     public AnimationConfig AnimationConfig;
     public Rectangle Hitbox;
     public string Type;
-    public int Background;
+    public Rectangle Background;
 
     // public TileComponent(int id, string type = "ground", Rectangle hitbox = default, AnimationConfig animationConfig = null, int background = -1)
     // {

@@ -4,6 +4,9 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using System.Text.Json.Serialization;
 using Newtonsoft.Json;
+using Microsoft.Xna.Framework.Graphics;
+using System.ComponentModel;
+using System;
 
 public class MapSystem
 {
@@ -43,9 +46,9 @@ public class MapSystem
         // Deserialize into a list of list of TileData
         var tileMap = JsonConvert.DeserializeObject<List<List<TileData>>>(jsonText);
 
-        int sheetWidth = _assetStore.TileSheet.Width;
-        int size = Constants.TileSize;
-        float scale = Constants.ScaleFactor;
+        // int sheetWidth = _assetStore.TileSheet.Width;
+        // int size = Constants.TileSize;
+        // float scale = Constants.ScaleFactor;
 
         int rows = tileMap.Count;
         int cols = tileMap[0].Count;
@@ -70,16 +73,18 @@ public class MapSystem
                 int type = mapData[row, col].Type;
                 int? background = mapData[row, col].Background;
 
+                // int sheetWidth = _assetStore.TileSheet.Width;
+                int size = Constants.TileSize;
+                float scale = Constants.ScaleFactor;
+
                 Entity Tile = _entityManager.CreateEntity();
 
+                Tile.AddComponent(new PositionComponent(col * size * scale, row * size * scale, size, size));
+                // int tilesPerRow = sheetWidth / size;
+                // int x = id % tilesPerRow * size;
+                // int y = id / tilesPerRow * size;
 
                 Tile.AddComponent(new TileComponent());
-
-
-                Tile.AddComponent(new PositionComponent(col * size * scale, row * size * scale, size, size));
-                int tilesPerRow = sheetWidth / size;
-                int x = id % tilesPerRow * size;
-                int y = id / tilesPerRow * size;
 
                 var sheet = _assetStore.TileSheet;
                 switch (type)
@@ -92,10 +97,20 @@ public class MapSystem
                         break;
                     case Constants.Tile.AnimationCollisionSheetIndex:
                         sheet = _assetStore.AnimatedTiles;
-                        x = 0;
-                        y = id * size;
+                        // x = 0;
+                        // y = id * size;
                         break;
                 }
+
+                int sheetWidth = sheet.Width;
+                int tilesPerRow = sheetWidth / size;
+                int x = id % tilesPerRow * size;
+                int y = id / tilesPerRow * size;
+                if (type == Constants.Tile.AnimationCollisionSheetIndex) {
+                    x = 0;
+                    y = id * size;
+                }
+
                 Tile.AddComponent(new SpriteComponent(sheet, new Rectangle(x, y, size, size)));
 
                 if (Constants.Tile.SolidSheets.Contains(type))
@@ -103,8 +118,19 @@ public class MapSystem
 
                 if (type == Constants.Tile.AnimationCollisionSheetIndex
                     && Constants.Tile.tileAnimations.TryGetValue(id, out AnimationConfig animationConfig))
-                        Tile.AddComponent(new AnimationComponent(animationConfig));
-                    
+                    Tile.AddComponent(new AnimationComponent(animationConfig));
+
+                if (background.HasValue)
+                {
+                    sheetWidth = _assetStore.BackgroundTiles.Width;
+                    int tilesInRow = sheetWidth / size;
+                    int bgRow = background.Value / tilesInRow;
+                    int bgCol = background.Value % tilesInRow;
+                    int xPos = bgCol * size; // Calculate x position based on column
+                    int yPos = bgRow * size; // Calculate y position based on row
+                    Tile.GetComponent<TileComponent>().Background = new Rectangle(xPos, yPos, size, size);
+                }
+
             }
         }
 
