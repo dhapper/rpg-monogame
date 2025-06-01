@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -41,6 +42,13 @@ public class GameInitializer
         // Create Player
         PlayerEntity = PlayerFactory.CreatePlayer(200, 200, _entityManager, _assets, _graphicsDevice);
         PlayerController = new PlayerController(PlayerEntity, _inputSystem, _animationSystem, _entityManager.Entities, _camera);
+        PlayerEntity.AddComponent(new PlayerComponent());
+        var (x, y) = SaveManager.LoadData();
+        var position = PlayerEntity.GetComponent<PositionComponent>();
+        Console.WriteLine(position.X+" "+position.Y);
+        position.X = x;
+        position.Y = y;
+        Console.WriteLine(position.X+" "+position.Y);
         // Create an Entity
         npc = PlayerFactory.CreatePlayer(50, 300, _entityManager, _assets, _graphicsDevice);
         npc.GetComponent<SpriteComponent>().Color = Color.Red;

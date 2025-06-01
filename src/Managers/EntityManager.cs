@@ -19,6 +19,17 @@ public class EntityManager
         return _entities;
     }
 
+    internal IEnumerable<Entity> EntitiesWithComponent<T>()
+    {
+        foreach (var entity in _entities)
+        {
+            if (entity.HasComponent<T>())
+            {
+                yield return entity;
+            }
+        }
+    }
+
     internal IEnumerable<Entity> EntitiesWithComponents<T1, T2>()
     {
         foreach (var entity in _entities)

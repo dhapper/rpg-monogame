@@ -1,6 +1,4 @@
-using Microsoft.Xna.Framework;
-
-public struct PositionComponent
+public class PositionComponent
 {
     public float X, Y;
     public int Width, Height;
@@ -13,5 +11,4 @@ public struct PositionComponent
         Height = height;
     }
 
-    // public Rectangle GetHitbox() => new((int)X, (int)Y, (int) (Width * Constants.ScaleFactor), (int) (Height * Constants.ScaleFactor));
 }

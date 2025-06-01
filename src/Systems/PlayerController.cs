@@ -50,6 +50,9 @@ public class PlayerController
         if (_inputSystem.IsKeyDown(Keys.H))
             GameInitializer.ShowHitbox = !GameInitializer.ShowHitbox;
 
+        if (_inputSystem.IsKeyDown(Keys.O))
+            SaveManager.SaveData(_player);
+
         Vector2 speedVector = _movementSystem.CalculateSpeed(movement.Speed, dir);
         _collisionSystem.Move(speedVector.X, speedVector.Y, _camera.WorldWidthInPixels, _camera.WorldHeightInPixels);
         // int worldWidth, int worldHeight
