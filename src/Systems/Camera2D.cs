@@ -52,19 +52,6 @@ public class Camera2D
         UpdateTransform();
     }
 
-
-    // public void Follow(Vector2 target)
-    // {
-    //     float halfViewportWidth = _viewport.Width / 2f;
-    //     float halfViewportHeight = _viewport.Height / 2f;
-
-    //     float clampedX = MathHelper.Clamp(target.X - halfViewportWidth, 0, _worldWidth - _viewport.Width);
-    //     float clampedY = MathHelper.Clamp(target.Y - halfViewportHeight, 0, _worldHeight - _viewport.Height);
-
-    //     Position = new Vector2(clampedX, clampedY);
-    //     UpdateTransform();
-    // }
-
     private void UpdateTransform()
     {
         Transform = Matrix.CreateTranslation(new Vector3(-Position, 0));

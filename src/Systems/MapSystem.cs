@@ -29,14 +29,12 @@ public class MapSystem
 
     public void InitMap()
     {
-        string jsonPath = @"C:\Users\Dhaarshan. P\Desktop\main\Coding\VS projects\C#\MonoGame\rpg\src\Data\map.json";
+        string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+        string jsonPath = Path.Combine(baseDir, "Data", "map.json");
         string jsonText = File.ReadAllText(jsonPath);
-
         var tileMap = JsonConvert.DeserializeObject<List<List<TileData>>>(jsonText);
-
         int rows = tileMap.Count;
         int cols = tileMap[0].Count;
-
         TileData[,] mapData = new TileData[rows, cols];
 
         // convert to 2d array
