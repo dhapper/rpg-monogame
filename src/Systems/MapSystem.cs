@@ -2,53 +2,37 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
-using System.Text.Json.Serialization;
 using Newtonsoft.Json;
-using Microsoft.Xna.Framework.Graphics;
-using System.ComponentModel;
 using System;
 
 public class MapSystem
 {
-    // int[,] map_data = new int[,]
-    // {
-    //     {2, 3, 4, 5, 6, 0, 1, 8, 8, 8},
-    //     {1, 1, 1, 1, 1, 0, 1, 8, 8, 8},
-    //     {1, 1, 1, 1, 1, 1, 1, 8, 8, 8},
-    //     {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-    //     {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-    //     {1, 1, 1, 1, 1, 0, 0, 1, 1, 1},
-    //     {1, 1, 1, 1, 1, 0, 0, 1, 0, 1},
-    //     {1, 1, 1, 1, 1, 0, 1, 1, 1, 1},
-    //     {1, 1, 1, 1, 1, 0, 1, 1, 1, 1},
-    //     {1, 1, 1, 1, 1, 0, 1, 1, 1, 1},
-    // };
 
-    List<Entity> map = new List<Entity>();
+    // List<Entity> map = new List<Entity>();
 
     private EntityManager _entityManager;
     private AssetStore _assetStore;
+    private Camera2D _camera;
 
-    public MapSystem(EntityManager entityManager, AssetStore assetStore)
+    public int MapWidthInPixels { get; private set; }
+    public int MapHeightInPixels { get; private set; }
+
+
+    public MapSystem(EntityManager entityManager, AssetStore assetStore, Camera2D camera)
     {
         _entityManager = entityManager;
         _assetStore = assetStore;
+        _camera = camera;
 
         InitMap();
     }
 
     public void InitMap()
     {
-        // Load JSON string from file, make path relative
         string jsonPath = @"C:\Users\Dhaarshan. P\Desktop\main\Coding\VS projects\C#\MonoGame\rpg\src\Data\map.json";
         string jsonText = File.ReadAllText(jsonPath);
 
-        // Deserialize into a list of list of TileData
         var tileMap = JsonConvert.DeserializeObject<List<List<TileData>>>(jsonText);
-
-        // int sheetWidth = _assetStore.TileSheet.Width;
-        // int size = Constants.TileSize;
-        // float scale = Constants.ScaleFactor;
 
         int rows = tileMap.Count;
         int cols = tileMap[0].Count;
@@ -73,18 +57,12 @@ public class MapSystem
                 int type = mapData[row, col].Type;
                 int? background = mapData[row, col].Background;
 
-                // int sheetWidth = _assetStore.TileSheet.Width;
                 int size = Constants.TileSize;
                 float scale = Constants.ScaleFactor;
 
                 Entity Tile = _entityManager.CreateEntity();
-
-                Tile.AddComponent(new PositionComponent(col * size * scale, row * size * scale, size, size));
-                // int tilesPerRow = sheetWidth / size;
-                // int x = id % tilesPerRow * size;
-                // int y = id / tilesPerRow * size;
-
                 Tile.AddComponent(new TileComponent());
+                Tile.AddComponent(new PositionComponent(col * size * scale, row * size * scale, size, size));
 
                 var sheet = _assetStore.TileSheet;
                 switch (type)
@@ -97,8 +75,6 @@ public class MapSystem
                         break;
                     case Constants.Tile.AnimationCollisionSheetIndex:
                         sheet = _assetStore.AnimatedTiles;
-                        // x = 0;
-                        // y = id * size;
                         break;
                 }
 
@@ -106,7 +82,8 @@ public class MapSystem
                 int tilesPerRow = sheetWidth / size;
                 int x = id % tilesPerRow * size;
                 int y = id / tilesPerRow * size;
-                if (type == Constants.Tile.AnimationCollisionSheetIndex) {
+                if (type == Constants.Tile.AnimationCollisionSheetIndex)
+                {
                     x = 0;
                     y = id * size;
                 }
@@ -133,6 +110,11 @@ public class MapSystem
 
             }
         }
+
+        MapWidthInPixels = (int)(mapData.GetLength(1) * Constants.TileSize * Constants.ScaleFactor);
+        MapHeightInPixels = (int)(mapData.GetLength(0) * Constants.TileSize * Constants.ScaleFactor);
+        _camera.SetWorldBounds(MapWidthInPixels, MapHeightInPixels);
+
     }
 
     public class TileData

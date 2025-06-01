@@ -28,7 +28,7 @@ public class CollisionSystem
         return false;
     }
 
-    public void Move(float xSpeed, float ySpeed)
+    public void Move(float xSpeed, float ySpeed, int worldWidth, int worldHeight)
     {
         var position = _entity.GetComponent<PositionComponent>();
         float newX = position.X + xSpeed;
@@ -48,6 +48,14 @@ public class CollisionSystem
             (int)(collision.hitboxWidth * Constants.ScaleFactor),
             (int)(collision.hitboxHeight * Constants.ScaleFactor));
 
+        int hitboxWidth = _entity.GetComponent<CollisionComponent>().Hitbox.Width;
+        int hitboxHeight = _entity.GetComponent<CollisionComponent>().Hitbox.Height;
+
+        if (!(newHitboxX.X > 0 && newHitboxX.X < worldWidth - hitboxWidth - Constants.ScaleFactor))
+            newX = position.X;
+            
+        if (!(newHitboxY.Y > 0 && newHitboxY.Y < worldWidth - hitboxHeight - Constants.ScaleFactor))
+            newY = position.Y;
 
         if (!CheckEntityCollision(newHitboxX))
             position.X = newX;

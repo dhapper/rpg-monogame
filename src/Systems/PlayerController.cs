@@ -50,7 +50,8 @@ public class PlayerController
             GameInitializer.ShowHitbox = !GameInitializer.ShowHitbox;
 
         Vector2 speedVector = _movementSystem.CalculateSpeed(movement.Speed, dir);
-        _collisionSystem.Move(speedVector.X, speedVector.Y);
+        _collisionSystem.Move(speedVector.X, speedVector.Y, _camera.WorldWidthInPixels, _camera.WorldHeightInPixels);
+        // int worldWidth, int worldHeight
 
         // walking animation
         if (!LeftKeyPressed && !RightKeyPressed)

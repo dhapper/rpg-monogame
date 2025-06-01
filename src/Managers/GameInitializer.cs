@@ -36,10 +36,10 @@ public class GameInitializer
         RenderSystem = new RenderSystem(_spriteBatch, _entityManager, _assets, _camera);
         _animationSystem = new AnimationSystem(_entityManager);
 
-        MapSystem = new MapSystem(_entityManager, _assets);
+        MapSystem = new MapSystem(_entityManager, _assets, _camera);
 
         // Create Player
-        PlayerEntity = PlayerFactory.CreatePlayer(100, 100, _entityManager, _assets.PlayerTexture);
+        PlayerEntity = PlayerFactory.CreatePlayer(200, 200, _entityManager, _assets.PlayerTexture);
 
         PlayerController = new PlayerController(PlayerEntity, _inputSystem, _animationSystem, _entityManager.Entities, _camera);
 
