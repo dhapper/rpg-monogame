@@ -7,6 +7,7 @@ public class AssetStore
     public Texture2D PlayerTexture { get; private set; }
     public Texture2D TileSheet;
     public Texture2D GroundTiles, CollisionTiles, AnimatedTiles, BackgroundTiles;
+    public Texture2D PlayerBody, PlayerHair, PlayerTools;
 
     private ContentManager _content;
 
@@ -25,5 +26,11 @@ public class AssetStore
         CollisionTiles = _content.Load<Texture2D>("solids");
         AnimatedTiles = _content.Load<Texture2D>("animations");
         BackgroundTiles = _content.Load<Texture2D>("background");
+
+        PlayerBody = _content.Load<Texture2D>("new_player_body");
+        PlayerHair = _content.Load<Texture2D>("new_player_hair");
+        PlayerTools = _content.Load<Texture2D>("new_player_tool");
+
+
     }
 }

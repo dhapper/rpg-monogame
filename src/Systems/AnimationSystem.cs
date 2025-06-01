@@ -14,7 +14,7 @@ public class AnimationSystem
     {
         var anim = entity.GetComponent<AnimationComponent>();
 
-        if (anim.Row != config.Row)
+        if (anim.Row != config.Row || anim.IsMirrored != config.IsMirrored)
         {
             anim.Row = config.Row;
             anim.FrameCount = config.FrameCount;

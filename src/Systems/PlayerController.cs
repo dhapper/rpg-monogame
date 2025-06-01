@@ -12,6 +12,7 @@ public class PlayerController
     private AnimationSystem _animationSystem;
     private List<Entity> _entities;
     private bool[] dir = [false, false, false, false];
+    private bool facingRight = true;
     private Camera2D _camera;
 
     public PlayerController(Entity player, InputSystem inputSystem, AnimationSystem animationSystem, List<Entity> entities, Camera2D camera)
@@ -54,29 +55,54 @@ public class PlayerController
         // int worldWidth, int worldHeight
 
         // walking animation
-        if (!LeftKeyPressed && !RightKeyPressed)
-        {
-            if (UpKeyPressed)
-                _animationSystem.SetAnimation(_player, Constants.Player.Animations.WalkUp);
-            if (DownKeyPressed)
-                _animationSystem.SetAnimation(_player, Constants.Player.Animations.WalkDown);
-        }
-        if (LeftKeyPressed)
-            _animationSystem.SetAnimation(_player, Constants.Player.Animations.WalkLeft);
-        if (RightKeyPressed)
-            _animationSystem.SetAnimation(_player, Constants.Player.Animations.WalkRight);
+        // if (!LeftKeyPressed && !RightKeyPressed)
+        // {
+        //     if (UpKeyPressed)
+        //         _animationSystem.SetAnimation(_player, Constants.Player.Animations.WalkUp);
+        //     if (DownKeyPressed)
+        //         _animationSystem.SetAnimation(_player, Constants.Player.Animations.WalkDown);
+        // }
+        // if (LeftKeyPressed)
+        //     _animationSystem.SetAnimation(_player, Constants.Player.Animations.WalkLeft);
+        // if (RightKeyPressed)
+        //     _animationSystem.SetAnimation(_player, Constants.Player.Animations.WalkRight);
+
+        // if (!LeftKeyPressed && !RightKeyPressed)
+        // {
+            if (LeftKeyPressed)
+            {
+                _animationSystem.SetAnimation(_player, Constants.Player.Animations.WalkLeft);
+                facingRight = false;
+            }
+            if (RightKeyPressed)
+            {
+                _animationSystem.SetAnimation(_player, Constants.Player.Animations.WalkRight);
+                facingRight = true;
+            }
+        // }
+        // if (!UpKeyPressed && !DownKeyPressed)
+        // {
+            if (UpKeyPressed || DownKeyPressed) {
+                _animationSystem.SetAnimation(_player, facingRight ? Constants.Player.Animations.WalkRight : Constants.Player.Animations.WalkLeft);
+            }
+        // }
 
         // default idle
-        if ((!movement.IsMoving && movement.LastDir != -1) || (speedVector.X == 0 && speedVector.Y == 0))
+        // if ((!movement.IsMoving && movement.LastDir != -1) || (speedVector.X == 0 && speedVector.Y == 0))
+        // {
+        //     if (movement.LastDir == Constants.Directions.Up)
+        //         _animationSystem.SetAnimation(_player, Constants.Player.Animations.IdleUp);
+        //     else if (movement.LastDir == Constants.Directions.Left)
+        //         _animationSystem.SetAnimation(_player, Constants.Player.Animations.IdleLeft);
+        //     else if (movement.LastDir == Constants.Directions.Right)
+        //         _animationSystem.SetAnimation(_player, Constants.Player.Animations.IdleRight);
+        //     else
+        //         _animationSystem.SetAnimation(_player, Constants.Player.Animations.IdleDown);
+        // }
+
+        if (!movement.IsMoving || (speedVector.X == 0 && speedVector.Y == 0))
         {
-            if (movement.LastDir == Constants.Directions.Up)
-                _animationSystem.SetAnimation(_player, Constants.Player.Animations.IdleUp);
-            else if (movement.LastDir == Constants.Directions.Left)
-                _animationSystem.SetAnimation(_player, Constants.Player.Animations.IdleLeft);
-            else if (movement.LastDir == Constants.Directions.Right)
-                _animationSystem.SetAnimation(_player, Constants.Player.Animations.IdleRight);
-            else
-                _animationSystem.SetAnimation(_player, Constants.Player.Animations.IdleDown);
+            _animationSystem.SetAnimation(_player, facingRight ? Constants.Player.Animations.IdleRight : Constants.Player.Animations.IdleLeft);
         }
 
 
@@ -85,8 +111,8 @@ public class PlayerController
         // int cameraY = (int)pos.Y - (Constants.Player.YOffset + Constants.Player.HitboxHeight/2);
         // int cameraX = (int)pos.X + 100;
         // int cameraY = (int)pos.Y + 100;
-        int cameraX = (int)(pos.X + Constants.ScaleFactor * (Constants.Player.XOffset + Constants.Player.HitboxWidth/2));
-        int cameraY = (int)(pos.Y + Constants.ScaleFactor * (Constants.Player.YOffset + Constants.Player.HitboxHeight/2));
+        int cameraX = (int)(pos.X + Constants.ScaleFactor * (Constants.Player.XOffset + Constants.Player.HitboxWidth / 2));
+        int cameraY = (int)(pos.Y + Constants.ScaleFactor * (Constants.Player.YOffset + Constants.Player.HitboxHeight / 2));
         _camera.Follow(new Vector2(cameraX, cameraY));
 
 

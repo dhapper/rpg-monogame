@@ -39,3 +39,6 @@ C:\Users\Dhaarshan. P\Desktop\main\Coding\VS projects\C#\MonoGame\rpg\bin\Debug\
 C:\Users\Dhaarshan. P\Desktop\main\Coding\VS projects\C#\MonoGame\rpg\bin\Debug\net8.0\Content\background.xnb
 C:\Users\Dhaarshan. P\Desktop\main\Coding\VS projects\C#\MonoGame\rpg\bin\Debug\net8.0\Content\solids.xnb
 C:\Users\Dhaarshan. P\Desktop\main\Coding\VS projects\C#\MonoGame\rpg\bin\Debug\net8.0\Content\walkable.xnb
+C:\Users\Dhaarshan. P\Desktop\main\Coding\VS projects\C#\MonoGame\rpg\bin\Debug\net8.0\Content\new_player_body.xnb
+C:\Users\Dhaarshan. P\Desktop\main\Coding\VS projects\C#\MonoGame\rpg\bin\Debug\net8.0\Content\new_player_hair.xnb
+C:\Users\Dhaarshan. P\Desktop\main\Coding\VS projects\C#\MonoGame\rpg\bin\Debug\net8.0\Content\new_player_tool.xnb
