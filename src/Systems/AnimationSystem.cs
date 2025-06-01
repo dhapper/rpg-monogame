@@ -49,21 +49,40 @@ public class AnimationSystem
 
             animation.Timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (animation.Timer >= animation.FrameDuration)
+            if (animation.FrameDurations != null)
             {
-                animation.Timer -= animation.FrameDuration;
-                animation.CurrentFrame = (animation.CurrentFrame + 1) % animation.FrameCount;
+                float currentFrameDuration = animation.FrameDurations[animation.CurrentFrame];
+                if (animation.Timer >= currentFrameDuration)
+                {
+                    animation.Timer -= currentFrameDuration;
+                    animation.CurrentFrame = (animation.CurrentFrame + 1) % animation.FrameCount;
 
-                Rectangle rect = sprite.SourceRectangle ?? new Rectangle(0, 0, 32, 32);
+                    Rectangle rect = sprite.SourceRectangle ?? new Rectangle(0, 0, 32, 32);
 
-                sprite.SourceRectangle = new Rectangle(
-                    animation.CurrentFrame * rect.Width,
-                    animation.Row * rect.Height,
-                    rect.Width,
-                    rect.Height);
-
-                // Console.WriteLine($"Frame: {animation.CurrentFrame}, Rect: {sprite.SourceRectangle}");
+                    sprite.SourceRectangle = new Rectangle(
+                        animation.CurrentFrame * rect.Width,
+                        animation.Row * rect.Height,
+                        rect.Width,
+                        rect.Height);
+                }
             }
+            else
+            {
+                if (animation.Timer >= animation.FrameDuration)
+                {
+                    animation.Timer -= animation.FrameDuration;
+                    animation.CurrentFrame = (animation.CurrentFrame + 1) % animation.FrameCount;
+
+                    Rectangle rect = sprite.SourceRectangle ?? new Rectangle(0, 0, 32, 32);
+
+                    sprite.SourceRectangle = new Rectangle(
+                        animation.CurrentFrame * rect.Width,
+                        animation.Row * rect.Height,
+                        rect.Width,
+                        rect.Height);
+                }
+            }
+
         }
     }
 

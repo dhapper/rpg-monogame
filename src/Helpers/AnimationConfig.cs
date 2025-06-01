@@ -4,13 +4,15 @@ public class AnimationConfig
     public int FrameCount { get; }
     public float FrameDuration { get; }
     public bool IsMirrored;
+    public float[] FrameDurations;
 
-    public AnimationConfig(int row, int frameCount, float frameDuration, bool isMirrored = false)
+    public AnimationConfig(int row, int frameCount, float frameDuration, bool isMirrored = false, float[] frameDurations = null)
     {
         Row = row;
         FrameCount = frameCount;
         FrameDuration = frameDuration;
         IsMirrored = isMirrored;
+        FrameDurations = frameDurations;
     }
 
 }

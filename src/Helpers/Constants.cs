@@ -60,10 +60,10 @@ public static class Constants
 
         public static Dictionary<int, AnimationConfig> tileAnimations = new Dictionary<int, AnimationConfig>
         {
-            {Water, new AnimationConfig(0, 7, 0.1f)},
-            {WaterEdgeMiddle, new AnimationConfig(1, 4, 0.1f)},
-            {WaterEdgeLeft, new AnimationConfig(2, 4, 0.1f)},
-            {WaterEdgeRight, new AnimationConfig(3, 4, 0.1f)},
+            {Water, new AnimationConfig(0, 7, 1, true, [4f, 0.15f, 0.15f, 0.15f, 0.15f, 0.15f, 0.15f])},
+            {WaterEdgeMiddle, new AnimationConfig(1, 4, 0.25f)},
+            {WaterEdgeLeft, new AnimationConfig(2, 4, 0.25f)},
+            {WaterEdgeRight, new AnimationConfig(3, 4, 0.25f)},
         };
 
     }
