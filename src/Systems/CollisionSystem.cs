@@ -54,7 +54,7 @@ public class CollisionSystem
         if (!(newHitboxX.X > 0 && newHitboxX.X < worldWidth - hitboxWidth - Constants.ScaleFactor))
             newX = position.X;
             
-        if (!(newHitboxY.Y > 0 && newHitboxY.Y < worldWidth - hitboxHeight - Constants.ScaleFactor))
+        if (!(newHitboxY.Y > 0 && newHitboxY.Y < worldHeight - hitboxHeight - Constants.ScaleFactor))
             newY = position.Y;
 
         if (!CheckEntityCollision(newHitboxX))

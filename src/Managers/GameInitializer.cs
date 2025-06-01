@@ -39,22 +39,10 @@ public class GameInitializer
         MapSystem = new MapSystem(_entityManager, _assets, _camera);
 
         // Create Player
-        // Color[][] colourChanges = new Color[][]{
-        //     new Color[] { new Color(255, 0, 0), new Color(85, 60, 45) },
-        //     new Color[] { new Color(0, 0, 255), new Color(100, 70, 55) }
-        // };
-        Color[][] colourChanges = [
-            [new Color(255, 0, 0), new Color(0, 0, 0)],
-            [new Color(0, 0, 255), new Color(40, 40, 40)]
-        ];
-        Texture2D hairSheet = SpriteProcessor.ChangeColours(colourChanges, _assets.PlayerHair, _graphicsDevice);
-        Texture2D layeredSheet = SpriteProcessor.LayerSheets([_assets.PlayerBody, hairSheet, _assets.PlayerTools], _graphicsDevice);
-        PlayerEntity = PlayerFactory.CreatePlayer(200, 200, _entityManager, layeredSheet);
-
+        PlayerEntity = PlayerFactory.CreatePlayer(200, 200, _entityManager, _assets, _graphicsDevice);
         PlayerController = new PlayerController(PlayerEntity, _inputSystem, _animationSystem, _entityManager.Entities, _camera);
-
         // Create an Entity
-        npc = PlayerFactory.CreatePlayer(50, 300, _entityManager, _assets.PlayerBody);
+        npc = PlayerFactory.CreatePlayer(50, 300, _entityManager, _assets, _graphicsDevice);
         npc.GetComponent<SpriteComponent>().Color = Color.Red;
 
     }

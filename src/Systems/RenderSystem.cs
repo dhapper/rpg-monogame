@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -19,54 +20,51 @@ public class RenderSystem
 
     public void Draw()
     {
-        // _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
         _spriteBatch.Begin(transformMatrix: _camera.Transform, samplerState: SamplerState.PointClamp);
-        foreach (var entity in _entityManager.GetEntities())
-        {
-            // tiles
-            if (entity.HasComponent<TileComponent>())
+
+        var allEntities = _entityManager.GetEntities();
+        var tileEntities = allEntities.Where(e => e.HasComponent<TileComponent>()).ToList();
+        var spriteEntities = allEntities.Where(e => e.HasComponent<PositionComponent>() && e.HasComponent<SpriteComponent>() && !e.HasComponent<TileComponent>()).ToList();
+        var sortedSprites = spriteEntities
+            .OrderBy(e =>
             {
-                // bg of tile for transparent tiles
-                if (!entity.GetComponent<TileComponent>().Background.IsEmpty)
-                {
-                    var position = entity.GetComponent<PositionComponent>();
-                    var sprite = entity.GetComponent<SpriteComponent>();
-                    var tile = entity.GetComponent<TileComponent>();
-                    _spriteBatch.Draw(
-                        _assetStore.BackgroundTiles,
-                        new Vector2(position.X, position.Y),
-                        tile.Background,
-                        sprite.Color,
-                        0f,
-                        Vector2.Zero,
-                        Constants.ScaleFactor,
-                        SpriteEffects.None,
-                        0f);
-                }
-                DrawTile(entity);
-            }
+                var position = e.GetComponent<PositionComponent>();
+                var sprite = e.GetComponent<SpriteComponent>();
+                int sourceHeight = sprite.SourceRectangle?.Height ?? 0;
+                return position.Y + sourceHeight;
+            }).ToList();
 
-            // entities
-            // temp params
-            if (entity.HasComponent<PositionComponent>() && entity.HasComponent<SpriteComponent>() && !entity.HasComponent<TileComponent>())
-                DrawEntity(entity);
+        foreach (var entity in tileEntities)
+        {
+            if(entity.GetComponent<TileComponent>().Background != default)
+                DrawTile(entity, true);
 
-            // hitboxes
+            DrawTile(entity);
+
             if (GameInitializer.ShowHitbox && entity.HasComponent<CollisionComponent>())
                 DrawHitbox(_spriteBatch, entity.GetComponent<CollisionComponent>().Hitbox);
         }
+
+        foreach (var entity in sortedSprites)
+        {
+            DrawEntity(entity);
+
+            if (GameInitializer.ShowHitbox && entity.HasComponent<CollisionComponent>())
+                DrawHitbox(_spriteBatch, entity.GetComponent<CollisionComponent>().Hitbox);
+        }
+
         _spriteBatch.End();
     }
 
-    public void DrawTile(Entity entity)
+    public void DrawTile(Entity entity, bool hasBackground = false)
     {
         var position = entity.GetComponent<PositionComponent>();
         var sprite = entity.GetComponent<SpriteComponent>();
 
         _spriteBatch.Draw(
-            sprite.Texture,
+            hasBackground ? _assetStore.BackgroundTiles : sprite.Texture,
             new Vector2(position.X, position.Y),
-            sprite.SourceRectangle,
+            hasBackground ? entity.GetComponent<TileComponent>().Background : sprite.SourceRectangle,
             sprite.Color,
             0f,
             Vector2.Zero,
@@ -85,7 +83,7 @@ public class RenderSystem
 
         _spriteBatch.Draw(
             sprite.Texture,
-            new Vector2((int) position.X, (int) position.Y),
+            new Vector2((int)position.X, (int)position.Y),
             sprite.SourceRectangle,
             sprite.Color,
             0f,
@@ -101,13 +99,10 @@ public class RenderSystem
         whitePixel.SetData(new[] { Color.White });
         Color color = Color.White;
 
-        // Top
+        // Top, Bottom, Left, Right
         spriteBatch.Draw(whitePixel, new Rectangle(hitbox.Left, hitbox.Top, hitbox.Width, 1), color);
-        // Bottom
         spriteBatch.Draw(whitePixel, new Rectangle(hitbox.Left, hitbox.Bottom - 1, hitbox.Width, 1), color);
-        // Left
         spriteBatch.Draw(whitePixel, new Rectangle(hitbox.Left, hitbox.Top, 1, hitbox.Height), color);
-        // Right
         spriteBatch.Draw(whitePixel, new Rectangle(hitbox.Right - 1, hitbox.Top, 1, hitbox.Height), color);
     }
 

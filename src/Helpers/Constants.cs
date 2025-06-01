@@ -80,6 +80,12 @@ public static class Constants
 
     }
 
+    public static class ColourIndex
+    {
+        public static readonly Color Hair = new Color(255, 0, 0);
+        public static readonly Color HairShine = new Color(0, 0, 255);
+    }
+
     public static class Directions
     {
         public const int Up = 0;
