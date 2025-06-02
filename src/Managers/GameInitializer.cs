@@ -11,11 +11,11 @@ public class GameInitializer
     private SpriteBatch _spriteBatch;
     private GraphicsDevice _graphicsDevice;
     private Camera2D _camera;
+    private MapSystem _mapSystem;
 
     public Entity PlayerEntity { get; private set; }
     public PlayerController PlayerController { get; private set; }
     public RenderSystem RenderSystem { get; private set; }
-    public MapSystem MapSystem;
 
     public Entity npc { get; private set; }
 
@@ -36,12 +36,11 @@ public class GameInitializer
 
         RenderSystem = new RenderSystem(_spriteBatch, _entityManager, _assets, _camera);
         _animationSystem = new AnimationSystem(_entityManager);
-
-        MapSystem = new MapSystem(_entityManager, _assets, _camera);
+        _mapSystem = new MapSystem(_entityManager, _assets, _camera);
 
         // Create Player
         PlayerEntity = PlayerFactory.CreatePlayer(200, 200, _entityManager, _assets, _graphicsDevice);
-        PlayerController = new PlayerController(PlayerEntity, _inputSystem, _animationSystem, _entityManager.Entities, _camera);
+        PlayerController = new PlayerController(PlayerEntity, _inputSystem, _animationSystem, _entityManager.Entities, _mapSystem, _camera);
         PlayerEntity.AddComponent(new PlayerComponent());
         var (x, y) = SaveManager.LoadData();
         var position = PlayerEntity.GetComponent<PositionComponent>();

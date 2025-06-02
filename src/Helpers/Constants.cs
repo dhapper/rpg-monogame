@@ -53,6 +53,10 @@ public static class Constants
             public static readonly AnimationConfig IdleLeft = new AnimationConfig(0, 4, 0.5f, true);
             public static readonly AnimationConfig WalkRight = new AnimationConfig(3, 8, 0.1f);
             public static readonly AnimationConfig WalkLeft = new AnimationConfig(3, 8, 0.1f, true);
+            public static readonly AnimationConfig WateringCanRight = new AnimationConfig(9, 6, 0.1f);
+            public static readonly AnimationConfig WateringCanLeft = new AnimationConfig(9, 6, 0.1f, true);
+            public static readonly AnimationConfig PickAxeRight = new AnimationConfig(10, 5, 0.1f);
+            public static readonly AnimationConfig PickAxeLeft = new AnimationConfig(10, 5, 0.1f, true);
 
         }
     }
@@ -77,6 +81,13 @@ public static class Constants
             {WaterEdgeLeft, new AnimationConfig(2, 4, 0.25f)},
             {WaterEdgeRight, new AnimationConfig(3, 4, 0.25f)},
         };
+
+        public const int UntilledGround = 14;
+
+        public static readonly InteractionComponent UntilledGroundInteraction = new InteractionComponent((Entity entity) =>
+        {
+            entity.GetComponent<SpriteComponent>().SourceRectangle = new Rectangle(3 * Constants.TileSize, 2 * Constants.TileSize, Constants.TileSize, Constants.TileSize);
+        });
 
     }
 

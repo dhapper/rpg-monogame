@@ -49,16 +49,21 @@ public class AnimationSystem
 
             animation.Timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
+            animation.EndOfOneAnimationCycle = false;
+
             if (animation.FrameDurations != null)
             {
                 float currentFrameDuration = animation.FrameDurations[animation.CurrentFrame];
                 if (animation.Timer >= currentFrameDuration)
                 {
                     animation.Timer -= currentFrameDuration;
+                    int previousFrame = animation.CurrentFrame;
                     animation.CurrentFrame = (animation.CurrentFrame + 1) % animation.FrameCount;
 
-                    Rectangle rect = sprite.SourceRectangle ?? new Rectangle(0, 0, 32, 32);
+                    if (animation.CurrentFrame == 0 && previousFrame != 0)
+                        animation.EndOfOneAnimationCycle = true;
 
+                    Rectangle rect = sprite.SourceRectangle ?? new Rectangle(0, 0, 32, 32);
                     sprite.SourceRectangle = new Rectangle(
                         animation.CurrentFrame * rect.Width,
                         animation.Row * rect.Height,
@@ -71,10 +76,13 @@ public class AnimationSystem
                 if (animation.Timer >= animation.FrameDuration)
                 {
                     animation.Timer -= animation.FrameDuration;
+                    int previousFrame = animation.CurrentFrame;
                     animation.CurrentFrame = (animation.CurrentFrame + 1) % animation.FrameCount;
 
-                    Rectangle rect = sprite.SourceRectangle ?? new Rectangle(0, 0, 32, 32);
+                    if (animation.CurrentFrame == 0 && previousFrame != 0)
+                        animation.EndOfOneAnimationCycle = true;
 
+                    Rectangle rect = sprite.SourceRectangle ?? new Rectangle(0, 0, 32, 32);
                     sprite.SourceRectangle = new Rectangle(
                         animation.CurrentFrame * rect.Width,
                         animation.Row * rect.Height,

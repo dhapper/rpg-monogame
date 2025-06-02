@@ -106,6 +106,9 @@ public class MapSystem
                     Tile.GetComponent<TileComponent>().Background = new Rectangle(xPos, yPos, size, size);
                 }
 
+                if (type == Constants.Tile.WalkableSheetIndex && id == Constants.Tile.UntilledGround)
+                    Tile.AddComponent(Constants.Tile.UntilledGroundInteraction);
+
             }
         }
 
@@ -113,6 +116,30 @@ public class MapSystem
         MapHeightInPixels = (int)(mapData.GetLength(0) * Constants.TileSize * Constants.ScaleFactor);
         _camera.SetWorldBounds(MapWidthInPixels, MapHeightInPixels);
 
+    }
+
+    public Entity GetTile(float mouseX, float mouseY)
+    {
+        float worldX = mouseX + _camera.Position.X;
+        float worldY = mouseY + _camera.Position.Y;
+
+        // Determine the tile's row and column
+        int tileSize = (int)(Constants.TileSize * Constants.ScaleFactor);
+        int col = (int)(worldX / tileSize);
+        int row = (int)(worldY / tileSize);
+
+        // Loop through entities with TileComponent to find the one at the given position
+        foreach (var entity in _entityManager.EntitiesWithComponent<TileComponent>())
+        {
+            var position = entity.GetComponent<PositionComponent>();
+            if ((int)(position.X / tileSize) == col && (int)(position.Y / tileSize) == row)
+            {
+                Console.WriteLine(position.X / tileSize + " " + position.Y / tileSize);
+                return entity;
+            }
+        }
+
+        return null;
     }
 
     public class TileData

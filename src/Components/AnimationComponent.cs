@@ -10,6 +10,7 @@ public class AnimationComponent
     public bool IsMirrored;
     public float[] FrameDurations;
     public int AnimationIndex;
+    public bool EndOfOneAnimationCycle = false;
 
     public AnimationComponent(AnimationConfig config)
     {
@@ -21,6 +22,7 @@ public class AnimationComponent
         CurrentFrame = 0;
         Timer = 0f;
         AnimationIndex = 0;
+        EndOfOneAnimationCycle = false;
     }
 
 }
