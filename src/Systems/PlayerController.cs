@@ -66,16 +66,10 @@ public class PlayerController
 
         if (_inputSystem.IsMousePressed(InputSystem.MouseButton.Left))
         {
-            // var position = _player.GetComponent<PositionComponent>();
-            // var sprite = _player.GetComponent<SpriteComponent>();
-            // int sourceWidth = sprite.SourceRectangle?.Width ?? 0;
-            // int sourceHeight = sprite.SourceRectangle?.Height ?? 0;
-            // float x = position.X + sourceWidth;
-            // float y = position.Y + sourceHeight;
-
             var (x, y) = _inputSystem.GetMouseLocation();
-            Entity tile = _mapSystem.GetTile(x, y);
-            tile.GetComponent<InteractionComponent>().InteractAction(tile);
+                Entity tile = _mapSystem.GetTile(x, y);
+                if(tile != null && tile.HasComponent<InteractionComponent>())
+                    tile.GetComponent<InteractionComponent>().InteractAction(tile);
         }
 
         if (_player.GetComponent<AnimationComponent>().EndOfOneAnimationCycle)

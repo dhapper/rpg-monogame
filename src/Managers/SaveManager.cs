@@ -65,4 +65,34 @@ public class SaveManager
 
         return (200f, 200f);
     }
+
+    public static void SaveTileData(int x, int y, int type, int id, int background = -1)
+    {
+        string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+        string jsonPath = Path.Combine(baseDir, "Data", "map.json");
+
+        // Read the existing map data
+        string jsonText = File.ReadAllText(jsonPath);
+        var mapData = JsonConvert.DeserializeObject<List<List<Dictionary<string, object>>>>(jsonText);
+
+        if (mapData == null || y >= mapData.Count || x >= mapData[y].Count)
+        {
+            Console.WriteLine("Invalid coordinates");
+            return;
+        }
+
+        // Get the specific cell
+        var cell = mapData[y][x];
+
+        // Update properties
+        cell["type"] = type;
+        cell["id"] = id;
+
+        if (background != -1)
+            cell["background"] = background;
+
+        // Save back to JSON
+        string updatedJson = JsonConvert.SerializeObject(mapData, Formatting.Indented);
+        File.WriteAllText(jsonPath, updatedJson);
+    }
 }

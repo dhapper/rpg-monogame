@@ -1,5 +1,6 @@
 
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Xna.Framework;
 
 public static class Constants
@@ -74,20 +75,30 @@ public static class Constants
         public const int WaterEdgeLeft = 2;
         public const int WaterEdgeRight = 3;
 
-        public static Dictionary<int, AnimationConfig> tileAnimations = new Dictionary<int, AnimationConfig>
+        public static Dictionary<int, AnimationConfig> TileAnimations = new Dictionary<int, AnimationConfig>
         {
-            {Water, new AnimationConfig(0, 7, 1, true, [3f, 0.15f, 0.15f, 0.15f, 0.15f, 0.15f, 0.15f])},
-            {WaterEdgeMiddle, new AnimationConfig(1, 4, 0.25f)},
-            {WaterEdgeLeft, new AnimationConfig(2, 4, 0.25f)},
-            {WaterEdgeRight, new AnimationConfig(3, 4, 0.25f)},
+            { Water, new AnimationConfig(0, 7, 1, true, [3f, 0.15f, 0.15f, 0.15f, 0.15f, 0.15f, 0.15f]) },
+            { WaterEdgeMiddle, new AnimationConfig(1, 4, 0.25f) },
+            { WaterEdgeLeft, new AnimationConfig(2, 4, 0.25f) },
+            { WaterEdgeRight, new AnimationConfig(3, 4, 0.25f) },
         };
 
-        public const int UntilledGround = 14;
+        public const int TilledGround = 14;
+        public const int WateredGround = 15;
 
-        public static readonly InteractionComponent UntilledGroundInteraction = new InteractionComponent((Entity entity) =>
+        public static readonly InteractionComponent TilledGroundInteraction = new InteractionComponent((Entity entity) =>
         {
             entity.GetComponent<SpriteComponent>().SourceRectangle = new Rectangle(3 * Constants.TileSize, 2 * Constants.TileSize, Constants.TileSize, Constants.TileSize);
+            entity.GetComponent<TileComponent>().Id = WateredGround;
+            int x = (int)(entity.GetComponent<PositionComponent>().X / (Constants.TileSize * Constants.ScaleFactor));
+            int y = (int)(entity.GetComponent<PositionComponent>().Y / (Constants.TileSize * Constants.ScaleFactor));
+            SaveManager.SaveTileData(x, y, 0, WateredGround);
         });
+
+        public static Dictionary<int, InteractionComponent> WalkableTileInteractions = new Dictionary<int, InteractionComponent>
+        {
+            { TilledGround, TilledGroundInteraction }
+        };
 
     }
 

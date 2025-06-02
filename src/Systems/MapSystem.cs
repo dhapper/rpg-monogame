@@ -91,8 +91,7 @@ public class MapSystem
                 if (Constants.Tile.SolidSheets.Contains(type))
                     Tile.AddComponent(new CollisionComponent(Tile.GetComponent<PositionComponent>(), 0, 0, size, size));
 
-                if (type == Constants.Tile.AnimationCollisionSheetIndex
-                    && Constants.Tile.tileAnimations.TryGetValue(id, out AnimationConfig animationConfig))
+                if (type == Constants.Tile.AnimationCollisionSheetIndex && Constants.Tile.TileAnimations.TryGetValue(id, out AnimationConfig animationConfig))
                     Tile.AddComponent(new AnimationComponent(animationConfig));
 
                 if (background.HasValue)
@@ -106,8 +105,8 @@ public class MapSystem
                     Tile.GetComponent<TileComponent>().Background = new Rectangle(xPos, yPos, size, size);
                 }
 
-                if (type == Constants.Tile.WalkableSheetIndex && id == Constants.Tile.UntilledGround)
-                    Tile.AddComponent(Constants.Tile.UntilledGroundInteraction);
+                if (type == Constants.Tile.WalkableSheetIndex && Constants.Tile.WalkableTileInteractions.ContainsKey(id))
+                    Tile.AddComponent(Constants.Tile.WalkableTileInteractions[id]);
 
             }
         }
