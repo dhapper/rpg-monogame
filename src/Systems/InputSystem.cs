@@ -31,7 +31,7 @@ public class InputSystem
         state.Interact = IsMousePressed(MouseButton.Left);
 
         state.IsNumberChanging = false;
-        for (int i = 0; i <= 9; i++)
+        for (int i = 0; i < 9; i++)
         {
             if (IsKeyPressed(Keys.D0 + i))
             {

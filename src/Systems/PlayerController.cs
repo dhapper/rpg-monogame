@@ -1,8 +1,5 @@
-using System;
 using System.Collections.Generic;
-using Microsoft.VisualBasic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 
 public class PlayerController
 {
@@ -67,7 +64,7 @@ public class PlayerController
             SaveManager.SaveData(_player);
 
         var inv = _player.GetComponent<InventoryComponent>();
-        inv.activeItem = inputs.IsNumberChanging ? inv.Items[inputs.Number ?? 2] : inv.activeItem;
+        inv.activeItem = inputs.IsNumberChanging ? inv.Items[inputs.Number - 1 ?? 0] : inv.activeItem;
         if (inputs.Interact)
         {
             switch (inv.activeItem.Name)

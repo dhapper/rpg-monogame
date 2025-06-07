@@ -34,7 +34,7 @@ public class GameInitializer
         _inputSystem = new InputSystem();
         _camera = new Camera2D(_graphicsDevice.Viewport);
 
-        RenderSystem = new RenderSystem(_spriteBatch, _entityManager, _assets, _camera);
+        RenderSystem = new RenderSystem(_spriteBatch, _entityManager, _assets, _camera, _graphicsDevice);
         _animationSystem = new AnimationSystem(_entityManager);
         _mapSystem = new MapSystem(_entityManager, _assets, _camera);
 

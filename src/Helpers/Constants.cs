@@ -1,3 +1,4 @@
+using Microsoft.VisualBasic.FileIO;
 using Microsoft.Xna.Framework;
 
 public static class Constants
@@ -36,6 +37,14 @@ public static class Constants
 
         public static string[] SolidTilesets = { CollisionSheetIndex, WaterSheetIndex };
 
+    }
+
+    public static class Items
+    {
+        public static readonly Item WateringCan = new Item("WateringCan", ItemType.Tool, new Rectangle(0 * TileSize, 0 * TileSize, TileSize, TileSize));
+        public static readonly Item Pickaxe = new Item("Pickaxe", ItemType.Tool, new Rectangle(1 * TileSize, 0 * TileSize, TileSize, TileSize));
+        public static readonly Item Seeds = new Item("Seeds", ItemType.Plantable, new Rectangle(2 * TileSize, 0 * TileSize, TileSize, TileSize));
+        public static readonly Item Empty = new Item("Empty", ItemType.Empty, new Rectangle(0, 0, 0, 0));
     }
 
     public static class ColourIndex

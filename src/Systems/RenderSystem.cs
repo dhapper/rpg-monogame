@@ -9,13 +9,15 @@ public class RenderSystem
     private EntityManager _entityManager;
     private AssetStore _assetStore;
     private Camera2D _camera;
+    private GraphicsDevice _graphicsDevice;
 
-    public RenderSystem(SpriteBatch spriteBatch, EntityManager entityManager, AssetStore assetStore, Camera2D camera)
+    public RenderSystem(SpriteBatch spriteBatch, EntityManager entityManager, AssetStore assetStore, Camera2D camera, GraphicsDevice graphicsDevice)
     {
         _spriteBatch = spriteBatch;
         _entityManager = entityManager;
         _assetStore = assetStore;
         _camera = camera;
+        _graphicsDevice = graphicsDevice;
     }
 
     public void Draw()
@@ -36,7 +38,7 @@ public class RenderSystem
 
         foreach (var entity in tileEntities)
         {
-            if(entity.GetComponent<TileComponent>().Background != default)
+            if (entity.GetComponent<TileComponent>().Background != default)
                 DrawTile(entity, true);
 
             DrawTile(entity);
@@ -53,7 +55,79 @@ public class RenderSystem
                 DrawHitbox(_spriteBatch, entity.GetComponent<CollisionComponent>().Hitbox);
         }
 
+        DrawHotbar();
+
         _spriteBatch.End();
+    }
+
+    public void DrawHotbar()
+    {
+
+        for (int i = 0; i < 9; i++)
+        {
+            int defaultSlotSize = 22;
+            int defaultSpacing = 20;
+            int slotWidth = (int)(defaultSpacing * Constants.ScaleFactor);
+            int hotbarWidth = (int)(slotWidth * 9);
+            // int x = (int)(_camera.Position.X + _graphicsDevice.Viewport.Width - hotbarWidth/2);
+            int x = (int)(_camera.Position.X + 50);
+            int y = (int)(_camera.Position.Y + 6 * (Constants.TileSize * Constants.ScaleFactor));
+
+            _spriteBatch.Draw(
+                _assetStore.UIsheet,
+                new Vector2(x + slotWidth * i, y),
+                new Rectangle(0, 0, defaultSlotSize, defaultSlotSize),
+                Color.White,
+                0f,
+                Vector2.Zero,
+                Constants.ScaleFactor,
+                SpriteEffects.None,
+                0f);
+        }
+
+        for (int i = 0; i < 9; i++)
+        {
+
+            int defaultSlotSize = 22;
+            int defaultSpacing = 20;
+            int slotWidth = (int)(defaultSpacing * Constants.ScaleFactor);
+            int hotbarWidth = (int)(slotWidth * 9);
+            // int x = (int)(_camera.Position.X + _graphicsDevice.Viewport.Width - hotbarWidth/2);
+            int x = (int)(_camera.Position.X + 50);
+            int y = (int)(_camera.Position.Y + 6 * (Constants.TileSize * Constants.ScaleFactor));
+
+            var inv = _entityManager.EntitiesWithComponent<InventoryComponent>().First().GetComponent<InventoryComponent>();
+
+            if (inv.Items[i] == inv.activeItem)
+            {
+                _spriteBatch.Draw(
+                    _assetStore.UIsheet,
+                    new Vector2(x + slotWidth * i, y),
+                    new Rectangle(32, 0, defaultSlotSize, defaultSlotSize),
+                    Color.White,
+                    0f,
+                    Vector2.Zero,
+                    Constants.ScaleFactor,
+                    SpriteEffects.None,
+                    0f);
+            }
+
+            int iconOffset = (int)(3 * Constants.ScaleFactor);
+
+            if (inv.Items[i].Type != ItemType.Empty)
+            {
+                _spriteBatch.Draw(
+                    _assetStore.IconSheet,
+                    new Vector2(x + slotWidth * i + iconOffset, y + iconOffset),
+                    inv.Items[i].SourceRectangle,
+                    Color.White,
+                    0f,
+                    Vector2.Zero,
+                    Constants.ScaleFactor,
+                    SpriteEffects.None,
+                    0f);
+            }
+        }
     }
 
     public void DrawTile(Entity entity, bool hasBackground = false)

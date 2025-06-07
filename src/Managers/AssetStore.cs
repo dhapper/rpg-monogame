@@ -9,6 +9,7 @@ public class AssetStore
     public Texture2D GroundTiles, AnimatedTiles;
     public Texture2D PlayerBody, PlayerHair, PlayerTools;
     public Texture2D BackgroundTiles, PathTiles, WaterTiles, CollisionTiles;
+    public Texture2D UIsheet, IconSheet;
 
     private ContentManager _content;
 
@@ -37,6 +38,8 @@ public class AssetStore
         PathTiles = _content.Load<Texture2D>("paths");
         WaterTiles = _content.Load<Texture2D>("water");
 
+        UIsheet = _content.Load<Texture2D>("ui");
+        IconSheet = _content.Load<Texture2D>("icons");
 
 
     }
