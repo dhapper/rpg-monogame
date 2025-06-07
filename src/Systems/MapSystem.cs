@@ -8,8 +8,6 @@ using System;
 public class MapSystem
 {
 
-    // List<Entity> map = new List<Entity>();
-
     private EntityManager _entityManager;
     private AssetStore _assetStore;
     private Camera2D _camera;
@@ -51,62 +49,10 @@ public class MapSystem
         {
             for (int col = 0; col < mapData.GetLength(1); col++)
             {
-                int id = mapData[row, col].Id;
-                int type = mapData[row, col].Type;
+                int id = mapData[row, col].Id ?? 1;
+                string type = mapData[row, col].Type ?? "Tilesheet1";
                 int? background = mapData[row, col].Background;
-
-                int size = Constants.TileSize;
-                float scale = Constants.ScaleFactor;
-
-                Entity Tile = _entityManager.CreateEntity();
-                Tile.AddComponent(new TileComponent());
-                Tile.AddComponent(new PositionComponent(col * size * scale, row * size * scale, size, size));
-
-                var sheet = _assetStore.TileSheet;
-                switch (type)
-                {
-                    case Constants.Tile.WalkableSheetIndex:
-                        sheet = _assetStore.GroundTiles;
-                        break;
-                    case Constants.Tile.CollisionSheetIndex:
-                        sheet = _assetStore.CollisionTiles;
-                        break;
-                    case Constants.Tile.AnimationCollisionSheetIndex:
-                        sheet = _assetStore.AnimatedTiles;
-                        break;
-                }
-
-                int sheetWidth = sheet.Width;
-                int tilesPerRow = sheetWidth / size;
-                int x = id % tilesPerRow * size;
-                int y = id / tilesPerRow * size;
-                if (type == Constants.Tile.AnimationCollisionSheetIndex)
-                {
-                    x = 0;
-                    y = id * size;
-                }
-
-                Tile.AddComponent(new SpriteComponent(sheet, new Rectangle(x, y, size, size)));
-
-                if (Constants.Tile.SolidSheets.Contains(type))
-                    Tile.AddComponent(new CollisionComponent(Tile.GetComponent<PositionComponent>(), 0, 0, size, size));
-
-                if (type == Constants.Tile.AnimationCollisionSheetIndex && Constants.Tile.TileAnimations.TryGetValue(id, out AnimationConfig animationConfig))
-                    Tile.AddComponent(new AnimationComponent(animationConfig));
-
-                if (background.HasValue)
-                {
-                    sheetWidth = _assetStore.BackgroundTiles.Width;
-                    int tilesInRow = sheetWidth / size;
-                    int bgRow = background.Value / tilesInRow;
-                    int bgCol = background.Value % tilesInRow;
-                    int xPos = bgCol * size;
-                    int yPos = bgRow * size;
-                    Tile.GetComponent<TileComponent>().Background = new Rectangle(xPos, yPos, size, size);
-                }
-
-                if (type == Constants.Tile.WalkableSheetIndex && Constants.Tile.WalkableTileInteractions.ContainsKey(id))
-                    Tile.AddComponent(Constants.Tile.WalkableTileInteractions[id]);
+                Entity Tile = TileFactory.CreateTile(id, type, background, row, col, _entityManager, _assetStore);
 
             }
         }
@@ -143,11 +89,11 @@ public class MapSystem
 
     public class TileData
     {
-        public int Type { get; set; }
-        public int Id { get; set; }
+        public string Type { get; set; }
+        public int? Id { get; set; }
         public int? Background { get; set; }
 
-        public TileData(int type, int id, int? background = null)
+        public TileData(string type, int? id = 1, int? background = null)
         {
             Type = type;
             Id = id;

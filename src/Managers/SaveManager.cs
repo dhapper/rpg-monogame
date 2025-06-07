@@ -6,17 +6,51 @@ using Newtonsoft.Json;
 
 public class SaveManager
 {
+
+    private static string _baseDir = AppDomain.CurrentDomain.BaseDirectory;
+    private static string _jsonPath = Path.Combine(_baseDir, "Data", "SaveFile.json");
+
+    private static string ReadJsonFromFile()
+    {
+        return File.ReadAllText(_jsonPath);
+    }
+
+    // public static void SaveData(Entity playerEntity)
+    // {
+    //     var position = playerEntity.GetComponent<PositionComponent>();
+    //     float x = position.X;
+    //     float y = position.Y;
+
+    //     var jsonText = ReadJsonFromFile();
+    //     var jsonArray = JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(jsonText);
+
+    //     if (jsonArray != null && jsonArray.Count > 0)
+    //     {
+    //         var firstObject = jsonArray[0];
+
+    //         if (firstObject.ContainsKey("Position"))
+    //         {
+    //             var positionObj = firstObject["Position"];
+
+    //             if (positionObj is Dictionary<string, object> positionDict)
+    //             {
+    //                 positionDict["x"] = x;
+    //                 positionDict["y"] = y;
+    //             }
+    //         }
+
+    //         string updatedJson = JsonConvert.SerializeObject(jsonArray, Formatting.Indented);
+    //         File.WriteAllText(_jsonPath, updatedJson);
+    //     }
+    // }
+
     public static void SaveData(Entity playerEntity)
     {
-        // var playerEntities = entityManager.EntitiesWithComponent<PlayerComponent>();
-        // var playerEntity = playerEntities.FirstOrDefault();
         var position = playerEntity.GetComponent<PositionComponent>();
         float x = position.X;
         float y = position.Y;
 
-        string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-        string jsonPath = Path.Combine(baseDir, "Data", "SaveFile.json");
-        string jsonText = File.ReadAllText(jsonPath);
+        var jsonText = ReadJsonFromFile();
 
         var jsonArray = JsonConvert.DeserializeObject<List<Dictionary<string, Dictionary<string, float>>>>(jsonText);
 
@@ -31,15 +65,13 @@ public class SaveManager
             }
 
             string updatedJson = JsonConvert.SerializeObject(jsonArray, Formatting.Indented);
-            File.WriteAllText(jsonPath, updatedJson);
+            File.WriteAllText(_jsonPath, updatedJson);
         }
     }
 
     public static (float x, float y) LoadData()
     {
-        string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-        string jsonPath = Path.Combine(baseDir, "Data", "SaveFile.json");
-        string jsonText = File.ReadAllText(jsonPath);
+        var jsonText = ReadJsonFromFile();
 
         var jsonArray = JsonConvert.DeserializeObject<List<Dictionary<string, Dictionary<string, float>>>>(jsonText);
 
@@ -68,11 +100,8 @@ public class SaveManager
 
     public static void SaveTileData(int x, int y, int type, int id, int background = -1)
     {
-        string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-        string jsonPath = Path.Combine(baseDir, "Data", "map.json");
+        var jsonText = ReadJsonFromFile();
 
-        // Read the existing map data
-        string jsonText = File.ReadAllText(jsonPath);
         var mapData = JsonConvert.DeserializeObject<List<List<Dictionary<string, object>>>>(jsonText);
 
         if (mapData == null || y >= mapData.Count || x >= mapData[y].Count)
@@ -93,6 +122,6 @@ public class SaveManager
 
         // Save back to JSON
         string updatedJson = JsonConvert.SerializeObject(mapData, Formatting.Indented);
-        File.WriteAllText(jsonPath, updatedJson);
+        File.WriteAllText(_jsonPath, updatedJson);
     }
 }

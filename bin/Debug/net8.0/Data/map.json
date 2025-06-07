@@ -1,1655 +1,1678 @@
 [
   [
     {
-      "type": 0,
-      "id": 1,
-      "background": 5
-    },
-    {
-      "type": 0,
-      "id": 1,
-      "background": 5
-    },
-    {
-      "type": 0,
-      "id": 2,
-      "background": 5
-    },
-    {
-      "type": 2,
+      "type": "Tileset1",
       "id": 0
     },
     {
-      "type": 0,
-      "id": 6,
-      "background": 5
+      "type": "Tileset1",
+      "id": 0
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 0
     },
     {
-      "type": 0,
-      "id": 14
+      "type": "Tileset1",
+      "id": 0
     },
     {
-      "type": 0,
-      "id": 14
+      "type": "Tileset1",
+      "id": 0
     },
     {
-      "type": 0,
-      "id": 14
+      "type": "Tileset1",
+      "id": 0
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 0
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 0
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 0
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 0
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 0
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 0
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 0
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 0
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 0
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 9,
+      "background": 4
     },
     {
-      "type": 0,
-      "id": 12
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 25,
+      "background": 6
+    },
+    {
+      "background": 6
     }
   ],
   [
     {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 8,
-      "background": 5
-    },
-    {
-      "type": 2,
+      "type": "Tileset1",
       "id": 0
     },
     {
-      "type": 0,
-      "id": 6,
-      "background": 5
+      "type": "Tileset1",
+      "id": 0
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 0
     },
     {
-      "type": 0,
-      "id": 15
+      "type": "Tileset1",
+      "id": 0
     },
     {
-      "type": 0,
-      "id": 15
+      "type": "Tileset1",
+      "id": 0
     },
     {
-      "type": 0,
-      "id": 14
+      "type": "Tileset1",
+      "id": 0
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 10,
+      "background": 6
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 17,
+      "background": 6
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 17,
+      "background": 6
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 17,
+      "background": 6
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 17,
+      "background": 6
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 11,
+      "background": 6
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 0
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 0
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 0
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 9,
+      "background": 4
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 25,
+      "background": 6
+    },
+    {
+      "background": 6
     }
   ],
   [
     {
-      "type": 2,
-      "id": 1
+      "type": "Tileset1",
+      "id": 0
     },
     {
-      "type": 2,
-      "id": 1
+      "type": "Tileset1",
+      "id": 0
     },
     {
-      "type": 2,
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 9,
+      "background": 6
+    },
+    {
+      "background": 6
+    },
+    {
+      "background": 6
+    },
+    {
+      "background": 6
+    },
+    {
+      "background": 6
+    },
+    {
+      "type": "Tileset1",
+      "id": 16,
+      "background": 6
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 9,
+      "background": 4
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 28,
+      "background": 6
+    },
+    {
+      "type": "Tileset1",
+      "id": 27,
+      "background": 6
+    }
+  ],
+  [
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 9,
+      "background": 6
+    },
+    {
+      "background": 6
+    },
+    {
+      "background": 6
+    },
+    {
+      "background": 6
+    },
+    {
+      "background": 6
+    },
+    {
+      "type": "Tileset1",
+      "id": 16,
+      "background": 6
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 9,
+      "background": 4
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset2",
       "id": 3
     },
     {
-      "type": 2,
+      "type": "Tileset1",
+      "id": 25
+    }
+  ],
+  [
+    {
+      "type": "Tileset1",
       "id": 0
     },
     {
-      "type": 0,
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 18,
+      "background": 6
+    },
+    {
+      "type": "Tileset1",
+      "id": 8,
+      "background": 6
+    },
+    {
+      "type": "Tileset1",
+      "id": 8,
+      "background": 6
+    },
+    {
+      "type": "Tileset1",
+      "id": 8,
+      "background": 6
+    },
+    {
+      "type": "Tileset1",
+      "id": 8,
+      "background": 6
+    },
+    {
+      "type": "Tileset1",
+      "id": 19
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 9,
+      "background": 4
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 25
+    }
+  ],
+  [
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset2",
+      "id": 4
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 9,
+      "background": 4
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 25
+    }
+  ],
+  [
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 9,
+      "background": 4
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 25
+    }
+  ],
+  [
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 9,
+      "background": 4
+    },
+    {
+      "type": "Tileset1",
+      "id": 33
+    },
+    {
+      "type": "Tileset1",
+      "id": 33
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 25
+    }
+  ],
+  [
+    {
+      "type": "Tileset1",
+      "id": 17,
+      "background": 1
+    },
+    {
+      "type": "Tileset1",
+      "id": 17,
+      "background": 1
+    },
+    {
+      "type": "Tileset1",
+      "id": 17,
+      "background": 1
+    },
+    {
+      "type": "Tileset1",
+      "id": 17,
+      "background": 1
+    },
+    {
+      "type": "Tileset1",
+      "id": 17,
+      "background": 1
+    },
+    {
+      "type": "Tileset1",
+      "id": 17,
+      "background": 1
+    },
+    {
+      "type": "Tileset1",
+      "id": 11
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset2",
+      "id": 4
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 9,
+      "background": 1
+    },
+    {
+      "type": "Tileset2",
+      "id": 1
+    },
+    {
+      "type": "Tileset2",
+      "id": 1
+    },
+    {
+      "type": "Tileset1",
+      "id": 32
+    },
+    {
+      "type": "Tileset1",
+      "id": 25
+    }
+  ],
+  [
+    {
+      "type": "Tileset2",
+      "id": 1
+    },
+    {
+      "type": "Tileset2",
+      "id": 1
+    },
+    {
+      "type": "Tileset2",
+      "id": 1
+    },
+    {
+      "type": "Tileset2",
+      "id": 1
+    },
+    {
+      "type": "Tileset2",
+      "id": 1
+    },
+    {
+      "type": "Tileset2",
+      "id": 1
+    },
+    {
+      "type": "Tileset1",
+      "id": 16,
+      "background": 1
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 9,
+      "background": 9
+    },
+    {
+      "type": "Tileset2",
+      "id": 9
+    },
+    {
+      "type": "Tileset2",
+      "id": 9
+    },
+    {
+      "type": "Tileset1",
+      "id": 32
+    },
+    {
+      "type": "Tileset1",
+      "id": 25
+    }
+  ],
+  [
+    {
+      "type": "Tileset2",
+      "id": 1
+    },
+    {
+      "type": "Tileset2",
+      "id": 1
+    },
+    {
+      "type": "Tileset2",
+      "id": 1
+    },
+    {
+      "type": "Tileset2",
+      "id": 1
+    },
+    {
+      "type": "Tileset2",
+      "id": 1
+    },
+    {
+      "type": "Tileset2",
+      "id": 1
+    },
+    {
+      "type": "Tileset1",
+      "id": 16,
+      "background": 1
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 9
+    },
+    {
+      "type": "Tileset1",
+      "id": 36
+    },
+    {
+      "type": "Tileset1",
+      "id": 36
+    },
+    {
+      "type": "Tileset1",
+      "id": 32
+    },
+    {
+      "type": "Tileset1",
+      "id": 25
+    }
+  ],
+  [
+    {
+      "type": "Tileset2",
+      "id": 1
+    },
+    {
+      "type": "Tileset2",
+      "id": 1
+    },
+    {
+      "type": "Tileset2",
+      "id": 1
+    },
+    {
+      "type": "Tileset2",
+      "id": 1
+    },
+    {
+      "type": "Tileset2",
+      "id": 1
+    },
+    {
+      "type": "Tileset2",
+      "id": 1
+    },
+    {
+      "type": "Tileset1",
+      "id": 16,
+      "background": 1
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset2",
+      "id": 4
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 9
+    },
+    {
+      "type": "Tileset1",
+      "id": 36
+    },
+    {
+      "type": "Tileset1",
+      "id": 36
+    },
+    {
+      "type": "Tileset1",
+      "id": 34
+    },
+    {
+      "type": "Tileset1",
+      "id": 35
+    }
+  ],
+  [
+    {
+      "type": "Tileset2",
+      "id": 1
+    },
+    {
+      "type": "Tileset2",
+      "id": 1
+    },
+    {
+      "type": "Tileset2",
+      "id": 1
+    },
+    {
+      "type": "Tileset2",
+      "id": 1
+    },
+    {
+      "type": "Tileset2",
+      "id": 1
+    },
+    {
+      "type": "Tileset2",
+      "id": 1
+    },
+    {
+      "type": "Tileset1",
+      "id": 16,
+      "background": 1
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 9
+    },
+    {
+      "type": "Tileset1",
+      "id": 36
+    },
+    {
+      "type": "Tileset1",
+      "id": 36
+    },
+    {
+      "type": "Tileset2",
+      "id": 8
+    },
+    {
+      "type": "Tileset2",
+      "id": 10
+    }
+  ],
+  [
+    {
+      "type": "Tileset2",
+      "id": 1
+    },
+    {
+      "type": "Tileset2",
+      "id": 1
+    },
+    {
+      "type": "Tileset2",
+      "id": 1
+    },
+    {
+      "type": "Tileset2",
+      "id": 1
+    },
+    {
+      "type": "Tileset2",
+      "id": 1
+    },
+    {
+      "type": "Tileset2",
+      "id": 1
+    },
+    {
+      "type": "Tileset1",
+      "id": 16,
+      "background": 1
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 9
+    },
+    {
+      "type": "Tileset1",
+      "id": 36
+    },
+    {
+      "type": "Tileset1",
+      "id": 36
+    },
+    {
+      "type": "Tileset1",
+      "id": 36
+    },
+    {
+      "type": "Tileset1",
+      "id": 36
+    }
+  ],
+  [
+    {
+      "type": "Tileset2",
+      "id": 1
+    },
+    {
+      "type": "Tileset2",
+      "id": 1
+    },
+    {
+      "type": "Tileset2",
+      "id": 1
+    },
+    {
+      "type": "Tileset2",
+      "id": 1
+    },
+    {
+      "type": "Tileset2",
+      "id": 1
+    },
+    {
+      "type": "Tileset2",
+      "id": 1
+    },
+    {
+      "type": "Tileset1",
+      "id": 20,
+      "background": 1
+    },
+    {
+      "type": "Tileset1",
+      "id": 17,
+      "background": 2
+    },
+    {
+      "type": "Tileset1",
+      "id": 17
+    },
+    {
+      "type": "Tileset1",
+      "id": 17
+    },
+    {
+      "type": "Tileset1",
       "id": 6,
-      "background": 5
+      "background": 3
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 17
     },
     {
-      "type": 0,
-      "id": 15
+      "type": "Tileset1",
+      "id": 17
     },
     {
-      "type": 0,
-      "id": 15
+      "type": "Tileset1",
+      "id": 17
     },
     {
-      "type": 0,
-      "id": 15
+      "type": "Tileset1",
+      "id": 17
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 21
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 36
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 36
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 36
     },
     {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 36
     }
   ],
   [
     {
-      "type": 2,
-      "id": 0
+      "type": "Tileset2",
+      "id": 1
     },
     {
-      "type": 2,
-      "id": 0
+      "type": "Tileset2",
+      "id": 1
     },
     {
-      "type": 2,
-      "id": 0
+      "type": "Tileset2",
+      "id": 1
     },
     {
-      "type": 2,
-      "id": 0
+      "type": "Tileset2",
+      "id": 1
     },
     {
-      "type": 0,
-      "id": 6,
-      "background": 5
+      "type": "Tileset2",
+      "id": 1
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset2",
+      "id": 1
     },
     {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    }
-  ],
-  [
-    {
-      "type": 0,
+      "type": "Tileset2",
       "id": 1,
-      "background": 5
+      "background": 2
     },
     {
-      "type": 0,
-      "id": 1,
-      "background": 5
+      "type": "Tileset2",
+      "id": 2
     },
     {
-      "type": 0,
-      "id": 1,
-      "background": 5
+      "type": "Tileset1",
+      "id": 36
     },
     {
-      "type": 0,
-      "id": 1,
-      "background": 5
+      "type": "Tileset1",
+      "id": 36
     },
     {
-      "type": 0,
-      "id": 10,
-      "background": 5
+      "type": "Tileset1",
+      "id": 14
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 36
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 36
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 36
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 36
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 36
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 36
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 36
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 36
     },
     {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 36
     }
   ],
   [
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset2",
+      "id": 1
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset2",
+      "id": 1
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset2",
+      "id": 1
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset2",
+      "id": 1
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset2",
+      "id": 1
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset2",
+      "id": 1
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset2",
+      "id": 1
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset2",
+      "id": 2
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 26
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 24
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 22,
+      "background": 4
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 24
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 24
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 24
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 24
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 24
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 24
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 24
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 24
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 27
     }
   ],
   [
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset2",
+      "id": 1
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset2",
+      "id": 1
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset2",
+      "id": 1
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset2",
+      "id": 1
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset2",
+      "id": 1
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset2",
+      "id": 1
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset2",
+      "id": 1
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset2",
+      "id": 2
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 32
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 28
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 33
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 33
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 33
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 33
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 33
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 33
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 33
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 33
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 28
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 25
     }
   ],
   [
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset2",
+      "id": 1
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset2",
+      "id": 1
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset2",
+      "id": 1
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset2",
+      "id": 1
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset2",
+      "id": 1
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset2",
+      "id": 1
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset2",
+      "id": 1
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset2",
+      "id": 2,
+      "background": 2
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 32
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 25
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 41
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 41
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 41
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 40
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 40
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 48
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 49
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 49
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 32
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 25
     }
   ],
   [
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset2",
+      "id": 1
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset2",
+      "id": 1
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset2",
+      "id": 1
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset2",
+      "id": 1
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset2",
+      "id": 1
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset2",
+      "id": 1
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset2",
+      "id": 1
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset2",
+      "id": 2
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 32
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 25
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 41
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 41
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 40
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 40
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 40
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 49
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 49
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 49
     },
     {
-      "type": 0,
-      "id": 7
+      "type": "Tileset1",
+      "id": 32
     },
     {
-      "type": 0,
-      "id": 7
-    }
-  ],
-  [
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    }
-  ],
-  [
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    }
-  ],
-  [
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    }
-  ],
-  [
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    }
-  ],
-  [
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    }
-  ],
-  [
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    }
-  ],
-  [
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    }
-  ],
-  [
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    }
-  ],
-  [
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    }
-  ],
-  [
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    }
-  ],
-  [
-    {
-      "type": 0,
-      "id": 12
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 7
-    },
-    {
-      "type": 0,
-      "id": 12
+      "type": "Tileset1",
+      "id": 25
     }
   ]
 ]

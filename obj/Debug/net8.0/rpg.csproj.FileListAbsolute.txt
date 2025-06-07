@@ -32,13 +32,12 @@ C:\Users\Dhaarshan. P\Desktop\main\Coding\VS projects\C#\MonoGame\rpg\obj\Debug\
 C:\Users\Dhaarshan. P\Desktop\main\Coding\VS projects\C#\MonoGame\rpg\obj\Debug\net8.0\ref\rpg.dll
 C:\Users\Dhaarshan. P\Desktop\main\Coding\VS projects\C#\MonoGame\rpg\bin\Debug\net8.0\Content\player.xnb
 C:\Users\Dhaarshan. P\Desktop\main\Coding\VS projects\C#\MonoGame\rpg\obj\Debug\net8.0\rpg.sourcelink.json
-C:\Users\Dhaarshan. P\Desktop\main\Coding\VS projects\C#\MonoGame\rpg\bin\Debug\net8.0\Content\tilesheet.xnb
 C:\Users\Dhaarshan. P\Desktop\main\Coding\VS projects\C#\MonoGame\rpg\bin\Debug\net8.0\Content\custom_player_sheet.xnb
 C:\Users\Dhaarshan. P\Desktop\main\Coding\VS projects\C#\MonoGame\rpg\bin\Debug\net8.0\Newtonsoft.Json.dll
-C:\Users\Dhaarshan. P\Desktop\main\Coding\VS projects\C#\MonoGame\rpg\bin\Debug\net8.0\Content\animations.xnb
 C:\Users\Dhaarshan. P\Desktop\main\Coding\VS projects\C#\MonoGame\rpg\bin\Debug\net8.0\Content\background.xnb
-C:\Users\Dhaarshan. P\Desktop\main\Coding\VS projects\C#\MonoGame\rpg\bin\Debug\net8.0\Content\solids.xnb
-C:\Users\Dhaarshan. P\Desktop\main\Coding\VS projects\C#\MonoGame\rpg\bin\Debug\net8.0\Content\walkable.xnb
 C:\Users\Dhaarshan. P\Desktop\main\Coding\VS projects\C#\MonoGame\rpg\bin\Debug\net8.0\Content\new_player_body.xnb
 C:\Users\Dhaarshan. P\Desktop\main\Coding\VS projects\C#\MonoGame\rpg\bin\Debug\net8.0\Content\new_player_hair.xnb
 C:\Users\Dhaarshan. P\Desktop\main\Coding\VS projects\C#\MonoGame\rpg\bin\Debug\net8.0\Content\new_player_tool.xnb
+C:\Users\Dhaarshan. P\Desktop\main\Coding\VS projects\C#\MonoGame\rpg\bin\Debug\net8.0\Content\collision.xnb
+C:\Users\Dhaarshan. P\Desktop\main\Coding\VS projects\C#\MonoGame\rpg\bin\Debug\net8.0\Content\paths.xnb
+C:\Users\Dhaarshan. P\Desktop\main\Coding\VS projects\C#\MonoGame\rpg\bin\Debug\net8.0\Content\water.xnb

@@ -64,41 +64,41 @@ public static class Constants
 
     public static class Tile
     {
-        public const int WalkableSheetIndex = 0;
-        public const int CollisionSheetIndex = 1;
-        public const int AnimationCollisionSheetIndex = 2;
+        public const string PathsSheetName = "Tileset1";
+        public const string CollisionSheetIndex = "Tileset2";
+        public const string WaterSheetIndex = "Tileset3";
 
-        public static int[] SolidSheets = { CollisionSheetIndex, AnimationCollisionSheetIndex };
+        public static string[] SolidTilesets = { CollisionSheetIndex, WaterSheetIndex };
 
-        public const int Water = 0;
-        public const int WaterEdgeMiddle = 1;
-        public const int WaterEdgeLeft = 2;
-        public const int WaterEdgeRight = 3;
+        // public const int Water = 0;
+        // public const int WaterEdgeMiddle = 1;
+        // public const int WaterEdgeLeft = 2;
+        // public const int WaterEdgeRight = 3;
 
-        public static Dictionary<int, AnimationConfig> TileAnimations = new Dictionary<int, AnimationConfig>
-        {
-            { Water, new AnimationConfig(0, 7, 1, true, [3f, 0.15f, 0.15f, 0.15f, 0.15f, 0.15f, 0.15f]) },
-            { WaterEdgeMiddle, new AnimationConfig(1, 4, 0.25f) },
-            { WaterEdgeLeft, new AnimationConfig(2, 4, 0.25f) },
-            { WaterEdgeRight, new AnimationConfig(3, 4, 0.25f) },
-        };
+        // public static Dictionary<int, AnimationConfig> TileAnimations = new Dictionary<int, AnimationConfig>
+        // {
+        //     { Water, new AnimationConfig(0, 7, 1, true, [3f, 0.15f, 0.15f, 0.15f, 0.15f, 0.15f, 0.15f]) },
+        //     { WaterEdgeMiddle, new AnimationConfig(1, 4, 0.25f) },
+        //     { WaterEdgeLeft, new AnimationConfig(2, 4, 0.25f) },
+        //     { WaterEdgeRight, new AnimationConfig(3, 4, 0.25f) },
+        // };
 
-        public const int TilledGround = 14;
-        public const int WateredGround = 15;
+        // public const int TilledGround = 14;
+        // public const int WateredGround = 15;
 
-        public static readonly InteractionComponent TilledGroundInteraction = new InteractionComponent((Entity entity) =>
-        {
-            entity.GetComponent<SpriteComponent>().SourceRectangle = new Rectangle(3 * Constants.TileSize, 2 * Constants.TileSize, Constants.TileSize, Constants.TileSize);
-            entity.GetComponent<TileComponent>().Id = WateredGround;
-            int x = (int)(entity.GetComponent<PositionComponent>().X / (Constants.TileSize * Constants.ScaleFactor));
-            int y = (int)(entity.GetComponent<PositionComponent>().Y / (Constants.TileSize * Constants.ScaleFactor));
-            SaveManager.SaveTileData(x, y, 0, WateredGround);
-        });
+        // public static readonly InteractionComponent TilledGroundInteraction = new InteractionComponent((Entity entity) =>
+        // {
+        //     entity.GetComponent<SpriteComponent>().SourceRectangle = new Rectangle(3 * Constants.TileSize, 2 * Constants.TileSize, Constants.TileSize, Constants.TileSize);
+        //     entity.GetComponent<TileComponent>().Id = WateredGround;
+        //     int x = (int)(entity.GetComponent<PositionComponent>().X / (Constants.TileSize * Constants.ScaleFactor));
+        //     int y = (int)(entity.GetComponent<PositionComponent>().Y / (Constants.TileSize * Constants.ScaleFactor));
+        //     SaveManager.SaveTileData(x, y, 0, WateredGround);
+        // });
 
-        public static Dictionary<int, InteractionComponent> WalkableTileInteractions = new Dictionary<int, InteractionComponent>
-        {
-            { TilledGround, TilledGroundInteraction }
-        };
+        // public static Dictionary<int, InteractionComponent> WalkableTileInteractions = new Dictionary<int, InteractionComponent>
+        // {
+        //     { TilledGround, TilledGroundInteraction }
+        // };
 
     }
 
