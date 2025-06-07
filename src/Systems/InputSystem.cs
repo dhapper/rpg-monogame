@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework.Input;
+using NVorbis.Contracts;
 
 public class InputSystem
 {
@@ -28,6 +29,17 @@ public class InputSystem
         state.ToggleHitbox = IsKeyPressed(Keys.H);
         state.Save = IsKeyDown(Keys.O);
         state.Interact = IsMousePressed(MouseButton.Left);
+
+        state.IsNumberChanging = false;
+        for (int i = 0; i <= 9; i++)
+        {
+            if (IsKeyPressed(Keys.D0 + i))
+            {
+                state.Number = i;
+                state.IsNumberChanging = true;
+                break;
+            }
+        }
 
         return state;
     }

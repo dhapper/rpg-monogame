@@ -1,4 +1,3 @@
-using System;
 using Microsoft.Xna.Framework;
 
 public class AnimationSystem
@@ -61,7 +60,10 @@ public class AnimationSystem
                     animation.CurrentFrame = (animation.CurrentFrame + 1) % animation.FrameCount;
 
                     if (animation.CurrentFrame == 0 && previousFrame != 0)
+                    {
                         animation.EndOfOneAnimationCycle = true;
+                        break;
+                    }
 
                     Rectangle rect = sprite.SourceRectangle ?? new Rectangle(0, 0, 32, 32);
                     sprite.SourceRectangle = new Rectangle(
@@ -80,7 +82,10 @@ public class AnimationSystem
                     animation.CurrentFrame = (animation.CurrentFrame + 1) % animation.FrameCount;
 
                     if (animation.CurrentFrame == 0 && previousFrame != 0)
+                    {
                         animation.EndOfOneAnimationCycle = true;
+                        break;
+                    }
 
                     Rectangle rect = sprite.SourceRectangle ?? new Rectangle(0, 0, 32, 32);
                     sprite.SourceRectangle = new Rectangle(

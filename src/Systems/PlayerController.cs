@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Microsoft.VisualBasic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
@@ -32,21 +33,19 @@ public class PlayerController
 
     public void Update()
     {
-
         ResetDirVars();
         var movement = _player.GetComponent<MovementComponent>();
         movement.IsMoving = false;
         var inputs = _inputSystem.GetInputState();
 
         UpdateInputActions(inputs);
-
-        // if (_player.GetComponent<AnimationComponent>().EndOfOneAnimationCycle)
-        //     isAnimationLocked = false;
-
-        // if (!isAnimationLocked)
-            UpdateAnimation(inputs, movement);
-
+        UpdateAnimation(inputs, movement);
         UpdateCamera();
+    }
+
+    public void GetInteraction()
+    {
+        // if(Inventory.getCurrentItem == 'wateringCan')
     }
 
     public void UpdateInputActions(InputState inputs)
@@ -66,15 +65,30 @@ public class PlayerController
             GameInitializer.ShowHitbox = !GameInitializer.ShowHitbox;
         if (inputs.Save)
             SaveManager.SaveData(_player);
+
+        var inv = _player.GetComponent<InventoryComponent>();
+        inv.activeItem = inputs.IsNumberChanging ? inv.Items[inputs.Number ?? 2] : inv.activeItem;
         if (inputs.Interact)
         {
-            _animationSystem.SetAnimation(_player, facingRight ? Constants.Player.Animations.WateringCanRight : Constants.Player.Animations.WateringCanLeft);
-            isAnimationLocked = true;
+            switch (inv.activeItem.Name)
+            {
+                case "WateringCan":
+                    _animationSystem.SetAnimation(_player, facingRight ? Constants.Player.Animations.WateringCanRight : Constants.Player.Animations.WateringCanLeft);
+                    isAnimationLocked = true;
+                    break;
+                case "Pickaxe":
+                    _animationSystem.SetAnimation(_player, facingRight ? Constants.Player.Animations.PickAxeRight : Constants.Player.Animations.PickAxeLeft);
+                    isAnimationLocked = true;
+                    break;
+            }
 
-            var (x, y) = _inputSystem.GetMouseLocation();
-            Entity tile = _mapSystem.GetTile(x, y);
-            if (tile != null && tile.HasComponent<InteractionComponent>())
-                tile.GetComponent<InteractionComponent>().InteractAction(tile);
+            // _animationSystem.SetAnimation(_player, facingRight ? Constants.Player.Animations.WateringCanRight : Constants.Player.Animations.WateringCanLeft);
+            // isAnimationLocked = true;
+
+            // var (x, y) = _inputSystem.GetMouseLocation();
+            // Entity tile = _mapSystem.GetTile(x, y);
+            // if (tile != null && tile.HasComponent<InteractionComponent>())
+            //     tile.GetComponent<InteractionComponent>().InteractAction(tile);
         }
     }
 

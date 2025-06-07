@@ -1,5 +1,3 @@
-using Microsoft.Xna.Framework.Input;
-
 public class InputState
 {
     public bool MoveUp;
@@ -9,5 +7,8 @@ public class InputState
     public bool Interact;
     public bool ToggleHitbox;
     public bool Save;
+
+    public bool IsNumberChanging;
+    public int? Number;
 
 }
