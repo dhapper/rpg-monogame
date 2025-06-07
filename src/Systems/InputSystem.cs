@@ -17,6 +17,21 @@ public class InputSystem
         _currentMouseState = Mouse.GetState();
     }
 
+    public InputState GetInputState()
+    {
+        var state = new InputState();
+
+        state.MoveUp = IsKeyDown(Keys.Up) || IsKeyDown(Keys.W);
+        state.MoveDown = IsKeyDown(Keys.Down) || IsKeyDown(Keys.S);
+        state.MoveLeft = IsKeyDown(Keys.Left) || IsKeyDown(Keys.A);
+        state.MoveRight = IsKeyDown(Keys.Right) || IsKeyDown(Keys.D);
+        state.ToggleHitbox = IsKeyPressed(Keys.H);
+        state.Save = IsKeyDown(Keys.O);
+        state.Interact = IsMousePressed(MouseButton.Left);
+
+        return state;
+    }
+
     public bool IsKeyDown(Keys key)
     {
         return _currentKeyboardState.IsKeyDown(key);

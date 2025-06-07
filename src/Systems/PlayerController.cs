@@ -16,7 +16,7 @@ public class PlayerController
     private bool facingRight = true;
     private Camera2D _camera;
 
-    private bool usingTool = false;
+    private bool isAnimationLocked = false;
 
     public PlayerController(Entity player, InputSystem inputSystem, AnimationSystem animationSystem, List<Entity> entities, MapSystem mapSystem, Camera2D camera)
     {
@@ -36,74 +36,75 @@ public class PlayerController
         ResetDirVars();
         var movement = _player.GetComponent<MovementComponent>();
         movement.IsMoving = false;
+        var inputs = _inputSystem.GetInputState();
 
-        bool UpKeyPressed = _inputSystem.IsKeyDown(Keys.Up) || _inputSystem.IsKeyDown(Keys.W);
-        bool DownKeyPressed = _inputSystem.IsKeyDown(Keys.Down) || _inputSystem.IsKeyDown(Keys.S);
-        bool LeftKeyPressed = _inputSystem.IsKeyDown(Keys.Left) || _inputSystem.IsKeyDown(Keys.A);
-        bool RightKeyPressed = _inputSystem.IsKeyDown(Keys.Right) || _inputSystem.IsKeyDown(Keys.D);
+        UpdateInputActions(inputs);
 
+        // if (_player.GetComponent<AnimationComponent>().EndOfOneAnimationCycle)
+        //     isAnimationLocked = false;
+
+        // if (!isAnimationLocked)
+            UpdateAnimation(inputs, movement);
+
+        UpdateCamera();
+    }
+
+    public void UpdateInputActions(InputState inputs)
+    {
         // movement
-        if (UpKeyPressed && !DownKeyPressed)
+        if (inputs.MoveUp)
             InitMovement(Constants.Directions.Up);
-        if (DownKeyPressed && !UpKeyPressed)
+        if (inputs.MoveDown)
             InitMovement(Constants.Directions.Down);
-        if (LeftKeyPressed && !RightKeyPressed)
+        if (inputs.MoveLeft)
             InitMovement(Constants.Directions.Left);
-        if (RightKeyPressed && !LeftKeyPressed)
+        if (inputs.MoveRight)
             InitMovement(Constants.Directions.Right);
 
-        if (_inputSystem.IsKeyDown(Keys.H))
+        // misc
+        if (inputs.ToggleHitbox)
             GameInitializer.ShowHitbox = !GameInitializer.ShowHitbox;
-
-        if (_inputSystem.IsKeyDown(Keys.O))
+        if (inputs.Save)
             SaveManager.SaveData(_player);
-
-        if (_inputSystem.IsKeyDown(Keys.I) || _inputSystem.IsMousePressed(InputSystem.MouseButton.Left))
+        if (inputs.Interact)
         {
             _animationSystem.SetAnimation(_player, facingRight ? Constants.Player.Animations.WateringCanRight : Constants.Player.Animations.WateringCanLeft);
-            usingTool = true;
-        }
+            isAnimationLocked = true;
 
-        if (_inputSystem.IsMousePressed(InputSystem.MouseButton.Left))
-        {
             var (x, y) = _inputSystem.GetMouseLocation();
-                Entity tile = _mapSystem.GetTile(x, y);
-                if(tile != null && tile.HasComponent<InteractionComponent>())
-                    tile.GetComponent<InteractionComponent>().InteractAction(tile);
+            Entity tile = _mapSystem.GetTile(x, y);
+            if (tile != null && tile.HasComponent<InteractionComponent>())
+                tile.GetComponent<InteractionComponent>().InteractAction(tile);
+        }
+    }
+
+    public void UpdateAnimation(InputState inputs, MovementComponent movement)
+    {
+        if (_player.GetComponent<AnimationComponent>().EndOfOneAnimationCycle)
+            isAnimationLocked = false;
+
+        if (isAnimationLocked)
+            return;
+
+        Vector2 speedVector = _movementSystem.CalculateSpeed(movement.Speed, dir);
+        _collisionSystem.Move(speedVector.X, speedVector.Y, _camera.WorldWidthInPixels, _camera.WorldHeightInPixels);
+
+        if (inputs.MoveLeft)
+        {
+            _animationSystem.SetAnimation(_player, Constants.Player.Animations.WalkLeft);
+            facingRight = false;
+        }
+        if (inputs.MoveRight)
+        {
+            _animationSystem.SetAnimation(_player, Constants.Player.Animations.WalkRight);
+            facingRight = true;
         }
 
-        if (_player.GetComponent<AnimationComponent>().EndOfOneAnimationCycle)
-            usingTool = false;
+        if (inputs.MoveUp || inputs.MoveDown)
+            _animationSystem.SetAnimation(_player, facingRight ? Constants.Player.Animations.WalkRight : Constants.Player.Animations.WalkLeft);
 
-        if (!usingTool)
-            {
-
-                Vector2 speedVector = _movementSystem.CalculateSpeed(movement.Speed, dir);
-                _collisionSystem.Move(speedVector.X, speedVector.Y, _camera.WorldWidthInPixels, _camera.WorldHeightInPixels);
-
-                if (LeftKeyPressed)
-                {
-                    _animationSystem.SetAnimation(_player, Constants.Player.Animations.WalkLeft);
-                    facingRight = false;
-                }
-                if (RightKeyPressed)
-                {
-                    _animationSystem.SetAnimation(_player, Constants.Player.Animations.WalkRight);
-                    facingRight = true;
-                }
-
-                if (UpKeyPressed || DownKeyPressed)
-                    _animationSystem.SetAnimation(_player, facingRight ? Constants.Player.Animations.WalkRight : Constants.Player.Animations.WalkLeft);
-
-                if (!movement.IsMoving || (speedVector.X == 0 && speedVector.Y == 0))
-                    _animationSystem.SetAnimation(_player, facingRight ? Constants.Player.Animations.IdleRight : Constants.Player.Animations.IdleLeft);
-            }
-
-        var pos = _player.GetComponent<PositionComponent>();
-        int cameraX = (int)(pos.X + Constants.ScaleFactor * (Constants.Player.XOffset + Constants.Player.HitboxWidth / 2));
-        int cameraY = (int)(pos.Y + Constants.ScaleFactor * (Constants.Player.YOffset + Constants.Player.HitboxHeight / 2));
-        _camera.Follow(new Vector2(cameraX, cameraY));
-
+        if (!movement.IsMoving || (speedVector.X == 0 && speedVector.Y == 0))
+            _animationSystem.SetAnimation(_player, facingRight ? Constants.Player.Animations.IdleRight : Constants.Player.Animations.IdleLeft);
     }
 
     public void InitMovement(int direction)
@@ -112,6 +113,14 @@ public class PlayerController
         movement.LastDir = direction;
         movement.IsMoving = true;
         dir[direction] = true;
+    }
+
+    public void UpdateCamera()
+    {
+        var pos = _player.GetComponent<PositionComponent>();
+        int cameraX = (int)(pos.X + Constants.ScaleFactor * (Constants.Player.XOffset + Constants.Player.HitboxWidth / 2));
+        int cameraY = (int)(pos.Y + Constants.ScaleFactor * (Constants.Player.YOffset + Constants.Player.HitboxHeight / 2));
+        _camera.Follow(new Vector2(cameraX, cameraY));
     }
 
     private void ResetDirVars()
