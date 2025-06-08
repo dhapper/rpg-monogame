@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework.Input;
-using NVorbis.Contracts;
 
 public class InputSystem
 {
@@ -26,11 +25,15 @@ public class InputSystem
         state.MoveDown = IsKeyDown(Keys.Down) || IsKeyDown(Keys.S);
         state.MoveLeft = IsKeyDown(Keys.Left) || IsKeyDown(Keys.A);
         state.MoveRight = IsKeyDown(Keys.Right) || IsKeyDown(Keys.D);
+
         state.ToggleHitbox = IsKeyPressed(Keys.H);
-        state.Save = IsKeyDown(Keys.O);
+        state.ToggleInventory = IsKeyPressed(Keys.I);
+
+        state.Save = IsKeyPressed(Keys.O);
         state.Interact = IsMousePressed(MouseButton.Left);
 
         state.IsNumberChanging = false;
+
         for (int i = 0; i < 9; i++)
         {
             if (IsKeyPressed(Keys.D0 + i))
@@ -44,11 +47,13 @@ public class InputSystem
         return state;
     }
 
+    // calls continously upon key hold
     public bool IsKeyDown(Keys key)
     {
         return _currentKeyboardState.IsKeyDown(key);
     }
 
+    // calls once upon initial key press
     public bool IsKeyPressed(Keys key)
     {
         return _currentKeyboardState.IsKeyDown(key) && !_previousKeyboardState.IsKeyDown(key);

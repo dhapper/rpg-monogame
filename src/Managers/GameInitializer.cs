@@ -13,6 +13,7 @@ public class GameInitializer
     private Camera2D _camera;
     private MapSystem _mapSystem;
     private InventoryUI _inventoryUI;
+    private GameStateManager _gameStateManager;
 
     public Entity PlayerEntity { get; private set; }
     public PlayerController PlayerController { get; private set; }
@@ -21,6 +22,11 @@ public class GameInitializer
     public Entity npc { get; private set; }
 
     public static bool ShowHitbox = false;
+
+
+    // private GameState currentGameState = GameState.Playing;
+
+
 
     public GameInitializer(EntityManager entityManager, SpriteBatch spriteBatch, AssetStore assets)
     {
@@ -34,9 +40,10 @@ public class GameInitializer
     {
         _inputSystem = new InputSystem();
         _camera = new Camera2D(_graphicsDevice.Viewport);
-        _inventoryUI = new InventoryUI(_camera, _graphicsDevice.Viewport);
+        _inventoryUI = new InventoryUI(_camera, _graphicsDevice.Viewport, _entityManager);
+        _gameStateManager = new GameStateManager();
 
-        RenderSystem = new RenderSystem(_spriteBatch, _entityManager, _assets, _camera, _graphicsDevice, _inventoryUI);
+        RenderSystem = new RenderSystem(_spriteBatch, _entityManager, _assets, _camera, _graphicsDevice, _inventoryUI, _gameStateManager);
         _animationSystem = new AnimationSystem(_entityManager);
         _mapSystem = new MapSystem(_entityManager, _assets, _camera);
 
@@ -46,10 +53,10 @@ public class GameInitializer
         PlayerEntity.AddComponent(new PlayerComponent());
         var (x, y) = SaveManager.LoadData();
         var position = PlayerEntity.GetComponent<PositionComponent>();
-        Console.WriteLine(position.X+" "+position.Y);
         position.X = x;
         position.Y = y;
-        Console.WriteLine(position.X+" "+position.Y);
+        _inventoryUI.InitializePlayerInventory();
+
         // Create an Entity
         npc = PlayerFactory.CreatePlayer(50, 300, _entityManager, _assets, _graphicsDevice);
         npc.GetComponent<SpriteComponent>().Color = Color.Red;
@@ -58,11 +65,24 @@ public class GameInitializer
 
     public void Update(GameTime gameTime)
     {
-        _inputSystem.Update();
-        PlayerController.Update();
-        _animationSystem.Update(gameTime);
-        _inventoryUI.Update();
 
+        _inputSystem.Update();
+
+        var inputs = _inputSystem.GetInputState();
+        if (inputs.ToggleInventory)
+            _gameStateManager.ToggleBetweenStates(GameState.Playing, GameState.Inventory);
+
+        switch (_gameStateManager.CurrentGameState)
+        {
+            case GameState.Playing:
+                // _inputSystem.Update();
+                PlayerController.Update();
+                _animationSystem.Update(gameTime);
+                _inventoryUI.Update();
+                break;
+            case GameState.Inventory:
+                break;
+        }
     }
 
     public void Draw()

@@ -25,7 +25,6 @@ public static class PlayerFactory
             Constants.Player.HitboxWidth,
             Constants.Player.HitboxHeight));
         player.AddComponent(new MovementComponent(Constants.Player.Speed));
-
         player.AddComponent(new InventoryComponent());
 
 

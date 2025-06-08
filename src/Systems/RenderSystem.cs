@@ -11,8 +11,9 @@ public class RenderSystem
     private Camera2D _camera;
     private GraphicsDevice _graphicsDevice;
     private InventoryUI _inventoryUI;
+    private GameStateManager _gameStatemanager;
 
-    public RenderSystem(SpriteBatch spriteBatch, EntityManager entityManager, AssetStore assetStore, Camera2D camera, GraphicsDevice graphicsDevice, InventoryUI inventoryUI)
+    public RenderSystem(SpriteBatch spriteBatch, EntityManager entityManager, AssetStore assetStore, Camera2D camera, GraphicsDevice graphicsDevice, InventoryUI inventoryUI, GameStateManager gameStateManager)
     {
         _spriteBatch = spriteBatch;
         _entityManager = entityManager;
@@ -20,6 +21,7 @@ public class RenderSystem
         _camera = camera;
         _graphicsDevice = graphicsDevice;
         _inventoryUI = inventoryUI;
+        _gameStatemanager = gameStateManager;
     }
 
     public void Draw()
@@ -58,7 +60,7 @@ public class RenderSystem
         }
 
         DrawHotbar();
-        if (GameInitializer.ShowHitbox)
+        if (_gameStatemanager.CurrentGameState == GameState.Inventory)
             DrawInventory();
 
         _spriteBatch.End();
@@ -82,12 +84,12 @@ public class RenderSystem
                     0f);
 
                 var inv = _entityManager.EntitiesWithComponent<InventoryComponent>().First().GetComponent<InventoryComponent>();
-                if (inv.InventoryItems[i + j * 9].Type != ItemType.Empty)
+                if (inv.InventoryItems[i][j] != null)
                 {
                     _spriteBatch.Draw(
                         _assetStore.IconSheet,
                         _inventoryUI.InventoryIconPositions[i][j],
-                        inv.InventoryItems[i + j * 9].SourceRectangle,
+                        inv.InventoryItems[i][j].SourceRectangle,
                         Color.White,
                         0f,
                         Vector2.Zero,
@@ -134,7 +136,7 @@ public class RenderSystem
                     0f);
             }
 
-            if (inv.HotbarItems[i].Type != ItemType.Empty)
+            if (inv.HotbarItems[i] != null)
             {
                 _spriteBatch.Draw(
                     _assetStore.IconSheet,

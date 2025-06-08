@@ -7,6 +7,7 @@ public class InputState
     public bool Interact;
     public bool ToggleHitbox;
     public bool Save;
+    public bool ToggleInventory;
 
     public bool IsNumberChanging;
     public int? Number;
