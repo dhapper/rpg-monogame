@@ -2,34 +2,59 @@ using System.Collections.Generic;
 
 public class InventoryComponent
 {
-    public List<Item> Items { get; set; }
+    public List<Item> HotbarItems { get; set; }
+    public List<Item> InventoryItems { get; set; }
     public Item activeItem;
 
-    public InventoryComponent(List<Item> items = null)
+    public InventoryComponent()
     {
-        Items = items ?? new List<Item>();
+        HotbarItems = new List<Item>();
+        InventoryItems = new List<Item>();
 
-        // Declare two dummy items
         Item item1 = Constants.Items.WateringCan;
         Item item2 = Constants.Items.Pickaxe;
         Item item3 = Constants.Items.Seeds;
         Item empty = Constants.Items.Empty;
 
-        // Add the items to the list
-        Items.Add(item1);
-        Items.Add(item2);
-        Items.Add(item3);
-        Items.Add(item1);
+        HotbarItems.Add(item1);
+        HotbarItems.Add(item2);
+        HotbarItems.Add(item3);
+        HotbarItems.Add(item1);
+        HotbarItems.Add(empty);
+        HotbarItems.Add(empty);
+        HotbarItems.Add(empty);
+        HotbarItems.Add(empty);
+        HotbarItems.Add(empty);
+        activeItem = HotbarItems[1];
 
-        Items.Add(empty);
-        Items.Add(empty);
-        Items.Add(empty);
-        Items.Add(empty);
-        Items.Add(empty);
+        InventoryItems.Add(empty);
+        InventoryItems.Add(empty);
+        InventoryItems.Add(item1);
+        InventoryItems.Add(empty);
+        InventoryItems.Add(empty);
+        InventoryItems.Add(empty);
+        InventoryItems.Add(empty);
+        InventoryItems.Add(empty);
+        InventoryItems.Add(empty);
 
+        InventoryItems.Add(empty);
+        InventoryItems.Add(empty);
+        InventoryItems.Add(empty);
+        InventoryItems.Add(empty);
+        InventoryItems.Add(empty);
+        InventoryItems.Add(empty);
+        InventoryItems.Add(empty);
+        InventoryItems.Add(item2);
+        InventoryItems.Add(empty);
 
-
-        // Set activeItem safely
-        activeItem = Items[1];
+        InventoryItems.Add(empty);
+        InventoryItems.Add(empty);
+        InventoryItems.Add(empty);
+        InventoryItems.Add(empty);
+        InventoryItems.Add(item3);
+        InventoryItems.Add(empty);
+        InventoryItems.Add(empty);
+        InventoryItems.Add(empty);
+        InventoryItems.Add(empty);
     }
 }

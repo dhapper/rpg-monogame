@@ -64,7 +64,7 @@ public class PlayerController
             SaveManager.SaveData(_player);
 
         var inv = _player.GetComponent<InventoryComponent>();
-        inv.activeItem = inputs.IsNumberChanging ? inv.Items[inputs.Number - 1 ?? 0] : inv.activeItem;
+        inv.activeItem = inputs.IsNumberChanging ? inv.HotbarItems[inputs.Number - 1 ?? 0] : inv.activeItem;
         if (inputs.Interact)
         {
             switch (inv.activeItem.Name)

@@ -10,14 +10,16 @@ public class RenderSystem
     private AssetStore _assetStore;
     private Camera2D _camera;
     private GraphicsDevice _graphicsDevice;
+    private InventoryUI _inventoryUI;
 
-    public RenderSystem(SpriteBatch spriteBatch, EntityManager entityManager, AssetStore assetStore, Camera2D camera, GraphicsDevice graphicsDevice)
+    public RenderSystem(SpriteBatch spriteBatch, EntityManager entityManager, AssetStore assetStore, Camera2D camera, GraphicsDevice graphicsDevice, InventoryUI inventoryUI)
     {
         _spriteBatch = spriteBatch;
         _entityManager = entityManager;
         _assetStore = assetStore;
         _camera = camera;
         _graphicsDevice = graphicsDevice;
+        _inventoryUI = inventoryUI;
     }
 
     public void Draw()
@@ -56,8 +58,45 @@ public class RenderSystem
         }
 
         DrawHotbar();
+        if (GameInitializer.ShowHitbox)
+            DrawInventory();
 
         _spriteBatch.End();
+    }
+
+    public void DrawInventory()
+    {
+        for (int i = 0; i < 9; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                _spriteBatch.Draw(
+                    _assetStore.UIsheet,
+                    _inventoryUI.InventorySlotPositions[i][j],
+                    new Rectangle(0, 0, _inventoryUI.DefaultSlotSize, _inventoryUI.DefaultSlotSize),
+                    Color.White,
+                    0f,
+                    Vector2.Zero,
+                    Constants.ScaleFactor,
+                    SpriteEffects.None,
+                    0f);
+
+                var inv = _entityManager.EntitiesWithComponent<InventoryComponent>().First().GetComponent<InventoryComponent>();
+                if (inv.InventoryItems[i + j * 9].Type != ItemType.Empty)
+                {
+                    _spriteBatch.Draw(
+                        _assetStore.IconSheet,
+                        _inventoryUI.InventoryIconPositions[i][j],
+                        inv.InventoryItems[i + j * 9].SourceRectangle,
+                        Color.White,
+                        0f,
+                        Vector2.Zero,
+                        Constants.ScaleFactor,
+                        SpriteEffects.None,
+                        0f);
+                }
+            }
+        }
     }
 
     public void DrawHotbar()
@@ -65,18 +104,10 @@ public class RenderSystem
 
         for (int i = 0; i < 9; i++)
         {
-            int defaultSlotSize = 22;
-            int defaultSpacing = 20;
-            int slotWidth = (int)(defaultSpacing * Constants.ScaleFactor);
-            int hotbarWidth = (int)(slotWidth * 9);
-            // int x = (int)(_camera.Position.X + _graphicsDevice.Viewport.Width - hotbarWidth/2);
-            int x = (int)(_camera.Position.X + 50);
-            int y = (int)(_camera.Position.Y + 6 * (Constants.TileSize * Constants.ScaleFactor));
-
             _spriteBatch.Draw(
                 _assetStore.UIsheet,
-                new Vector2(x + slotWidth * i, y),
-                new Rectangle(0, 0, defaultSlotSize, defaultSlotSize),
+                _inventoryUI.HotbarSlotPositions[i],
+                new Rectangle(0, 0, _inventoryUI.DefaultSlotSize, _inventoryUI.DefaultSlotSize),
                 Color.White,
                 0f,
                 Vector2.Zero,
@@ -87,23 +118,14 @@ public class RenderSystem
 
         for (int i = 0; i < 9; i++)
         {
-
-            int defaultSlotSize = 22;
-            int defaultSpacing = 20;
-            int slotWidth = (int)(defaultSpacing * Constants.ScaleFactor);
-            int hotbarWidth = (int)(slotWidth * 9);
-            // int x = (int)(_camera.Position.X + _graphicsDevice.Viewport.Width - hotbarWidth/2);
-            int x = (int)(_camera.Position.X + 50);
-            int y = (int)(_camera.Position.Y + 6 * (Constants.TileSize * Constants.ScaleFactor));
-
             var inv = _entityManager.EntitiesWithComponent<InventoryComponent>().First().GetComponent<InventoryComponent>();
 
-            if (inv.Items[i] == inv.activeItem)
+            if (inv.HotbarItems[i] == inv.activeItem)
             {
                 _spriteBatch.Draw(
                     _assetStore.UIsheet,
-                    new Vector2(x + slotWidth * i, y),
-                    new Rectangle(32, 0, defaultSlotSize, defaultSlotSize),
+                    _inventoryUI.HotbarSlotPositions[i],
+                    new Rectangle(32, 0, _inventoryUI.DefaultSlotSize, _inventoryUI.DefaultSlotSize),
                     Color.White,
                     0f,
                     Vector2.Zero,
@@ -112,14 +134,12 @@ public class RenderSystem
                     0f);
             }
 
-            int iconOffset = (int)(3 * Constants.ScaleFactor);
-
-            if (inv.Items[i].Type != ItemType.Empty)
+            if (inv.HotbarItems[i].Type != ItemType.Empty)
             {
                 _spriteBatch.Draw(
                     _assetStore.IconSheet,
-                    new Vector2(x + slotWidth * i + iconOffset, y + iconOffset),
-                    inv.Items[i].SourceRectangle,
+                    _inventoryUI.HotbarIconPositions[i],
+                    inv.HotbarItems[i].SourceRectangle,
                     Color.White,
                     0f,
                     Vector2.Zero,

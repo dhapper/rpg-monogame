@@ -12,6 +12,7 @@ public class GameInitializer
     private GraphicsDevice _graphicsDevice;
     private Camera2D _camera;
     private MapSystem _mapSystem;
+    private InventoryUI _inventoryUI;
 
     public Entity PlayerEntity { get; private set; }
     public PlayerController PlayerController { get; private set; }
@@ -33,8 +34,9 @@ public class GameInitializer
     {
         _inputSystem = new InputSystem();
         _camera = new Camera2D(_graphicsDevice.Viewport);
+        _inventoryUI = new InventoryUI(_camera, _graphicsDevice.Viewport);
 
-        RenderSystem = new RenderSystem(_spriteBatch, _entityManager, _assets, _camera, _graphicsDevice);
+        RenderSystem = new RenderSystem(_spriteBatch, _entityManager, _assets, _camera, _graphicsDevice, _inventoryUI);
         _animationSystem = new AnimationSystem(_entityManager);
         _mapSystem = new MapSystem(_entityManager, _assets, _camera);
 
@@ -59,6 +61,8 @@ public class GameInitializer
         _inputSystem.Update();
         PlayerController.Update();
         _animationSystem.Update(gameTime);
+        _inventoryUI.Update();
+
     }
 
     public void Draw()
