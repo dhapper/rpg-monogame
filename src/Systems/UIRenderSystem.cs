@@ -36,6 +36,9 @@ public class UIRenderSystem
 
     public void Draw()
     {
+
+        _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+
         DrawHotbar();
         if (_gameStateManager.CurrentGameState == GameState.Inventory)
         {
@@ -44,11 +47,14 @@ public class UIRenderSystem
             if (_inventoryUI.CurrentlyDragging)
                 DrawDraggedItem();
         }
+
+        _spriteBatch.End();
     }
 
     public void DrawDraggedItem()
     {
-        var (x, y) = _inputSystem.GetMouseLocationRelativeCamera(_camera);
+        // var (x, y) = _inputSystem.GetMouseLocationRelativeCamera(_camera);
+        var (x, y) = _inputSystem.GetMouseLocation();
         _spriteBatch.Draw(
             _assetStore.IconSheet,
             new Vector2(x, y),

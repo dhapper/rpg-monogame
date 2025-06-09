@@ -100,7 +100,7 @@ public class InventoryUI
 
     public (int, int)? IsHoveringSlot()
     {
-        var (x, y) = _inputSystem.GetMouseLocationRelativeCamera(_camera);
+        var (x, y) = _inputSystem.GetMouseLocation();
 
         for (int i = 0; i < Cols; i++)
         {
@@ -122,9 +122,9 @@ public class InventoryUI
     {
         int defaultSpacing = 20;
         int slotWidth = (int)(defaultSpacing * Constants.ScaleFactor);
-        int x = (int)(_camera.Position.X + _viewport.Width / 2 - slotWidth * 9 / 2 - 1 * Constants.ScaleFactor);
-        int yHotbar = (int)(_camera.Position.Y + 6 * (Constants.TileSize * Constants.ScaleFactor));
-        int yInventory = (int)(_camera.Position.Y + 0 * (Constants.TileSize * Constants.ScaleFactor));
+        int x = (int)(_viewport.Width / 2 - slotWidth * 9 / 2 - 1 * Constants.ScaleFactor);
+        int yHotbar = (int)(6 * (Constants.TileSize * Constants.ScaleFactor));
+        int yInventory = (int)(0 * (Constants.TileSize * Constants.ScaleFactor));
 
         for (int i = 0; i < Cols; i++)
         {

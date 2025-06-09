@@ -34,7 +34,7 @@ public class RenderSystem
 
     public void Draw()
     {
-        _spriteBatch.Begin(transformMatrix: _camera.Transform, samplerState: SamplerState.PointClamp);
+        _spriteBatch.Begin(transformMatrix: _camera.Transform, samplerState: SamplerState.PointClamp);  // new spritebatch for screen relative positioning
 
         var allEntities = _entityManager.GetEntities();
         var tileEntities = allEntities.Where(e => e.HasComponent<TileComponent>()).ToList();
@@ -67,9 +67,9 @@ public class RenderSystem
                 DrawHitbox(_spriteBatch, entity.GetComponent<CollisionComponent>().Hitbox);
         }
 
-        _uiRenderSystem.Draw();
-
         _spriteBatch.End();
+
+        _uiRenderSystem.Draw();
     }
 
     public void DrawTile(Entity entity, bool hasBackground = false)
