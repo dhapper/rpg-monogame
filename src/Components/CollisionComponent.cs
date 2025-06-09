@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework;
 
 public class CollisionComponent
 {
-    public Rectangle Hitbox { get; private set; }
+    public Rectangle Hitbox { get; set; }
     public bool isSolid { get; set; }
 
     public int offsetX, offsetY, hitboxWidth, hitboxHeight;

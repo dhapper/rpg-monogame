@@ -58,7 +58,7 @@ public class UIRenderSystem
         _spriteBatch.Draw(
             _assetStore.IconSheet,
             new Vector2(x, y),
-            _inventoryUI.DraggedItem.SourceRectangle,
+            _inventoryUI.DraggedItem.GetComponent<SpriteComponent>().SourceRectangle,
             Color.White,
             0f,
             Vector2.Zero,
@@ -93,7 +93,7 @@ public class UIRenderSystem
                     _spriteBatch.Draw(
                         _assetStore.IconSheet,
                         _inventoryUI.InventoryIconPositions[i][j],
-                        inv.InventoryItems[i][j].SourceRectangle,
+                        inv.InventoryItems[i][j].GetComponent<ItemComponent>().config.SourceRectangle,
                         Color.White,
                         0f,
                         Vector2.Zero,
@@ -147,7 +147,7 @@ public class UIRenderSystem
                 _spriteBatch.Draw(
                     _assetStore.IconSheet,
                     _inventoryUI.InventoryIconPositions[i][0],
-                    inv.InventoryItems[i][0].SourceRectangle,
+                    inv.InventoryItems[i][0].GetComponent<ItemComponent>().config.SourceRectangle,
                     Color.White,
                     0f,
                     Vector2.Zero,

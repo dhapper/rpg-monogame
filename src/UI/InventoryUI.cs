@@ -1,10 +1,11 @@
 using System;
-using System.Drawing;
 using System.Linq;
 using System.Numerics;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 using static Constants.UI.Inventory;
+using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 public class InventoryUI
 {
@@ -16,11 +17,11 @@ public class InventoryUI
     private GameStateManager _gameStateManager;
 
     public Vector2[][] InventorySlotPositions, InventoryIconPositions;
-    public Item DraggedItem = null;
+    public Entity DraggedItem = null;
     public bool CurrentlyDragging = false;
 
     private int _draggedItemCol, _draggedItemRow;
-    private Item _draggedItem;
+    private Entity _draggedItem;
 
     public InventoryUI(Camera2D camera, Viewport viewport, EntityManager entityManager, InputSystem inputSystem, GameStateManager gameStateManager)
     {
@@ -51,6 +52,20 @@ public class InventoryUI
         _inventory = _entityManager.EntitiesWithComponent<InventoryComponent>().FirstOrDefault().GetComponent<InventoryComponent>();
     }
 
+    public void DropItem()
+    {
+        var item = _inventory.InventoryItems[_draggedItemCol][_draggedItemRow];
+        var config = item.GetComponent<ItemComponent>().config;
+        var pos = item.GetComponent<PositionComponent>();
+        config.IsInOverworld = true;
+        var (x, y) = _inputSystem.GetMouseLocationRelativeCamera(_camera);
+        pos.X = x;
+        pos.Y = y;
+        // var collision = item.GetComponent<CollisionComponent>().Hitbox;
+        item.GetComponent<CollisionComponent>().Hitbox = new Rectangle(x, y, 64, 64);
+        _inventory.InventoryItems[_draggedItemCol][_draggedItemRow] = null;
+    }
+
     public void DraggingItemLogic()
     {
         if (_gameStateManager.CurrentGameState != GameState.Inventory)
@@ -69,7 +84,7 @@ public class InventoryUI
                 if (_draggedItem != null)
                 {
                     DraggedItem = _draggedItem;
-                    _draggedItem.BeingDragged = true;
+                    _draggedItem.GetComponent<ItemComponent>().config.BeingDragged = true;
                     CurrentlyDragging = true;
                 }
             }
@@ -85,12 +100,14 @@ public class InventoryUI
                 if (hoveredItemIndices.HasValue && hoveredItemIndices != (_draggedItemCol, _draggedItemRow)) // Swap guard
                 {
                     var inv = _inventory.InventoryItems;
-                    Item temp = inv[hoveredItemIndices.Value.Item1][hoveredItemIndices.Value.Item2];
+                    var temp = inv[hoveredItemIndices.Value.Item1][hoveredItemIndices.Value.Item2];
                     inv[hoveredItemIndices.Value.Item1][hoveredItemIndices.Value.Item2] = inv[_draggedItemCol][_draggedItemRow];
                     inv[_draggedItemCol][_draggedItemRow] = temp;
 
+                } else if (!hoveredItemIndices.HasValue) {
+                    DropItem();
                 }
-                DraggedItem.BeingDragged = false;
+                DraggedItem.GetComponent<ItemComponent>().config.BeingDragged = false;
             }
             _draggedItem = null;
             DraggedItem = null;

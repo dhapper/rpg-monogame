@@ -2,5 +2,5 @@ using System.Drawing;
 
 public class ItemComponent
 {
-    public Item Item { get; set; }
+    public ItemConfig config { get; set; }
 }

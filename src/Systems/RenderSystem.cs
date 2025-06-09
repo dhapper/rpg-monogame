@@ -38,7 +38,7 @@ public class RenderSystem
 
         var allEntities = _entityManager.GetEntities();
         var tileEntities = allEntities.Where(e => e.HasComponent<TileComponent>()).ToList();
-        var spriteEntities = allEntities.Where(e => e.HasComponent<PositionComponent>() && e.HasComponent<SpriteComponent>() && !e.HasComponent<TileComponent>()).ToList();
+        var spriteEntities = allEntities.Where(e => e.HasComponent<PositionComponent>() && e.HasComponent<SpriteComponent>() && e.HasComponent<CharacterComponent>()).ToList();
         var sortedSprites = spriteEntities
             .OrderBy(e =>
             {
@@ -48,6 +48,10 @@ public class RenderSystem
                 return position.Y + sourceHeight;
             }).ToList();
 
+        // has component ItemComponent && item.IsDropped == true
+        var overworldItems = allEntities.Where(e => e.HasComponent<ItemComponent>() && e.GetComponent<ItemComponent>().config.IsInOverworld).ToList();
+
+        // Draw tiles
         foreach (var entity in tileEntities)
         {
             if (entity.GetComponent<TileComponent>().Background != default)
@@ -59,6 +63,7 @@ public class RenderSystem
                 DrawHitbox(_spriteBatch, entity.GetComponent<CollisionComponent>().Hitbox);
         }
 
+        // Draw entities
         foreach (var entity in sortedSprites)
         {
             DrawEntity(entity);
@@ -67,9 +72,35 @@ public class RenderSystem
                 DrawHitbox(_spriteBatch, entity.GetComponent<CollisionComponent>().Hitbox);
         }
 
+        // Draw dropped overworld items
+        foreach (var entity in overworldItems)
+        {
+            DrawOverworldItem(entity);
+
+            if (GameInitializer.ShowHitbox && entity.HasComponent<CollisionComponent>())
+                DrawHitbox(_spriteBatch, entity.GetComponent<CollisionComponent>().Hitbox);
+        }
+
         _spriteBatch.End();
 
         _uiRenderSystem.Draw();
+    }
+
+    public void DrawOverworldItem(Entity entity)
+    {
+        var position = entity.GetComponent<PositionComponent>();
+        var sprite = entity.GetComponent<SpriteComponent>();
+        
+        _spriteBatch.Draw(
+            sprite.Texture,
+            new Vector2(position.X, position.Y),
+            sprite.SourceRectangle,
+            sprite.Color,
+            0f,
+            Vector2.Zero,
+            ScaleFactor,
+            SpriteEffects.None,
+            0f);
     }
 
     public void DrawTile(Entity entity, bool hasBackground = false)

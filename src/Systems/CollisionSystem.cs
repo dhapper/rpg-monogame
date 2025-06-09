@@ -1,16 +1,19 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 
 public class CollisionSystem
 {
-    private List<Entity> _entities;
+    private List<Entity> _entities; // factor out?
     private Entity _entity;
+    private EntityManager _entityManager;
 
-    public CollisionSystem(Entity entity, List<Entity> entities)
+    public CollisionSystem(Entity entity, EntityManager entityManager, List<Entity> entities)
     {
         _entities = entities;
         _entity = entity;
+        _entityManager = entityManager;
     }
 
     public bool CheckEntityCollision(Rectangle futureHitbox)
@@ -26,6 +29,37 @@ public class CollisionSystem
                 }
         }
         return false;
+    }
+
+    public void PickUp()
+    {
+        var hitbox = _entity.GetComponent<CollisionComponent>().Hitbox;
+        // can be opitimized;
+        var allEntities = _entityManager.GetEntities();
+        var overworldItems = allEntities.Where(e => e.HasComponent<ItemComponent>() && e.GetComponent<ItemComponent>().config.IsInOverworld).ToList();
+
+        foreach (var item in overworldItems)
+        {
+            var inCollectionBox = item.GetComponent<CollisionComponent>().Hitbox.Intersects(hitbox);
+            if (inCollectionBox)
+            {
+                // Console.WriteLine(item.GetComponent<ItemComponent>().config.Name);
+                //maybe remove this code from here
+                for (int i = 0; i < Constants.UI.Inventory.Rows; i++)
+                {
+                    for (int j = 0; j < Constants.UI.Inventory.Cols; j++)
+                    {
+                        var inv = _entity.GetComponent<InventoryComponent>();
+                        if (inv.InventoryItems[j][i] == null)
+                        {
+                            item.GetComponent<ItemComponent>().config.IsInOverworld = false;
+                            inv.InventoryItems[j][i] = item;
+                            return;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public void Move(float xSpeed, float ySpeed, int worldWidth, int worldHeight)
@@ -53,7 +87,7 @@ public class CollisionSystem
 
         if (!(newHitboxX.X > 0 && newHitboxX.X < worldWidth - hitboxWidth - Constants.ScaleFactor))
             newX = position.X;
-            
+
         if (!(newHitboxY.Y > 0 && newHitboxY.Y < worldHeight - hitboxHeight - Constants.ScaleFactor))
             newY = position.Y;
 
@@ -62,7 +96,7 @@ public class CollisionSystem
 
         if (!CheckEntityCollision(newHitboxY))
             position.Y = newY;
-        
+
         collision.UpdateHitbox(position);
         _entity.AddComponent(position);
     }

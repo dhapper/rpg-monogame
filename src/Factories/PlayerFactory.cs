@@ -15,6 +15,7 @@ public static class PlayerFactory
         Texture2D hairSheet = SpriteProcessor.ChangeColours(colourChanges, assets.PlayerHair, graphicsDevice);
         Texture2D layeredSheet = SpriteProcessor.LayerSheets([assets.PlayerBody, hairSheet, assets.PlayerTools], graphicsDevice);
 
+        player.AddComponent(new CharacterComponent());
         player.AddComponent(new PositionComponent(x, y, Constants.Player.SpriteSize, Constants.Player.SpriteSize));
         player.AddComponent(new SpriteComponent(layeredSheet, new Rectangle(0, 0, Constants.Player.SpriteSize, Constants.Player.SpriteSize)) { Color = Color.White });
         player.AddComponent(new AnimationComponent(Constants.Player.Animations.IdleRight));
@@ -25,7 +26,10 @@ public static class PlayerFactory
             Constants.Player.HitboxWidth,
             Constants.Player.HitboxHeight));
         player.AddComponent(new MovementComponent(Constants.Player.Speed));
-        player.AddComponent(new InventoryComponent());
+
+        var inv = new InventoryComponent();
+        player.AddComponent(inv);
+        new InventorySystem(entityManager, assets).InitInventory(inv);
 
 
         return player;

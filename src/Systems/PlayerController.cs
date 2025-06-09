@@ -13,19 +13,22 @@ public class PlayerController
     private bool[] dir = [false, false, false, false];
     private bool facingRight = true;
     private Camera2D _camera;
+    private EntityManager _entityManager;
 
     private bool isAnimationLocked = false;
 
-    public PlayerController(Entity player, InputSystem inputSystem, AnimationSystem animationSystem, List<Entity> entities, MapSystem mapSystem, Camera2D camera)
+    public PlayerController(Entity player, InputSystem inputSystem, AnimationSystem animationSystem, List<Entity> entities, MapSystem mapSystem, Camera2D camera, EntityManager entityManager)
     {
         _player = player;
         _inputSystem = inputSystem;
         _entities = entities;
-        _collisionSystem = new CollisionSystem(_player, _entities);
+        // _collisionSystem = new CollisionSystem(_player, _entities);
         _movementSystem = new MovementSystem();
         _animationSystem = animationSystem;
         _mapSystem = mapSystem;
         _camera = camera;
+        _entityManager = entityManager;
+        _collisionSystem = new CollisionSystem(_player, _entityManager, _entities);
     }
 
     public void Update()
@@ -34,6 +37,8 @@ public class PlayerController
         var movement = _player.GetComponent<MovementComponent>();
         movement.IsMoving = false;
         var inputs = _inputSystem.GetInputState();
+
+        _collisionSystem.PickUp();
 
         UpdateInputActions(inputs);
         UpdateAnimation(inputs, movement);
@@ -66,33 +71,29 @@ public class PlayerController
         var inv = _player.GetComponent<InventoryComponent>();
         // if (inv.InventoryItems[inputs.Number - 1 ?? 0][0] != null)
         // {
-            // inv.activeItem = inputs.IsNumberChanging ? inv.InventoryItems[inputs.Number - 1 ?? 0][0] : inv.activeItem;
-            // inv.activeItemIndices = (inputs.Number - 1 ?? 0, 0);
-            inv.activeItemIndices = inputs.IsNumberChanging ? (inputs.Number - 1 ?? 0, 0) : inv.activeItemIndices;
+        // inv.activeItem = inputs.IsNumberChanging ? inv.InventoryItems[inputs.Number - 1 ?? 0][0] : inv.activeItem;
+        // inv.activeItemIndices = (inputs.Number - 1 ?? 0, 0);
+        inv.activeItemIndices = inputs.IsNumberChanging ? (inputs.Number - 1 ?? 0, 0) : inv.activeItemIndices;
         // }
 
-        var activeItem = inv.InventoryItems[inv.activeItemIndices.Item1][inv.activeItemIndices.Item2];
-        if (inputs.Interact && activeItem != null)
+        var activeItemEntity = inv.InventoryItems[inv.activeItemIndices.Item1][inv.activeItemIndices.Item2];
+        if (activeItemEntity != null)
         {
-            switch (activeItem.Name)
+            var activeItem = inv.InventoryItems[inv.activeItemIndices.Item1][inv.activeItemIndices.Item2].GetComponent<ItemComponent>().config;
+            if (inputs.Interact && activeItem != null)
             {
-                case "WateringCan":
-                    _animationSystem.SetAnimation(_player, facingRight ? Constants.Player.Animations.WateringCanRight : Constants.Player.Animations.WateringCanLeft);
-                    isAnimationLocked = true;
-                    break;
-                case "Pickaxe":
-                    _animationSystem.SetAnimation(_player, facingRight ? Constants.Player.Animations.PickAxeRight : Constants.Player.Animations.PickAxeLeft);
-                    isAnimationLocked = true;
-                    break;
+                switch (activeItem.Name)
+                {
+                    case "WateringCan":
+                        _animationSystem.SetAnimation(_player, facingRight ? Constants.Player.Animations.WateringCanRight : Constants.Player.Animations.WateringCanLeft);
+                        isAnimationLocked = true;
+                        break;
+                    case "Pickaxe":
+                        _animationSystem.SetAnimation(_player, facingRight ? Constants.Player.Animations.PickAxeRight : Constants.Player.Animations.PickAxeLeft);
+                        isAnimationLocked = true;
+                        break;
+                }
             }
-
-            // _animationSystem.SetAnimation(_player, facingRight ? Constants.Player.Animations.WateringCanRight : Constants.Player.Animations.WateringCanLeft);
-            // isAnimationLocked = true;
-
-            // var (x, y) = _inputSystem.GetMouseLocation();
-            // Entity tile = _mapSystem.GetTile(x, y);
-            // if (tile != null && tile.HasComponent<InteractionComponent>())
-            //     tile.GetComponent<InteractionComponent>().InteractAction(tile);
         }
     }
 

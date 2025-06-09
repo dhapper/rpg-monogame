@@ -49,8 +49,8 @@ public class GameInitializer
 
         // Create Player
         PlayerEntity = PlayerFactory.CreatePlayer(200, 200, _entityManager, _assets, _graphicsDevice);
-        PlayerController = new PlayerController(PlayerEntity, _inputSystem, _animationSystem, _entityManager.Entities, _mapSystem, _camera);
-        PlayerEntity.AddComponent(new PlayerComponent());
+        PlayerController = new PlayerController(PlayerEntity, _inputSystem, _animationSystem, _entityManager.Entities, _mapSystem, _camera, _entityManager);
+        PlayerEntity.AddComponent(new PlayerComponent());   // should move to factory?
         var (x, y) = SaveManager.LoadData();
         var position = PlayerEntity.GetComponent<PositionComponent>();
         position.X = x;

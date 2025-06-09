@@ -41,10 +41,10 @@ public static class Constants
 
     public static class Items
     {
-        public static readonly Item WateringCan = new Item("WateringCan", ItemType.Tool, new Rectangle(0 * TileSize, 0 * TileSize, TileSize, TileSize));
-        public static readonly Item Pickaxe = new Item("Pickaxe", ItemType.Tool, new Rectangle(1 * TileSize, 0 * TileSize, TileSize, TileSize));
-        public static readonly Item Seeds = new Item("Seeds", ItemType.Plantable, new Rectangle(2 * TileSize, 0 * TileSize, TileSize, TileSize));
-        public static readonly Item Empty = new Item("Empty", ItemType.Empty, new Rectangle(0, 0, 0, 0));
+        public static readonly ItemConfig WateringCan = new ItemConfig("WateringCan", ItemType.Tool, new Rectangle(0 * TileSize, 0 * TileSize, TileSize, TileSize));
+        public static readonly ItemConfig Pickaxe = new ItemConfig("Pickaxe", ItemType.Tool, new Rectangle(1 * TileSize, 0 * TileSize, TileSize, TileSize));
+        public static readonly ItemConfig Seeds = new ItemConfig("Seeds", ItemType.Plantable, new Rectangle(2 * TileSize, 0 * TileSize, TileSize, TileSize));
+        public static readonly ItemConfig Empty = new ItemConfig("Empty", ItemType.Empty, new Rectangle(0, 0, 0, 0));
     }
 
     public static class UI
