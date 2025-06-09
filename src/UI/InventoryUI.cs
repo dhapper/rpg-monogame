@@ -1,79 +1,122 @@
+using System;
 using System.Drawing;
 using System.Linq;
 using System.Numerics;
 using Microsoft.Xna.Framework.Graphics;
 
+using static Constants.UI.Inventory;
+
 public class InventoryUI
 {
-
-    public Vector2[] HotbarSlotPositions, HotbarIconPositions;
-    public Vector2[][] InventorySlotPositions, InventoryIconPositions;
-    public int DefaultSlotSize = 22;
-
     private Camera2D _camera;
     private Viewport _viewport;
     private EntityManager _entityManager;
     private InventoryComponent _inventory;
+    private InputSystem _inputSystem;
+    private GameStateManager _gameStateManager;
 
-    private int rows = 3;
-    private int cols = 9;
-    private int iconOffset = (int)(3 * Constants.ScaleFactor);
+    public Vector2[][] InventorySlotPositions, InventoryIconPositions;
+    public Item DraggedItem = null;
+    public bool CurrentlyDragging = false;
 
+    private int _draggedItemCol, _draggedItemRow;
+    private Item _draggedItem;
 
-    public InventoryUI(Camera2D camera, Viewport viewport, EntityManager entityManager)
+    public InventoryUI(Camera2D camera, Viewport viewport, EntityManager entityManager, InputSystem inputSystem, GameStateManager gameStateManager)
     {
         _camera = camera;
         _viewport = viewport;
         _entityManager = entityManager;
-        // _inventory = _entityManager.EntitiesWithComponent<InventoryComponent>().FirstOrDefault().GetComponent<InventoryComponent>();
+        _inputSystem = inputSystem;
+        _gameStateManager = gameStateManager;
 
-        HotbarSlotPositions = new Vector2[cols];
-        HotbarIconPositions = new Vector2[cols];
-        InventorySlotPositions = new Vector2[cols][];
-        InventoryIconPositions = new Vector2[cols][];
-        for (int i = 0; i < cols; i++)
+        InventorySlotPositions = new Vector2[Cols][];
+        InventoryIconPositions = new Vector2[Cols][];
+        for (int i = 0; i < Cols; i++)
         {
-            InventorySlotPositions[i] = new Vector2[rows];
-            InventoryIconPositions[i] = new Vector2[rows];
+            InventorySlotPositions[i] = new Vector2[Rows];
+            InventoryIconPositions[i] = new Vector2[Rows];
         }
-    }
-
-    public void InitializePlayerInventory()
-    {
-        _inventory = _entityManager.EntitiesWithComponent<InventoryComponent>().FirstOrDefault().GetComponent<InventoryComponent>();
     }
 
     public void Update()
     {
         CalculateLayout();
+        DraggingItemLogic();
     }
 
-    public Item IsHoveringItem(int x, int y)
+    // Delayed initilaization word around
+    public void InitializePlayerInventory()
     {
-        //mouse xy
+        _inventory = _entityManager.EntitiesWithComponent<InventoryComponent>().FirstOrDefault().GetComponent<InventoryComponent>();
+    }
 
-        //for loop through item vectors in inv & hotbar
+    public void DraggingItemLogic()
+    {
+        if (_gameStateManager.CurrentGameState != GameState.Inventory)
+            return;
 
-        for (int i = 0; i < cols; i++)
+        var drag = _inputSystem.GetMouseDragState(InputSystem.MouseButton.Left);
+
+        if (drag.DragStarted)
         {
-
-            Rectangle bounds = new Rectangle((int)HotbarSlotPositions[i].X, (int)HotbarSlotPositions[i].Y, DefaultSlotSize, DefaultSlotSize);
-            if (bounds.Contains(x, y))
-                return _inventory.HotbarItems[i];
-
-            for (int j = 0; j < rows; j++)
+            var draggedItemIndices = IsHoveringSlot();
+            if (draggedItemIndices.HasValue)
             {
-                bounds = new Rectangle((int)InventorySlotPositions[i][j].X, (int)InventorySlotPositions[i][j].Y, DefaultSlotSize, DefaultSlotSize);
-                if (bounds.Contains(x, y))
-                    return _inventory.InventoryItems[i][j];
+                _draggedItemCol = draggedItemIndices.Value.Item1;
+                _draggedItemRow = draggedItemIndices.Value.Item2;
+                _draggedItem = _inventory.InventoryItems[_draggedItemCol][_draggedItemRow];
+                if (_draggedItem != null)
+                {
+                    DraggedItem = _draggedItem;
+                    _draggedItem.BeingDragged = true;
+                    CurrentlyDragging = true;
+                }
             }
         }
 
+        // if (drag.IsDragging)     // For future use
 
-        //if it clicked do something
-        return null;
+        if (drag.DragEnded)
+        {
+            if (_draggedItem != null)
+            {
+                var hoveredItemIndices = IsHoveringSlot();
+                if (hoveredItemIndices.HasValue && hoveredItemIndices != (_draggedItemCol, _draggedItemRow)) // Swap guard
+                {
+                    var inv = _inventory.InventoryItems;
+                    Item temp = inv[hoveredItemIndices.Value.Item1][hoveredItemIndices.Value.Item2];
+                    inv[hoveredItemIndices.Value.Item1][hoveredItemIndices.Value.Item2] = inv[_draggedItemCol][_draggedItemRow];
+                    inv[_draggedItemCol][_draggedItemRow] = temp;
 
+                }
+                DraggedItem.BeingDragged = false;
+            }
+            _draggedItem = null;
+            DraggedItem = null;
+            CurrentlyDragging = false;
+        }
     }
+
+    public (int, int)? IsHoveringSlot()
+    {
+        var (x, y) = _inputSystem.GetMouseLocationRelativeCamera(_camera);
+
+        for (int i = 0; i < Cols; i++)
+        {
+            for (int j = 0; j < Rows; j++)
+            {
+                var slotPos = InventorySlotPositions[i][j];
+                Rectangle slotRect = new Rectangle((int)slotPos.X, (int)slotPos.Y, SlotSize, SlotSize);
+                if (slotRect.Contains(x, y))
+                {
+                    return (i, j);
+                }
+            }
+        }
+        return null;
+    }
+
 
     public void CalculateLayout()
     {
@@ -81,19 +124,18 @@ public class InventoryUI
         int slotWidth = (int)(defaultSpacing * Constants.ScaleFactor);
         int x = (int)(_camera.Position.X + _viewport.Width / 2 - slotWidth * 9 / 2 - 1 * Constants.ScaleFactor);
         int yHotbar = (int)(_camera.Position.Y + 6 * (Constants.TileSize * Constants.ScaleFactor));
-        int yInventory = (int)(_camera.Position.Y + 1 * (Constants.TileSize * Constants.ScaleFactor));
+        int yInventory = (int)(_camera.Position.Y + 0 * (Constants.TileSize * Constants.ScaleFactor));
 
-        for (int i = 0; i < cols; i++)
+        for (int i = 0; i < Cols; i++)
         {
             int xOffset = slotWidth * i;
-            HotbarSlotPositions[i] = new Vector2(x + xOffset, yHotbar);
-            HotbarIconPositions[i] = new Vector2(HotbarSlotPositions[i].X + iconOffset,
-                HotbarSlotPositions[i].Y + iconOffset);
-            for (int j = 0; j < rows; j++)
+            InventorySlotPositions[i][0] = new Vector2(x + xOffset, yHotbar);
+            InventoryIconPositions[i][0] = new Vector2(InventorySlotPositions[i][0].X + IconOffset, InventorySlotPositions[i][0].Y + IconOffset);
+            for (int j = FirstInventoryRowIndex; j < Rows; j++)
             {
                 int yOffset = slotWidth * j;
                 InventorySlotPositions[i][j] = new Vector2(x + xOffset, yInventory + yOffset);
-                InventoryIconPositions[i][j] = new Vector2(InventorySlotPositions[i][j].X + iconOffset, InventorySlotPositions[i][j].Y + iconOffset);
+                InventoryIconPositions[i][j] = new Vector2(InventorySlotPositions[i][j].X + IconOffset, InventorySlotPositions[i][j].Y + IconOffset);
             }
 
         }

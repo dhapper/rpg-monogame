@@ -5,35 +5,38 @@ public class InventoryComponent
     // public List<Item> HotbarItems { get; set; }
     // public List<Item> InventoryItems { get; set; }
 
-    public Item[] HotbarItems;
+    // public Item[] HotbarItems;
     public Item[][] InventoryItems;
-    public Item activeItem;
+    // public Item activeItem;
+    public (int, int) activeItemIndices;
 
     public InventoryComponent()
     {
         // HotbarItems = new List<Item>();
         // InventoryItems = new List<Item>();
 
-        HotbarItems = new Item[9];
+        // HotbarItems = new Item[9];
         InventoryItems = new Item[9][];
         for (int i = 0; i < 9; i++)
         {
-            InventoryItems[i] = new Item[3];
+            InventoryItems[i] = new Item[4];
         }
 
         Item item1 = Constants.Items.WateringCan;
         Item item2 = Constants.Items.Pickaxe;
         Item item3 = Constants.Items.Seeds;
 
-        HotbarItems[0] = item1;
-        HotbarItems[1] = item2;
-        HotbarItems[2] = item3;
+        InventoryItems[0][0] = item1.Clone();
+        InventoryItems[1][0] = item2.Clone();
+        InventoryItems[2][0] = item3.Clone();
+        InventoryItems[3][0] = item3.Clone();
 
-        activeItem = HotbarItems[0];
+        // activeItem = InventoryItems[1][0];
+        activeItemIndices = (1, 0);
 
-        InventoryItems[6][0] = item3;
-        InventoryItems[0][1] = item2;
-        InventoryItems[7][2] = item1;
+        InventoryItems[6][1] = item3.Clone();
+        InventoryItems[0][2] = item2.Clone();
+        InventoryItems[7][3] = item1.Clone();
 
     }
 }

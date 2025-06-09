@@ -47,6 +47,20 @@ public static class Constants
         public static readonly Item Empty = new Item("Empty", ItemType.Empty, new Rectangle(0, 0, 0, 0));
     }
 
+    public static class UI
+    {
+        public static class Inventory
+        {
+            public const int Cols = 9;
+            public const int Rows = 4;
+            public const int FirstInventoryRowIndex = 1;
+
+            public const int DefaultSlotSize = 22;
+            public const int SlotSize = (int)(22 * Constants.ScaleFactor);
+            public const int IconOffset = (int)(3 * Constants.ScaleFactor);
+        }
+    }
+
     public static class ColourIndex
     {
         public static readonly Color Hair = new Color(255, 0, 0);

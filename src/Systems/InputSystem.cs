@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework.Input;
 
 public class InputSystem
@@ -8,6 +10,18 @@ public class InputSystem
     private KeyboardState _currentKeyboardState;
     private MouseState _currentMouseState;
 
+    private Dictionary<MouseButton, MouseDragState> _dragStates = new();
+
+    public InputSystem()
+    {
+        foreach (MouseButton button in Enum.GetValues(typeof(MouseButton)))
+        {
+            _dragStates[button] = new MouseDragState();
+        }
+    }
+
+
+
     public void Update()
     {
         _previousKeyboardState = _currentKeyboardState;
@@ -15,6 +29,40 @@ public class InputSystem
 
         _currentKeyboardState = Keyboard.GetState();
         _currentMouseState = Mouse.GetState();
+
+        foreach (var pair in _dragStates)
+        {
+            var button = pair.Key;
+            var dragState = pair.Value;
+
+            bool wasPressed = IsMouseButtonDown(_previousMouseState, button);
+            bool isPressed = IsMouseButtonDown(_currentMouseState, button);
+
+            var currentPos = _currentMouseState.Position;
+
+            dragState.DragStarted = false;
+            dragState.DragEnded = false;
+
+            if (!wasPressed && isPressed)
+            {
+                // Drag started
+                dragState.IsDragging = true;
+                dragState.DragStarted = true;
+                dragState.StartPosition = currentPos;
+            }
+            else if (wasPressed && isPressed && dragState.IsDragging)
+            {
+                // Drag in progress
+                dragState.CurrentPosition = currentPos;
+            }
+            else if (wasPressed && !isPressed && dragState.IsDragging)
+            {
+                // Drag ended
+                dragState.DragEnded = true;
+                dragState.IsDragging = false;
+            }
+        }
+
     }
 
     public InputState GetInputState()
@@ -83,9 +131,36 @@ public class InputSystem
         }
     }
 
+    private bool IsMouseButtonDown(MouseState state, MouseButton button)
+    {
+        return button switch
+        {
+            MouseButton.Left => state.LeftButton == ButtonState.Pressed,
+            MouseButton.Right => state.RightButton == ButtonState.Pressed,
+            MouseButton.Middle => state.MiddleButton == ButtonState.Pressed,
+            MouseButton.XButton1 => state.XButton1 == ButtonState.Pressed,
+            MouseButton.XButton2 => state.XButton2 == ButtonState.Pressed,
+            _ => false,
+        };
+    }
+
+    public MouseDragState GetMouseDragState(MouseButton button)
+    {
+        return _dragStates[button];
+    }
+
+
+
     public (int x, int y) GetMouseLocation()
     {
         return (_currentMouseState.Position.X, _currentMouseState.Position.Y);
+    }
+
+    public (int x, int y) GetMouseLocationRelativeCamera(Camera2D camera)
+    {
+        int x = (int)(_currentMouseState.Position.X + camera.Position.X);
+        int y = (int)(_currentMouseState.Position.Y + camera.Position.Y);
+        return (x, y);
     }
 
     public enum MouseButton

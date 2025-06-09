@@ -64,10 +64,17 @@ public class PlayerController
             SaveManager.SaveData(_player);
 
         var inv = _player.GetComponent<InventoryComponent>();
-        inv.activeItem = inputs.IsNumberChanging ? inv.HotbarItems[inputs.Number - 1 ?? 0] : inv.activeItem;
-        if (inputs.Interact)
+        // if (inv.InventoryItems[inputs.Number - 1 ?? 0][0] != null)
+        // {
+            // inv.activeItem = inputs.IsNumberChanging ? inv.InventoryItems[inputs.Number - 1 ?? 0][0] : inv.activeItem;
+            // inv.activeItemIndices = (inputs.Number - 1 ?? 0, 0);
+            inv.activeItemIndices = inputs.IsNumberChanging ? (inputs.Number - 1 ?? 0, 0) : inv.activeItemIndices;
+        // }
+
+        var activeItem = inv.InventoryItems[inv.activeItemIndices.Item1][inv.activeItemIndices.Item2];
+        if (inputs.Interact && activeItem != null)
         {
-            switch (inv.activeItem.Name)
+            switch (activeItem.Name)
             {
                 case "WateringCan":
                     _animationSystem.SetAnimation(_player, facingRight ? Constants.Player.Animations.WateringCanRight : Constants.Player.Animations.WateringCanLeft);

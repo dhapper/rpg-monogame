@@ -39,11 +39,11 @@ public class GameInitializer
     public void Initialize()
     {
         _inputSystem = new InputSystem();
-        _camera = new Camera2D(_graphicsDevice.Viewport);
-        _inventoryUI = new InventoryUI(_camera, _graphicsDevice.Viewport, _entityManager);
         _gameStateManager = new GameStateManager();
+        _camera = new Camera2D(_graphicsDevice.Viewport);
+        _inventoryUI = new InventoryUI(_camera, _graphicsDevice.Viewport, _entityManager, _inputSystem, _gameStateManager);
 
-        RenderSystem = new RenderSystem(_spriteBatch, _entityManager, _assets, _camera, _graphicsDevice, _inventoryUI, _gameStateManager);
+        RenderSystem = new RenderSystem(_spriteBatch, _entityManager, _assets, _camera, _graphicsDevice, _inventoryUI, _gameStateManager, _inputSystem);
         _animationSystem = new AnimationSystem(_entityManager);
         _mapSystem = new MapSystem(_entityManager, _assets, _camera);
 
@@ -67,6 +67,7 @@ public class GameInitializer
     {
 
         _inputSystem.Update();
+        _inventoryUI.Update();
 
         var inputs = _inputSystem.GetInputState();
         if (inputs.ToggleInventory)
@@ -78,7 +79,7 @@ public class GameInitializer
                 // _inputSystem.Update();
                 PlayerController.Update();
                 _animationSystem.Update(gameTime);
-                _inventoryUI.Update();
+                // _inventoryUI.Update();
                 break;
             case GameState.Inventory:
                 break;
