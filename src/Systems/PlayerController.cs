@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
 public class PlayerController
@@ -8,27 +7,27 @@ public class PlayerController
     private CollisionSystem _collisionSystem;
     private MovementSystem _movementSystem;
     private AnimationSystem _animationSystem;
-    private List<Entity> _entities;
     private MapSystem _mapSystem;
     private bool[] dir = [false, false, false, false];
     private bool facingRight = true;
     private Camera2D _camera;
     private EntityManager _entityManager;
+    private InventorySystem _inventorySystem;
 
     private bool isAnimationLocked = false;
 
-    public PlayerController(Entity player, InputSystem inputSystem, AnimationSystem animationSystem, List<Entity> entities, MapSystem mapSystem, Camera2D camera, EntityManager entityManager)
+    public PlayerController(Entity player, InputSystem inputSystem, AnimationSystem animationSystem, MapSystem mapSystem, Camera2D camera, EntityManager entityManager, InventorySystem inventorySystem)
     {
         _player = player;
         _inputSystem = inputSystem;
-        _entities = entities;
         // _collisionSystem = new CollisionSystem(_player, _entities);
         _movementSystem = new MovementSystem();
         _animationSystem = animationSystem;
         _mapSystem = mapSystem;
         _camera = camera;
         _entityManager = entityManager;
-        _collisionSystem = new CollisionSystem(_player, _entityManager, _entities);
+        _collisionSystem = new CollisionSystem(_player, _entityManager);
+        _inventorySystem = inventorySystem;
     }
 
     public void Update()
@@ -38,7 +37,7 @@ public class PlayerController
         movement.IsMoving = false;
         var inputs = _inputSystem.GetInputState();
 
-        _collisionSystem.PickUp();
+        _inventorySystem.PickUp(_player);
 
         UpdateInputActions(inputs);
         UpdateAnimation(inputs, movement);

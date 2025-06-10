@@ -21,6 +21,8 @@ public class AnimationSystem
             anim.IsMirrored = config.IsMirrored;
             anim.CurrentFrame = 0;
             anim.Timer = 0f;
+            anim.FrameDurations = config.FrameDurations;
+
 
             UpdateSourceRect(entity);
         }

@@ -49,8 +49,8 @@ public class MapSystem
             }
         }
 
-        MapWidthInPixels = (int)(mapData.GetLength(1) * Constants.TileSize * Constants.ScaleFactor);
-        MapHeightInPixels = (int)(mapData.GetLength(0) * Constants.TileSize * Constants.ScaleFactor);
+        MapWidthInPixels = (int)(mapData.GetLength(1) * Constants.DefaultTileSize * Constants.ScaleFactor);
+        MapHeightInPixels = (int)(mapData.GetLength(0) * Constants.DefaultTileSize * Constants.ScaleFactor);
         _camera.SetWorldBounds(MapWidthInPixels, MapHeightInPixels);
     }
 
@@ -58,7 +58,7 @@ public class MapSystem
     {
         float worldX = mouseX + _camera.Position.X;
         float worldY = mouseY + _camera.Position.Y;
-        int tileSize = (int)(Constants.TileSize * Constants.ScaleFactor);
+        int tileSize = (int)(Constants.DefaultTileSize * Constants.ScaleFactor);
         int col = (int)(worldX / tileSize);
         int row = (int)(worldY / tileSize);
         foreach (var entity in _entityManager.EntitiesWithComponent<TileComponent>())

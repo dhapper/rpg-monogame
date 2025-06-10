@@ -7,10 +7,38 @@ public class EntityManager
     private List<Entity> _entities = new();
     public List<Entity> Entities => _entities;
 
+    private List<Entity> _tileEntities = new List<Entity>();
+    private List<Entity> _spriteEntities = new List<Entity>();
+    private List<Entity> _dropperdOverworldItems = new List<Entity>();
+
+    public IReadOnlyList<Entity> TileEntities => _tileEntities.AsReadOnly();
+    public IReadOnlyList<Entity> SpriteEntities => _spriteEntities.AsReadOnly();
+    public IReadOnlyList<Entity> DroppedOverworldItems => _dropperdOverworldItems.AsReadOnly();
+
+
+    public void RefreshFilteredLists()
+    {
+        _tileEntities.Clear();
+        _spriteEntities.Clear();
+        _dropperdOverworldItems.Clear();
+
+        foreach (var entity in _entities)
+        {
+            if (entity.HasComponent<TileComponent>())
+                _tileEntities.Add(entity);
+            if (entity.HasComponent<PositionComponent>() && entity.HasComponent<SpriteComponent>() && entity.HasComponent<CharacterComponent>())
+                _spriteEntities.Add(entity);
+            if (entity.HasComponent<ItemComponent>() && entity.GetComponent<ItemComponent>().config.IsInOverworld)
+                _dropperdOverworldItems.Add(entity);
+
+        }
+    }
+
     public Entity CreateEntity()
     {
         var entity = new Entity(_nextId++);
         _entities.Add(entity);
+        RefreshFilteredLists(); // guard check?
         return entity;
     }
 

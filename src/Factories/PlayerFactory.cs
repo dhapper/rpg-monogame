@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 public static class PlayerFactory
 {
 
-    public static Entity CreatePlayer(int x, int y, EntityManager entityManager, AssetStore assets, GraphicsDevice graphicsDevice)
+    public static Entity CreatePlayer(int x, int y, EntityManager entityManager, AssetStore assets, GraphicsDevice graphicsDevice, InventorySystem inventorySystem)
     {
         var player = entityManager.CreateEntity();
 
@@ -29,7 +29,7 @@ public static class PlayerFactory
 
         var inv = new InventoryComponent();
         player.AddComponent(inv);
-        new InventorySystem(entityManager, assets).InitInventory(inv);
+        inventorySystem.InitInventory(inv);
 
 
         return player;

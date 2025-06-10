@@ -14,6 +14,7 @@ public class GameInitializer
     private MapSystem _mapSystem;
     private InventoryUI _inventoryUI;
     private GameStateManager _gameStateManager;
+    private InventorySystem _inventorySystem;
 
     public Entity PlayerEntity { get; private set; }
     public PlayerController PlayerController { get; private set; }
@@ -42,14 +43,15 @@ public class GameInitializer
         _gameStateManager = new GameStateManager();
         _camera = new Camera2D(_graphicsDevice.Viewport);
         _inventoryUI = new InventoryUI(_camera, _graphicsDevice.Viewport, _entityManager, _inputSystem, _gameStateManager);
+        _inventorySystem = new InventorySystem(_entityManager, _assets);
 
         RenderSystem = new RenderSystem(_spriteBatch, _entityManager, _assets, _camera, _graphicsDevice, _inventoryUI, _gameStateManager, _inputSystem);
         _animationSystem = new AnimationSystem(_entityManager);
         _mapSystem = new MapSystem(_entityManager, _assets, _camera);
 
         // Create Player
-        PlayerEntity = PlayerFactory.CreatePlayer(200, 200, _entityManager, _assets, _graphicsDevice);
-        PlayerController = new PlayerController(PlayerEntity, _inputSystem, _animationSystem, _entityManager.Entities, _mapSystem, _camera, _entityManager);
+        PlayerEntity = PlayerFactory.CreatePlayer(200, 200, _entityManager, _assets, _graphicsDevice, _inventorySystem);
+        PlayerController = new PlayerController(PlayerEntity, _inputSystem, _animationSystem, _mapSystem, _camera, _entityManager, _inventorySystem);
         PlayerEntity.AddComponent(new PlayerComponent());   // should move to factory?
         var (x, y) = SaveManager.LoadData();
         var position = PlayerEntity.GetComponent<PositionComponent>();
@@ -58,8 +60,8 @@ public class GameInitializer
         _inventoryUI.InitializePlayerInventory();
 
         // Create an Entity
-        npc = PlayerFactory.CreatePlayer(50, 300, _entityManager, _assets, _graphicsDevice);
-        npc.GetComponent<SpriteComponent>().Color = Color.Red;
+        // npc = PlayerFactory.CreatePlayer(50, 300, _entityManager, _assets, _graphicsDevice);
+        // npc.GetComponent<SpriteComponent>().Color = Color.Red;
 
     }
 

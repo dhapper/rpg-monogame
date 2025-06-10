@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -13,7 +14,9 @@ public class Camera2D
     public int WorldWidthInPixels => _worldWidth;
     public int WorldHeightInPixels => _worldHeight;
 
-    private int border = 3 * (int) (Constants.TileSize * Constants.ScaleFactor);
+    private int border = 3 * (int)(Constants.DefaultTileSize * Constants.ScaleFactor);
+
+    private float _zoom { get; set; } = 1f;
 
     public Camera2D(Viewport viewport)
     {
@@ -61,5 +64,16 @@ public class Camera2D
     {
         _worldWidth = width;
         _worldHeight = height;
+    }
+
+    public float Zoom { get; set; } = 1f;
+
+    public Rectangle GetViewRectangle()
+    {
+        int width = (int)(_viewport.Width / Zoom) + Constants.TileSize;
+        int height = (int)(_viewport.Height / Zoom) + Constants.TileSize;
+        int left = (int)Position.X - Constants.TileSize;
+        int top = (int)Position.Y - Constants.TileSize;
+        return new Rectangle(left, top, width, height);
     }
 }

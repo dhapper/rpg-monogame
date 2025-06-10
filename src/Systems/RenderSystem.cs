@@ -18,6 +18,8 @@ public class RenderSystem
 
     private UIRenderSystem _uiRenderSystem;
 
+    private Rectangle _cameraView;
+
     public RenderSystem(SpriteBatch spriteBatch, EntityManager entityManager, AssetStore assetStore, Camera2D camera, GraphicsDevice graphicsDevice, InventoryUI inventoryUI, GameStateManager gameStateManager, InputSystem inputSystem)
     {
         _spriteBatch = spriteBatch;
@@ -34,12 +36,11 @@ public class RenderSystem
 
     public void Draw()
     {
+        _cameraView = _camera.GetViewRectangle();
+
         _spriteBatch.Begin(transformMatrix: _camera.Transform, samplerState: SamplerState.PointClamp);  // new spritebatch for screen relative positioning
 
-        var allEntities = _entityManager.GetEntities();
-        var tileEntities = allEntities.Where(e => e.HasComponent<TileComponent>()).ToList();
-        var spriteEntities = allEntities.Where(e => e.HasComponent<PositionComponent>() && e.HasComponent<SpriteComponent>() && e.HasComponent<CharacterComponent>()).ToList();
-        var sortedSprites = spriteEntities
+        var sortedSprites = _entityManager.SpriteEntities
             .OrderBy(e =>
             {
                 var position = e.GetComponent<PositionComponent>();
@@ -48,11 +49,8 @@ public class RenderSystem
                 return position.Y + sourceHeight;
             }).ToList();
 
-        // has component ItemComponent && item.IsDropped == true
-        var overworldItems = allEntities.Where(e => e.HasComponent<ItemComponent>() && e.GetComponent<ItemComponent>().config.IsInOverworld).ToList();
-
         // Draw tiles
-        foreach (var entity in tileEntities)
+        foreach (var entity in _entityManager.TileEntities)
         {
             if (entity.GetComponent<TileComponent>().Background != default)
                 DrawTile(entity, true);
@@ -73,7 +71,7 @@ public class RenderSystem
         }
 
         // Draw dropped overworld items
-        foreach (var entity in overworldItems)
+        foreach (var entity in _entityManager.DroppedOverworldItems)
         {
             DrawOverworldItem(entity);
 
@@ -88,9 +86,11 @@ public class RenderSystem
 
     public void DrawOverworldItem(Entity entity)
     {
+        if (!RenderHelper.IsEntityInCameraView(entity, _cameraView)) { return; }
+
         var position = entity.GetComponent<PositionComponent>();
         var sprite = entity.GetComponent<SpriteComponent>();
-        
+
         _spriteBatch.Draw(
             sprite.Texture,
             new Vector2(position.X, position.Y),
@@ -98,13 +98,16 @@ public class RenderSystem
             sprite.Color,
             0f,
             Vector2.Zero,
-            ScaleFactor,
+            // ScaleFactor,
+            DroppedItemScaleFactor,
             SpriteEffects.None,
             0f);
     }
 
     public void DrawTile(Entity entity, bool hasBackground = false)
     {
+        if (!RenderHelper.IsEntityInCameraView(entity, _cameraView)) { return; }
+
         var position = entity.GetComponent<PositionComponent>();
         var sprite = entity.GetComponent<SpriteComponent>();
 
@@ -122,6 +125,8 @@ public class RenderSystem
 
     public void DrawEntity(Entity entity)
     {
+        if (!RenderHelper.IsEntityInCameraView(entity, _cameraView)) { return; }
+
         var position = entity.GetComponent<PositionComponent>();
         var sprite = entity.GetComponent<SpriteComponent>();
         var animation = entity.GetComponent<AnimationComponent>();
@@ -142,6 +147,8 @@ public class RenderSystem
 
     public void DrawHitbox(SpriteBatch spriteBatch, Rectangle hitbox)
     {
+        if (!RenderHelper.IsRectangleInCameraView(hitbox, _cameraView)) { return; }
+
         Texture2D whitePixel = new Texture2D(spriteBatch.GraphicsDevice, 1, 1);
         whitePixel.SetData(new[] { Color.White });
         Color color = Color.White;

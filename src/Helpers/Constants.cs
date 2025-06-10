@@ -4,7 +4,9 @@ using Microsoft.Xna.Framework;
 public static class Constants
 {
     public const float ScaleFactor = 4f;
-    public const int TileSize = 16; // 16x16
+    public const float DroppedItemScaleFactor = 2f;
+    public const int DefaultTileSize = 16; // 16x16
+    public const int TileSize = (int)(DefaultTileSize * ScaleFactor);
 
     public static class Player
     {
@@ -24,8 +26,8 @@ public static class Constants
             public static readonly AnimationConfig WalkLeft = new AnimationConfig(3, 8, 0.1f, true);
             public static readonly AnimationConfig WateringCanRight = new AnimationConfig(9, 6, 0.1f);
             public static readonly AnimationConfig WateringCanLeft = new AnimationConfig(9, 6, 0.1f, true);
-            public static readonly AnimationConfig PickAxeRight = new AnimationConfig(10, 5, 0.1f);
-            public static readonly AnimationConfig PickAxeLeft = new AnimationConfig(10, 5, 0.1f, true);
+            public static readonly AnimationConfig PickAxeRight = new AnimationConfig(10, 5, 0.1f, false, [0.15f, 0.15f, 0.075f, 0.075f, 0.2f]);
+            public static readonly AnimationConfig PickAxeLeft = new AnimationConfig(10, 5, 0.1f, true, [0.15f, 0.15f, 0.075f, 0.075f, 0.2f]);
         }
     }
 
@@ -41,9 +43,9 @@ public static class Constants
 
     public static class Items
     {
-        public static readonly ItemConfig WateringCan = new ItemConfig("WateringCan", ItemType.Tool, new Rectangle(0 * TileSize, 0 * TileSize, TileSize, TileSize));
-        public static readonly ItemConfig Pickaxe = new ItemConfig("Pickaxe", ItemType.Tool, new Rectangle(1 * TileSize, 0 * TileSize, TileSize, TileSize));
-        public static readonly ItemConfig Seeds = new ItemConfig("Seeds", ItemType.Plantable, new Rectangle(2 * TileSize, 0 * TileSize, TileSize, TileSize));
+        public static readonly ItemConfig WateringCan = new ItemConfig("WateringCan", ItemType.Tool, new Rectangle(0 * DefaultTileSize, 0 * DefaultTileSize, DefaultTileSize, DefaultTileSize));
+        public static readonly ItemConfig Pickaxe = new ItemConfig("Pickaxe", ItemType.Tool, new Rectangle(1 * DefaultTileSize, 0 * DefaultTileSize, DefaultTileSize, DefaultTileSize));
+        public static readonly ItemConfig Seeds = new ItemConfig("Seeds", ItemType.Plantable, new Rectangle(2 * DefaultTileSize, 0 * DefaultTileSize, DefaultTileSize, DefaultTileSize));
         public static readonly ItemConfig Empty = new ItemConfig("Empty", ItemType.Empty, new Rectangle(0, 0, 0, 0));
     }
 
@@ -58,6 +60,8 @@ public static class Constants
             public const int DefaultSlotSize = 22;
             public const int SlotSize = (int)(22 * Constants.ScaleFactor);
             public const int IconOffset = (int)(3 * Constants.ScaleFactor);
+
+            public const int CollectBoxSize = (int)(Constants.DefaultTileSize * Constants.DroppedItemScaleFactor);
         }
     }
 

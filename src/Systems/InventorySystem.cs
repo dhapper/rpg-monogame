@@ -22,6 +22,32 @@ public class InventorySystem
         inventory.InventoryItems[2][0] = seeds1;
         inventory.InventoryItems[7][2] = seeds2;
     }
+
+    public void PickUp(Entity entity)
+    {
+        var hitbox = entity.GetComponent<CollisionComponent>().Hitbox;
+        foreach (var item in _entityManager.DroppedOverworldItems)
+        {
+            var inCollectionBox = item.GetComponent<CollisionComponent>().Hitbox.Intersects(hitbox);
+            if (inCollectionBox)
+            {
+                for (int i = 0; i < Constants.UI.Inventory.Rows; i++)
+                {
+                    for (int j = 0; j < Constants.UI.Inventory.Cols; j++)
+                    {
+                        var inv = entity.GetComponent<InventoryComponent>();
+                        if (inv.InventoryItems[j][i] == null)
+                        {
+                            item.GetComponent<ItemComponent>().config.IsInOverworld = false;
+                            inv.InventoryItems[j][i] = item;
+                            _entityManager.RefreshFilteredLists();
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+    }
     
 
 }

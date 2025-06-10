@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 public static class TileFactory
 {
 
-    private static int size = Constants.TileSize;
+    private static int size = Constants.DefaultTileSize;
     private static float scale = Constants.ScaleFactor;
 
     public static Entity CreateTile(int id, string type, int? background, int row, int col, EntityManager entityManager, AssetStore assets)

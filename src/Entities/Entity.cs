@@ -16,9 +16,18 @@ public class Entity
         Components[typeof(T)] = component;
     }
 
-    public T GetComponent<T>()
+    // public T GetComponent<T>()
+    // {
+    //     return (T)Components[typeof(T)];
+    // }
+
+    public T GetComponent<T>() where T : class
     {
-        return (T)Components[typeof(T)];
+        if (Components.TryGetValue(typeof(T), out var component))
+        {
+            return component as T;
+        }
+        return null;
     }
 
     public bool HasComponent<T>()
