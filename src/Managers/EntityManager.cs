@@ -10,10 +10,12 @@ public class EntityManager
     private List<Entity> _tileEntities = new List<Entity>();
     private List<Entity> _spriteEntities = new List<Entity>();
     private List<Entity> _dropperdOverworldItems = new List<Entity>();
+    private List<Entity> _cropEntities = new List<Entity>();
 
     public IReadOnlyList<Entity> TileEntities => _tileEntities.AsReadOnly();
     public IReadOnlyList<Entity> SpriteEntities => _spriteEntities.AsReadOnly();
     public IReadOnlyList<Entity> DroppedOverworldItems => _dropperdOverworldItems.AsReadOnly();
+    public IReadOnlyList<Entity> CropEntities => _cropEntities.AsReadOnly();
 
 
     public void RefreshFilteredLists()
@@ -21,6 +23,7 @@ public class EntityManager
         _tileEntities.Clear();
         _spriteEntities.Clear();
         _dropperdOverworldItems.Clear();
+        _cropEntities.Clear();
 
         foreach (var entity in _entities)
         {
@@ -30,6 +33,8 @@ public class EntityManager
                 _spriteEntities.Add(entity);
             if (entity.HasComponent<ItemComponent>() && entity.GetComponent<ItemComponent>().config.IsInOverworld)
                 _dropperdOverworldItems.Add(entity);
+            if (entity.HasComponent<CropComponent>())
+                _cropEntities.Add(entity);
 
         }
     }

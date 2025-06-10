@@ -45,7 +45,7 @@ public class RenderSystem
             {
                 var position = e.GetComponent<PositionComponent>();
                 var sprite = e.GetComponent<SpriteComponent>();
-                int sourceHeight = sprite.SourceRectangle?.Height ?? 0;
+                int sourceHeight = sprite.SourceRectangle.Height;
                 return position.Y + sourceHeight;
             }).ToList();
 
@@ -61,19 +61,25 @@ public class RenderSystem
                 DrawHitbox(_spriteBatch, entity.GetComponent<CollisionComponent>().Hitbox);
         }
 
-        // Draw entities
-        foreach (var entity in sortedSprites)
+        // Draw dropped overworld items
+        foreach (var entity in _entityManager.DroppedOverworldItems)
         {
-            DrawEntity(entity);
+            DrawOverworldItem(entity);
 
             if (GameInitializer.ShowHitbox && entity.HasComponent<CollisionComponent>())
                 DrawHitbox(_spriteBatch, entity.GetComponent<CollisionComponent>().Hitbox);
         }
 
-        // Draw dropped overworld items
-        foreach (var entity in _entityManager.DroppedOverworldItems)
+        // Draw crops
+        foreach (var entity in _entityManager.CropEntities)
         {
-            DrawOverworldItem(entity);
+            DrawEntity(entity);
+        }
+
+        // Draw entities
+        foreach (var entity in sortedSprites)
+        {
+            DrawEntity(entity);
 
             if (GameInitializer.ShowHitbox && entity.HasComponent<CollisionComponent>())
                 DrawHitbox(_spriteBatch, entity.GetComponent<CollisionComponent>().Hitbox);
@@ -131,7 +137,9 @@ public class RenderSystem
         var sprite = entity.GetComponent<SpriteComponent>();
         var animation = entity.GetComponent<AnimationComponent>();
 
-        SpriteEffects effects = animation.IsMirrored ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+        SpriteEffects effects = SpriteEffects.None;
+        if (animation != null)
+            effects = animation.IsMirrored ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
 
         _spriteBatch.Draw(
             sprite.Texture,

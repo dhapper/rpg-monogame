@@ -15,6 +15,7 @@ public class GameInitializer
     private InventoryUI _inventoryUI;
     private GameStateManager _gameStateManager;
     private InventorySystem _inventorySystem;
+    private InteractionSystem _interactionSystem;
 
     public Entity PlayerEntity { get; private set; }
     public PlayerController PlayerController { get; private set; }
@@ -44,6 +45,7 @@ public class GameInitializer
         _camera = new Camera2D(_graphicsDevice.Viewport);
         _inventoryUI = new InventoryUI(_camera, _graphicsDevice.Viewport, _entityManager, _inputSystem, _gameStateManager);
         _inventorySystem = new InventorySystem(_entityManager, _assets);
+        _interactionSystem = new InteractionSystem(_entityManager);
 
         RenderSystem = new RenderSystem(_spriteBatch, _entityManager, _assets, _camera, _graphicsDevice, _inventoryUI, _gameStateManager, _inputSystem);
         _animationSystem = new AnimationSystem(_entityManager);
@@ -51,7 +53,7 @@ public class GameInitializer
 
         // Create Player
         PlayerEntity = PlayerFactory.CreatePlayer(200, 200, _entityManager, _assets, _graphicsDevice, _inventorySystem);
-        PlayerController = new PlayerController(PlayerEntity, _inputSystem, _animationSystem, _mapSystem, _camera, _entityManager, _inventorySystem);
+        PlayerController = new PlayerController(PlayerEntity, _inputSystem, _animationSystem, _mapSystem, _camera, _entityManager, _inventorySystem, _interactionSystem, _assets);
         PlayerEntity.AddComponent(new PlayerComponent());   // should move to factory?
         var (x, y) = SaveManager.LoadData();
         var position = PlayerEntity.GetComponent<PositionComponent>();

@@ -32,7 +32,7 @@ public class AnimationSystem
     {
         var anim = entity.GetComponent<AnimationComponent>();
         var sprite = entity.GetComponent<SpriteComponent>();
-        Rectangle rect = sprite.SourceRectangle ?? new Rectangle(0, 0, 0, 0);
+        Rectangle rect = sprite.SourceRectangle;
 
         sprite.SourceRectangle = new Rectangle(
             anim.CurrentFrame * rect.Width,
@@ -67,7 +67,7 @@ public class AnimationSystem
                         break;
                     }
 
-                    Rectangle rect = sprite.SourceRectangle ?? new Rectangle(0, 0, 32, 32);
+                    Rectangle rect = sprite.SourceRectangle;
                     sprite.SourceRectangle = new Rectangle(
                         animation.CurrentFrame * rect.Width,
                         animation.Row * rect.Height,
@@ -89,7 +89,7 @@ public class AnimationSystem
                         break;
                     }
 
-                    Rectangle rect = sprite.SourceRectangle ?? new Rectangle(0, 0, 32, 32);
+                    Rectangle rect = sprite.SourceRectangle;
                     sprite.SourceRectangle = new Rectangle(
                         animation.CurrentFrame * rect.Width,
                         animation.Row * rect.Height,

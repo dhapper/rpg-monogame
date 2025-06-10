@@ -49,6 +49,15 @@ public static class Constants
         public static readonly ItemConfig Empty = new ItemConfig("Empty", ItemType.Empty, new Rectangle(0, 0, 0, 0));
     }
 
+    public static class Crops
+    {
+        public const int DefaultSpriteSize = 48;
+        public const int DefaultStages = 4;
+
+        public static readonly CropConfig Pumpkin = new CropConfig("Pumpkin", DefaultStages, new Rectangle(0, 0 * DefaultSpriteSize, DefaultSpriteSize, DefaultSpriteSize));
+        public static readonly CropConfig Potato = new CropConfig("Potato", DefaultStages, new Rectangle(0, 1 * DefaultSpriteSize, DefaultSpriteSize, DefaultSpriteSize));
+    }
+
     public static class UI
     {
         public static class Inventory

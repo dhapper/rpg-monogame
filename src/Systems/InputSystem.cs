@@ -76,6 +76,7 @@ public class InputSystem
 
         state.ToggleHitbox = IsKeyPressed(Keys.H);
         state.ToggleInventory = IsKeyPressed(Keys.I);
+        state.Grow = IsKeyPressed(Keys.G);
 
         state.Save = IsKeyPressed(Keys.O);
         state.Interact = IsMousePressed(MouseButton.Left);

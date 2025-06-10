@@ -13,8 +13,8 @@ public class RenderHelper
         var position = entity.GetComponent<PositionComponent>();
         var sprite = entity.GetComponent<SpriteComponent>();
 
-        int width = sprite.SourceRectangle.Value.Width;
-        int height = sprite.SourceRectangle.Value.Height;
+        int width = sprite.SourceRectangle.Width;
+        int height = sprite.SourceRectangle.Height;
         Rectangle entityRectangle = new Rectangle((int)position.X, (int)position.Y, width, height);
 
         return entityRectangle.Intersects(cameraView);

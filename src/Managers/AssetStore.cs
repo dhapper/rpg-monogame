@@ -7,9 +7,14 @@ public class AssetStore
     public Texture2D PlayerTexture { get; private set; }
     public Texture2D TileSheet;
     public Texture2D GroundTiles, AnimatedTiles;
+
     public Texture2D PlayerBody, PlayerHair, PlayerTools;
+
     public Texture2D BackgroundTiles, PathTiles, WaterTiles, CollisionTiles;
+
     public Texture2D UIsheet, IconSheet;
+
+    public Texture2D CropSprites;
 
     private ContentManager _content;
 
@@ -40,6 +45,8 @@ public class AssetStore
 
         UIsheet = _content.Load<Texture2D>("ui");
         IconSheet = _content.Load<Texture2D>("icons");
+
+        CropSprites = _content.Load<Texture2D>("farming");
 
 
     }

@@ -13,7 +13,13 @@ public static class TileFactory
 
         var tile = entityManager.CreateEntity();
 
-        tile.AddComponent(new TileComponent());
+        // tile.AddComponent(new TileComponent());
+        tile.AddComponent(new TileComponent
+        {
+            Type = type,
+            Id = id
+        });
+
         tile.AddComponent(new PositionComponent(col * size * scale, row * size * scale, size, size));
 
         var sheet = GetTileset(type, assets);
@@ -22,11 +28,6 @@ public static class TileFactory
         int tilesPerRow = sheetWidth / size;
         int x = id % tilesPerRow * size;
         int y = id / tilesPerRow * size;
-        // if (type == Constants.Tile.AnimationCollisionSheetIndex)
-        // {
-        //     x = 0;
-        //     y = id * size;
-        // }
 
         tile.AddComponent(new SpriteComponent(sheet, new Rectangle(x, y, size, size)));
 

@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Xna.Framework;
 
 public class PlayerController
@@ -13,10 +14,12 @@ public class PlayerController
     private Camera2D _camera;
     private EntityManager _entityManager;
     private InventorySystem _inventorySystem;
+    private InteractionSystem _interactionSystem;
+    private AssetStore _assets;
 
     private bool isAnimationLocked = false;
 
-    public PlayerController(Entity player, InputSystem inputSystem, AnimationSystem animationSystem, MapSystem mapSystem, Camera2D camera, EntityManager entityManager, InventorySystem inventorySystem)
+    public PlayerController(Entity player, InputSystem inputSystem, AnimationSystem animationSystem, MapSystem mapSystem, Camera2D camera, EntityManager entityManager, InventorySystem inventorySystem, InteractionSystem interactionSystem, AssetStore assets)
     {
         _player = player;
         _inputSystem = inputSystem;
@@ -28,6 +31,8 @@ public class PlayerController
         _entityManager = entityManager;
         _collisionSystem = new CollisionSystem(_player, _entityManager);
         _inventorySystem = inventorySystem;
+        _interactionSystem = interactionSystem;
+        _assets = assets;
     }
 
     public void Update()
@@ -49,6 +54,48 @@ public class PlayerController
         // if(Inventory.getCurrentItem == 'wateringCan')
     }
 
+    public void PlantCrop()
+    {
+        var tile = _interactionSystem.GetTile(_inputSystem.GetMouseLocation(), _camera);
+        if (tile == null) { return; }
+        if (!tile.HasComponent<TileComponent>()) { return; }
+
+        var tileComp = tile.GetComponent<TileComponent>();
+        if (tileComp.Type == Constants.Tile.PathsSheetName && (tileComp.Id == 41 || tileComp.Id == 49))
+        {
+            var tilePosComp = tile.GetComponent<PositionComponent>();
+            var tilePos = (tilePosComp.X, tilePosComp.Y);
+
+            // check if already planted
+            foreach (var entity in _entityManager.CropEntities)
+            {
+                if (entity.GetComponent<CropComponent>().config.TilePosition == tilePos)
+                    return;
+            }
+
+            CropFactory.CreateCrop(Constants.Crops.Pumpkin, _entityManager, _assets, tilePos);
+            _entityManager.RefreshFilteredLists();
+        }
+
+    }
+
+    public void GrowPlants()
+    {
+        foreach (var entity in _entityManager.CropEntities)
+        {
+            var config = entity.GetComponent<CropComponent>().config;
+            Console.WriteLine(config.CurrentStage+" "+config.Stages);
+            if (config.CurrentStage < config.Stages)
+            {
+                var spriteComp = entity.GetComponent<SpriteComponent>();
+                Rectangle rect = spriteComp.SourceRectangle;
+                rect.X += Constants.Crops.DefaultSpriteSize;
+                spriteComp.SourceRectangle = rect;
+                config.CurrentStage++;
+            }
+        }
+    }
+
     public void UpdateInputActions(InputState inputs)
     {
         // movement
@@ -66,6 +113,8 @@ public class PlayerController
             GameInitializer.ShowHitbox = !GameInitializer.ShowHitbox;
         if (inputs.Save)
             SaveManager.SaveData(_player);
+        if (inputs.Grow)
+            GrowPlants();
 
         var inv = _player.GetComponent<InventoryComponent>();
         // if (inv.InventoryItems[inputs.Number - 1 ?? 0][0] != null)
@@ -90,6 +139,9 @@ public class PlayerController
                     case "Pickaxe":
                         _animationSystem.SetAnimation(_player, facingRight ? Constants.Player.Animations.PickAxeRight : Constants.Player.Animations.PickAxeLeft);
                         isAnimationLocked = true;
+                        break;
+                    case "Seeds":
+                        PlantCrop();
                         break;
                 }
             }

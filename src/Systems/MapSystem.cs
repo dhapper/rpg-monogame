@@ -54,25 +54,6 @@ public class MapSystem
         _camera.SetWorldBounds(MapWidthInPixels, MapHeightInPixels);
     }
 
-    public Entity GetTile(float mouseX, float mouseY)
-    {
-        float worldX = mouseX + _camera.Position.X;
-        float worldY = mouseY + _camera.Position.Y;
-        int tileSize = (int)(Constants.DefaultTileSize * Constants.ScaleFactor);
-        int col = (int)(worldX / tileSize);
-        int row = (int)(worldY / tileSize);
-        foreach (var entity in _entityManager.EntitiesWithComponent<TileComponent>())
-        {
-            var position = entity.GetComponent<PositionComponent>();
-            if ((int)(position.X / tileSize) == col && (int)(position.Y / tileSize) == row)
-            {
-                Console.WriteLine(position.X / tileSize + " " + position.Y / tileSize);
-                return entity;
-            }
-        }
-        return null;
-    }
-
     public class TileData
     {
         public string Type { get; set; }
