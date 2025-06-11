@@ -16,6 +16,7 @@ public class PlayerController
     private InventorySystem _inventorySystem;
     private InteractionSystem _interactionSystem;
     private AssetStore _assets;
+    // private PlantInteractions _plantInteractions;
 
     private bool isAnimationLocked = false;
 
@@ -30,9 +31,11 @@ public class PlayerController
         _camera = camera;
         _entityManager = entityManager;
         _collisionSystem = new CollisionSystem(_player, _entityManager);
-        _inventorySystem = inventorySystem;
         _interactionSystem = interactionSystem;
         _assets = assets;
+        // _plantInteractions = new PlantInteractions(_entityManager);
+
+        _inventorySystem = inventorySystem;
     }
 
     public void Update()
@@ -49,53 +52,6 @@ public class PlayerController
         UpdateCamera();
     }
 
-    public void GetInteraction()
-    {
-        // if(Inventory.getCurrentItem == 'wateringCan')
-    }
-
-    public void PlantCrop()
-    {
-        var tile = _interactionSystem.GetTile(_inputSystem.GetMouseLocation(), _camera);
-        if (tile == null) { return; }
-        if (!tile.HasComponent<TileComponent>()) { return; }
-
-        var tileComp = tile.GetComponent<TileComponent>();
-        if (tileComp.Type == Constants.Tile.PathsSheetName && (tileComp.Id == 41 || tileComp.Id == 49))
-        {
-            var tilePosComp = tile.GetComponent<PositionComponent>();
-            var tilePos = (tilePosComp.X, tilePosComp.Y);
-
-            // check if already planted
-            foreach (var entity in _entityManager.CropEntities)
-            {
-                if (entity.GetComponent<CropComponent>().config.TilePosition == tilePos)
-                    return;
-            }
-
-            CropFactory.CreateCrop(Constants.Crops.Pumpkin, _entityManager, _assets, tilePos);
-            _entityManager.RefreshFilteredLists();
-        }
-
-    }
-
-    public void GrowPlants()
-    {
-        foreach (var entity in _entityManager.CropEntities)
-        {
-            var config = entity.GetComponent<CropComponent>().config;
-            Console.WriteLine(config.CurrentStage+" "+config.Stages);
-            if (config.CurrentStage < config.Stages)
-            {
-                var spriteComp = entity.GetComponent<SpriteComponent>();
-                Rectangle rect = spriteComp.SourceRectangle;
-                rect.X += Constants.Crops.DefaultSpriteSize;
-                spriteComp.SourceRectangle = rect;
-                config.CurrentStage++;
-            }
-        }
-    }
-
     public void UpdateInputActions(InputState inputs)
     {
         // movement
@@ -108,44 +64,10 @@ public class PlayerController
         if (inputs.MoveRight)
             InitMovement(Constants.Directions.Right);
 
-        // misc
-        if (inputs.ToggleHitbox)
-            GameInitializer.ShowHitbox = !GameInitializer.ShowHitbox;
-        if (inputs.Save)
-            SaveManager.SaveData(_player);
-        if (inputs.Grow)
-            GrowPlants();
+        _interactionSystem.MiscControls(_player, inputs);
+        _interactionSystem.HandleInteractions(_player, inputs, facingRight, ref isAnimationLocked);
 
-        var inv = _player.GetComponent<InventoryComponent>();
-        // if (inv.InventoryItems[inputs.Number - 1 ?? 0][0] != null)
-        // {
-        // inv.activeItem = inputs.IsNumberChanging ? inv.InventoryItems[inputs.Number - 1 ?? 0][0] : inv.activeItem;
-        // inv.activeItemIndices = (inputs.Number - 1 ?? 0, 0);
-        inv.activeItemIndices = inputs.IsNumberChanging ? (inputs.Number - 1 ?? 0, 0) : inv.activeItemIndices;
-        // }
-
-        var activeItemEntity = inv.InventoryItems[inv.activeItemIndices.Item1][inv.activeItemIndices.Item2];
-        if (activeItemEntity != null)
-        {
-            var activeItem = inv.InventoryItems[inv.activeItemIndices.Item1][inv.activeItemIndices.Item2].GetComponent<ItemComponent>().config;
-            if (inputs.Interact && activeItem != null)
-            {
-                switch (activeItem.Name)
-                {
-                    case "WateringCan":
-                        _animationSystem.SetAnimation(_player, facingRight ? Constants.Player.Animations.WateringCanRight : Constants.Player.Animations.WateringCanLeft);
-                        isAnimationLocked = true;
-                        break;
-                    case "Pickaxe":
-                        _animationSystem.SetAnimation(_player, facingRight ? Constants.Player.Animations.PickAxeRight : Constants.Player.Animations.PickAxeLeft);
-                        isAnimationLocked = true;
-                        break;
-                    case "Seeds":
-                        PlantCrop();
-                        break;
-                }
-            }
-        }
+        // _interactionSystem.PlantInteractions.HarvestCrop(_interactionSystem, _inputSystem, _camera, _assets, _player.GetComponent<InventoryComponent>());
     }
 
     public void UpdateAnimation(InputState inputs, MovementComponent movement)
@@ -157,6 +79,7 @@ public class PlayerController
             return;
 
         Vector2 speedVector = _movementSystem.CalculateSpeed(movement.Speed, dir);
+        // Vector2 speedVector = _movementSystem.CalculateSpeed(2.66f, dir);
         _collisionSystem.Move(speedVector.X, speedVector.Y, _camera.WorldWidthInPixels, _camera.WorldHeightInPixels);
 
         if (inputs.MoveLeft)

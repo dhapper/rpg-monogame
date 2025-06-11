@@ -1,9 +1,10 @@
+using System.Collections.Generic;
 using Microsoft.VisualBasic.FileIO;
 using Microsoft.Xna.Framework;
 
 public static class Constants
 {
-    public const float ScaleFactor = 3f;
+    public const float ScaleFactor = 3;
     public const float DroppedItemScaleFactor = ScaleFactor/2;
     public const int DefaultTileSize = 16; // 16x16
     public const int TileSize = (int)(DefaultTileSize * ScaleFactor);
@@ -16,7 +17,7 @@ public static class Constants
         public const int HitboxWidth = 10;
         public const int HitboxHeight = 13;
 
-        public const float Speed = 2;
+        public const float Speed = ScaleFactor;
 
         public static class Animations
         {
@@ -37,16 +38,20 @@ public static class Constants
         public const string CollisionSheetIndex = "Tileset2";
         public const string WaterSheetIndex = "Tileset3";
 
-        public static string[] SolidTilesets = { CollisionSheetIndex, WaterSheetIndex };
+        public static readonly string[] SolidTilesets = { CollisionSheetIndex, WaterSheetIndex };
 
+        public static readonly int[] PlantableTiles = [ 41, 49 ];
     }
 
     public static class Items
     {
         public static readonly ItemConfig WateringCan = new ItemConfig("WateringCan", ItemType.Tool, new Rectangle(0 * DefaultTileSize, 0 * DefaultTileSize, DefaultTileSize, DefaultTileSize));
         public static readonly ItemConfig Pickaxe = new ItemConfig("Pickaxe", ItemType.Tool, new Rectangle(1 * DefaultTileSize, 0 * DefaultTileSize, DefaultTileSize, DefaultTileSize));
-        public static readonly ItemConfig Seeds = new ItemConfig("Seeds", ItemType.Plantable, new Rectangle(2 * DefaultTileSize, 0 * DefaultTileSize, DefaultTileSize, DefaultTileSize));
-        public static readonly ItemConfig Empty = new ItemConfig("Empty", ItemType.Empty, new Rectangle(0, 0, 0, 0));
+        public static readonly ItemConfig PumpkinSeeds = new ItemConfig("PumpkinSeeds", ItemType.Plantable, new Rectangle(2 * DefaultTileSize, 0 * DefaultTileSize, DefaultTileSize, DefaultTileSize));
+        public static readonly ItemConfig PotatoSeeds = new ItemConfig("PotatoSeeds", ItemType.Plantable, new Rectangle(3 * DefaultTileSize, 0 * DefaultTileSize, DefaultTileSize, DefaultTileSize));
+        public static readonly ItemConfig Pumpkin = new ItemConfig("Pumpkin", ItemType.Crop, new Rectangle(4 * DefaultTileSize, 0 * DefaultTileSize, DefaultTileSize, DefaultTileSize));
+        public static readonly ItemConfig Potato = new ItemConfig("Potato", ItemType.Crop, new Rectangle(5 * DefaultTileSize, 0 * DefaultTileSize, DefaultTileSize, DefaultTileSize));
+        // public static readonly ItemConfig Empty = new ItemConfig("Empty", ItemType.Empty, new Rectangle(0, 0, 0, 0));
     }
 
     public static class Crops
@@ -56,6 +61,21 @@ public static class Constants
 
         public static readonly CropConfig Pumpkin = new CropConfig("Pumpkin", DefaultStages, new Rectangle(0, 0 * DefaultSpriteSize, DefaultSpriteSize, DefaultSpriteSize));
         public static readonly CropConfig Potato = new CropConfig("Potato", DefaultStages, new Rectangle(0, 1 * DefaultSpriteSize, DefaultSpriteSize, DefaultSpriteSize));
+    }
+
+    public static class SeedCropMapping
+    {
+        public static readonly Dictionary<string, CropConfig> SeedNameToCrop = new()
+        {
+            { Items.PumpkinSeeds.Name, Crops.Pumpkin },
+            { Items.PotatoSeeds.Name, Crops.Potato }
+        };
+
+        public static readonly Dictionary<string, ItemConfig> PlantedCropNameToCrop = new()
+        {
+            { Crops.Pumpkin.Name, Items.Pumpkin },
+            { Crops.Potato.Name, Items.Potato }
+        };
     }
 
     public static class UI

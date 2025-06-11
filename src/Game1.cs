@@ -18,8 +18,8 @@ public class Game1 : Game
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
 
-        _graphics.PreferredBackBufferWidth = 1800;  // Set width
-        _graphics.PreferredBackBufferHeight = 970;  // Set height
+        _graphics.PreferredBackBufferWidth = 1800 - 600;  // Set width
+        _graphics.PreferredBackBufferHeight = 970 - 300;  // Set height
         _graphics.ApplyChanges(); // Apply the size change
 
     }

@@ -47,6 +47,12 @@ public class EntityManager
         return entity;
     }
 
+    public void DeleteEntity(Entity entity)
+    {
+        _entities.Remove(entity);
+        RefreshFilteredLists();
+    }
+
     public IEnumerable<Entity> GetEntities()
     {
         return _entities;

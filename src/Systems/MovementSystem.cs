@@ -1,4 +1,3 @@
-using System;
 using Microsoft.Xna.Framework;
 
 public class MovementSystem
@@ -25,19 +24,12 @@ public class MovementSystem
         if (dir[Constants.Directions.Left] && dir[Constants.Directions.Right])
             xSpeed = 0;
 
-
         // diagonal speed
-        // if (xSpeed != 0 && ySpeed != 0)
-        // {
-        //     double diagonalFactor = Math.Sqrt(0.5);
-        //     xSpeed *= (float)diagonalFactor;
-        //     ySpeed *= (float)diagonalFactor;
-        // }
-    
-        if (!(xSpeed != 0 && ySpeed != 0))
+        if (xSpeed != 0 && ySpeed != 0)
         {
-            xSpeed *= 1.5f;
-            ySpeed *= 1.5f;
+            float diagonalFactor = 0.7071f;
+            xSpeed *= diagonalFactor;
+            ySpeed *= diagonalFactor;
         }
 
         return new Vector2(xSpeed, ySpeed);

@@ -48,10 +48,10 @@ public class GameInitializer
         _camera = new Camera2D(_graphicsDevice.Viewport);
         _inventoryUI = new InventoryUI(_camera, _graphicsDevice.Viewport, _entityManager, _inputSystem, _gameStateManager);
         _inventorySystem = new InventorySystem(_entityManager, _assets);
-        _interactionSystem = new InteractionSystem(_entityManager);
+        _animationSystem = new AnimationSystem(_entityManager);
+        _interactionSystem = new InteractionSystem(_entityManager, _inputSystem, _assets, _animationSystem, _camera, _inventorySystem);
 
         RenderSystem = new RenderSystem(_spriteBatch, _entityManager, _assets, _camera, _graphicsDevice, _inventoryUI, _gameStateManager, _inputSystem);
-        _animationSystem = new AnimationSystem(_entityManager);
         _mapSystem = new MapSystem(_entityManager, _assets, _camera);
 
         // Create Player
