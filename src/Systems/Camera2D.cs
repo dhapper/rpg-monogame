@@ -1,4 +1,4 @@
-using System.ComponentModel;
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -14,50 +14,11 @@ public class Camera2D
     public int WorldWidthInPixels => _worldWidth;
     public int WorldHeightInPixels => _worldHeight;
 
-    private int border = 3 * (int)(Constants.DefaultTileSize * Constants.ScaleFactor);
-
-    private float _zoom { get; set; } = 1f;
-
     public Camera2D(Viewport viewport)
     {
         _viewport = viewport;
         Position = Vector2.Zero;
         UpdateTransform();
-    }
-
-    public void Follow(Vector2 target)
-    {
-        float leftBound = Position.X + border;
-        float rightBound = Position.X + _viewport.Width - border;
-        float topBound = Position.Y + border;
-        float bottomBound = Position.Y + _viewport.Height - border;
-
-        float newX = Position.X;
-        float newY = Position.Y;
-
-        // Horizontal camera adjustment
-        if (target.X < leftBound)
-            newX = target.X - border;
-        else if (target.X > rightBound)
-            newX = target.X - _viewport.Width + border;
-
-        // Vertical camera adjustment
-        if (target.Y < topBound)
-            newY = target.Y - border;
-        else if (target.Y > bottomBound)
-            newY = target.Y - _viewport.Height + border;
-
-        // Clamp to world bounds
-        newX = MathHelper.Clamp(newX, 0, _worldWidth - _viewport.Width);
-        newY = MathHelper.Clamp(newY, 0, _worldHeight - _viewport.Height);
-
-        Position = new Vector2(newX, newY);
-        UpdateTransform();
-    }
-
-    private void UpdateTransform()
-    {
-        Transform = Matrix.CreateTranslation(new Vector3(-Position, 0));
     }
 
     public void SetWorldBounds(int width, int height)
@@ -66,12 +27,48 @@ public class Camera2D
         _worldHeight = height;
     }
 
-    public float Zoom { get; set; } = 1f;
+    public void Follow(Vector2 target)
+    {
+        bool smallWorldWidth = _worldWidth <= _viewport.Width;
+        bool smallWorldHeight = _worldHeight <= _viewport.Height;
+
+        float newX, newY;
+
+        if (smallWorldWidth)
+        {
+            newX = (_worldWidth - _viewport.Width) / 2f;
+        }
+        else
+        {
+            newX = target.X - _viewport.Width / 2f;
+            newX = MathHelper.Clamp(newX, 0, _worldWidth - _viewport.Width);
+        }
+
+        if (smallWorldHeight)
+        {
+            newY = (_worldHeight - _viewport.Height) / 2f;
+        }
+        else
+        {
+            newY = target.Y - _viewport.Height / 2f;
+            newY = MathHelper.Clamp(newY, 0, _worldHeight - _viewport.Height);
+        }
+
+        Position = new Vector2(newX, newY);
+        UpdateTransform();
+    }
+
+    private void UpdateTransform()
+    {
+        // Round to pixel to avoid jitter
+        Vector2 pixelPosition = new Vector2((float)Math.Round(Position.X), (float)Math.Round(Position.Y));
+        Transform = Matrix.CreateTranslation(new Vector3(-pixelPosition, 0));
+    }
 
     public Rectangle GetViewRectangle()
     {
-        int width = (int)(_viewport.Width / Zoom) + Constants.TileSize;
-        int height = (int)(_viewport.Height / Zoom) + Constants.TileSize;
+        int width = _viewport.Width + Constants.TileSize;
+        int height = _viewport.Height + Constants.TileSize;
         int left = (int)Position.X - Constants.TileSize;
         int top = (int)Position.Y - Constants.TileSize;
         return new Rectangle(left, top, width, height);

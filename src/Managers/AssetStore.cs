@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -49,5 +50,14 @@ public class AssetStore
         CropSprites = _content.Load<Texture2D>("farming");
 
 
+    }
+
+    public void UpdateSheets(GraphicsDevice graphicsDevice)
+    {
+        // Color[][] colourChanges = [
+        //     [new Color(0, 0, 0), new Color(200, 200, 200)],
+        // ];
+        // PathTiles = SpriteProcessor.ChangeColours(colourChanges, PathTiles, graphicsDevice);
+        // CollisionTiles = SpriteProcessor.ChangeColours(colourChanges, CollisionTiles, graphicsDevice);
     }
 }

@@ -36,6 +36,9 @@ public class GameInitializer
         _assets = assets;
         _spriteBatch = spriteBatch;
         _graphicsDevice = _spriteBatch.GraphicsDevice;
+
+        _assets.UpdateSheets(_graphicsDevice);
+
     }
 
     public void Initialize()

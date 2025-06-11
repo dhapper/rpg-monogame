@@ -139,7 +139,9 @@ public class InventoryUI
         int slotWidth = (int)(defaultSpacing * Constants.ScaleFactor);
         int x = (int)(_viewport.Width / 2 - slotWidth * 9 / 2 - 1 * Constants.ScaleFactor);
         int yHotbar = (int)(6 * (Constants.DefaultTileSize * Constants.ScaleFactor));
+        yHotbar = _viewport.Height - 2 * Constants.TileSize;
         int yInventory = (int)(0 * (Constants.DefaultTileSize * Constants.ScaleFactor));
+        yInventory = _viewport.Height - 8 * Constants.TileSize;
 
         for (int i = 0; i < Cols; i++)
         {

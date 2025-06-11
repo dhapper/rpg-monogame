@@ -2,11 +2,11 @@ using System;
 
 public class MovementComponent
 {
-    public int Speed;
+    public float Speed;
     public Boolean IsMoving;
     public int LastDir = -1;
 
-    public MovementComponent(int speed)
+    public MovementComponent(float speed)
     {
         Speed = speed;
     }

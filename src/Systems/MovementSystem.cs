@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 public class MovementSystem
 {
 
-    public Vector2 CalculateSpeed(int speed, bool[] dir)
+    public Vector2 CalculateSpeed(float speed, bool[] dir)
     {
 
         float xSpeed = 0f;
@@ -27,11 +27,17 @@ public class MovementSystem
 
 
         // diagonal speed
-        if (xSpeed != 0 && ySpeed != 0)
+        // if (xSpeed != 0 && ySpeed != 0)
+        // {
+        //     double diagonalFactor = Math.Sqrt(0.5);
+        //     xSpeed *= (float)diagonalFactor;
+        //     ySpeed *= (float)diagonalFactor;
+        // }
+    
+        if (!(xSpeed != 0 && ySpeed != 0))
         {
-            double diagonalFactor = Math.Sqrt(0.5);
-            xSpeed *= (float)diagonalFactor;
-            ySpeed *= (float)diagonalFactor;
+            xSpeed *= 1.5f;
+            ySpeed *= 1.5f;
         }
 
         return new Vector2(xSpeed, ySpeed);

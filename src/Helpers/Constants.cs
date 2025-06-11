@@ -3,8 +3,8 @@ using Microsoft.Xna.Framework;
 
 public static class Constants
 {
-    public const float ScaleFactor = 4f;
-    public const float DroppedItemScaleFactor = 2f;
+    public const float ScaleFactor = 3f;
+    public const float DroppedItemScaleFactor = ScaleFactor/2;
     public const int DefaultTileSize = 16; // 16x16
     public const int TileSize = (int)(DefaultTileSize * ScaleFactor);
 
@@ -16,7 +16,7 @@ public static class Constants
         public const int HitboxWidth = 10;
         public const int HitboxHeight = 13;
 
-        public const int Speed = 4;
+        public const float Speed = 2;
 
         public static class Animations
         {

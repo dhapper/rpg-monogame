@@ -99,7 +99,8 @@ public class RenderSystem
 
         _spriteBatch.Draw(
             sprite.Texture,
-            new Vector2(position.X, position.Y),
+            // new Vector2(position.X, position.Y),
+            new Vector2((float)Math.Floor(position.X), (float)Math.Floor(position.Y)),
             sprite.SourceRectangle,
             sprite.Color,
             0f,
@@ -119,7 +120,8 @@ public class RenderSystem
 
         _spriteBatch.Draw(
             hasBackground ? _assetStore.BackgroundTiles : sprite.Texture,
-            new Vector2(position.X, position.Y),
+            // new Vector2(position.X, position.Y),
+            new Vector2((float)Math.Floor(position.X), (float)Math.Floor(position.Y)),
             hasBackground ? entity.GetComponent<TileComponent>().Background : sprite.SourceRectangle,
             sprite.Color,
             0f,
@@ -143,7 +145,8 @@ public class RenderSystem
 
         _spriteBatch.Draw(
             sprite.Texture,
-            new Vector2((int)position.X, (int)position.Y),
+            // new Vector2(position.X, position.Y),
+            new Vector2((float)Math.Floor(position.X), (float)Math.Floor(position.Y)),
             sprite.SourceRectangle,
             sprite.Color,
             0f,

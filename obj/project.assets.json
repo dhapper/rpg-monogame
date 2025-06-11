@@ -340,11 +340,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\Dhaarshan. P\\Desktop\\main\\Coding\\VS projects\\C#\\MonoGame\\rpg\\rpg.csproj",
+      "projectUniqueName": "C:\\Users\\Dhaarshan. P\\Desktop\\main\\Coding\\VS projects\\C#\\MonoGame\\rpg\\rpg.csproj",
       "projectName": "rpg",
-      "projectPath": "c:\\Users\\Dhaarshan. P\\Desktop\\main\\Coding\\VS projects\\C#\\MonoGame\\rpg\\rpg.csproj",
+      "projectPath": "C:\\Users\\Dhaarshan. P\\Desktop\\main\\Coding\\VS projects\\C#\\MonoGame\\rpg\\rpg.csproj",
       "packagesPath": "C:\\Users\\Dhaarshan. P\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\Dhaarshan. P\\Desktop\\main\\Coding\\VS projects\\C#\\MonoGame\\rpg\\obj\\",
+      "outputPath": "C:\\Users\\Dhaarshan. P\\Desktop\\main\\Coding\\VS projects\\C#\\MonoGame\\rpg\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "E:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -409,7 +409,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.410/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.411/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
