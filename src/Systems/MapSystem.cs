@@ -12,7 +12,7 @@ public class MapSystem
 
     public int MapWidthInPixels { get; private set; }
     public int MapHeightInPixels { get; private set; }
-
+    TileData[,] mapData;
 
     public MapSystem(EntityManager entityManager, AssetStore assetStore, Camera2D camera)
     {
@@ -21,6 +21,8 @@ public class MapSystem
         _camera = camera;
 
         InitMap();
+
+        InteractionZone interactionZone = new InteractionZone(this, _entityManager);
     }
 
     public void InitMap()
@@ -31,7 +33,7 @@ public class MapSystem
         var tileMap = JsonConvert.DeserializeObject<List<List<TileData>>>(jsonText);
         int rows = tileMap.Count;
         int cols = tileMap[0].Count;
-        TileData[,] mapData = new TileData[rows, cols];
+        mapData = new TileData[rows, cols];
 
         for (int r = 0; r < rows; r++)
             for (int c = 0; c < cols; c++)
@@ -54,7 +56,32 @@ public class MapSystem
         _camera.SetWorldBounds(MapWidthInPixels, MapHeightInPixels);
     }
 
-    
+    public List<(int row, int col)> MatchingTiles(string type, int id)
+    {
+        List<(int, int)> matchingPositions = new List<(int, int)>();
+
+        for (int r = 0; r < mapData.GetLength(0); r++)
+        {
+            for (int c = 0; c < mapData.GetLength(1); c++)
+            {
+                var tile = mapData[r, c];
+
+                // Check for nulls to avoid exceptions
+                if (tile != null)
+                {
+                    string tileType = tile.Type ?? "";
+                    int tileId = tile.Id ?? 1;
+
+                    if (tileType == type && tileId == id)
+                    {
+                        matchingPositions.Add((r, c));
+                    }
+                }
+            }
+        }
+
+        return matchingPositions;
+    }
 
     public class TileData
     {

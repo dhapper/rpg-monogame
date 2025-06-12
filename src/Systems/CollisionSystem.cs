@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Xna.Framework;
 
 public class CollisionSystem
@@ -11,7 +12,7 @@ public class CollisionSystem
         _entityManager = entityManager;
     }
 
-    public bool CheckEntityCollision(Rectangle futureHitbox)
+    public bool CheckEntityCollision(Rectangle futureHitbox)    // can refactor to use predefinmiedd list?
     {
         foreach (var entity in _entityManager.Entities)
         {
@@ -23,6 +24,31 @@ public class CollisionSystem
                     return true;
         }
         return false;
+    }
+
+    public void CheckZones(Rectangle futureHitbox)
+    {
+        foreach (var entity in _entityManager.Zones)
+        {
+            var zone = entity.GetComponent<ZoneComponent>();
+            var collision = entity.GetComponent<CollisionComponent>();
+            bool previouslyInZone = zone.InZone;
+
+            if (futureHitbox.Intersects(collision.Hitbox))
+            {
+                if (!previouslyInZone)
+                {
+                    Console.WriteLine("sleepin");
+                    zone.InZone = true;
+
+                    // zone specific code invoked only on initial entry
+                }
+            }
+            else
+            {
+                zone.InZone = false;
+            }
+        }
     }
 
     // public void PickUp()    // move to invsys
@@ -84,7 +110,9 @@ public class CollisionSystem
 
         if (!CheckEntityCollision(newHitboxY))
             position.Y = newY;
-        
+
+        CheckZones(collision.Hitbox);
+
         collision.UpdateHitbox(position);
     }
 }

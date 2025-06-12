@@ -85,6 +85,22 @@ public class RenderSystem
                 DrawHitbox(_spriteBatch, entity.GetComponent<CollisionComponent>().Hitbox);
         }
 
+        // Draw entities
+        foreach (var entity in _entityManager.Zones)
+        {
+
+            Color redColor = Color.Red;
+
+            Texture2D redTexture = new Texture2D(_graphicsDevice, 1, 1);
+            redTexture.SetData(new[] { redColor });
+
+            var pos = entity.GetComponent<PositionComponent>();
+            // Draw the rectangle using the texture.
+            _spriteBatch.Draw(redTexture, new Rectangle((int)pos.X, (int)pos.Y, 16, 16), redColor);
+
+            redTexture.Dispose();
+        }
+
         _spriteBatch.End();
 
         _uiRenderSystem.Draw();

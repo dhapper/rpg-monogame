@@ -11,11 +11,13 @@ public class EntityManager
     private List<Entity> _spriteEntities = new List<Entity>();
     private List<Entity> _dropperdOverworldItems = new List<Entity>();
     private List<Entity> _cropEntities = new List<Entity>();
+    private List<Entity> _zones = new List<Entity>();
 
     public IReadOnlyList<Entity> TileEntities => _tileEntities.AsReadOnly();
     public IReadOnlyList<Entity> SpriteEntities => _spriteEntities.AsReadOnly();
     public IReadOnlyList<Entity> DroppedOverworldItems => _dropperdOverworldItems.AsReadOnly();
     public IReadOnlyList<Entity> CropEntities => _cropEntities.AsReadOnly();
+    public IReadOnlyList<Entity> Zones => _zones.AsReadOnly();
 
 
     public void RefreshFilteredLists()
@@ -35,6 +37,8 @@ public class EntityManager
                 _dropperdOverworldItems.Add(entity);
             if (entity.HasComponent<CropComponent>())
                 _cropEntities.Add(entity);
+            if (entity.HasComponent<ZoneComponent>())
+                _zones.Add(entity);
 
         }
     }
