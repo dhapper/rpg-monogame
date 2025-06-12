@@ -65,7 +65,9 @@ public class PlayerController
             InitMovement(Constants.Directions.Right);
 
         _interactionSystem.MiscControls(_player, inputs);
-        _interactionSystem.HandleInteractions(_player, inputs, facingRight, ref isAnimationLocked);
+
+        var movement = _player.GetComponent<MovementComponent>();
+        _interactionSystem.HandleInteractions(_player, inputs, facingRight, ref isAnimationLocked, movement.LastDir);
 
         // _interactionSystem.PlantInteractions.HarvestCrop(_interactionSystem, _inputSystem, _camera, _assets, _player.GetComponent<InventoryComponent>());
     }
@@ -84,20 +86,41 @@ public class PlayerController
 
         if (inputs.MoveLeft)
         {
-            _animationSystem.SetAnimation(_player, Constants.Player.Animations.WalkLeft);
+            _animationSystem.SetAnimation(_player, Constants.Animations.Walk, Constants.Animations.Sideways, true);
             facingRight = false;
         }
         if (inputs.MoveRight)
         {
-            _animationSystem.SetAnimation(_player, Constants.Player.Animations.WalkRight);
+            _animationSystem.SetAnimation(_player, Constants.Animations.Walk, Constants.Animations.Sideways);
             facingRight = true;
         }
 
-        if (inputs.MoveUp || inputs.MoveDown)
-            _animationSystem.SetAnimation(_player, facingRight ? Constants.Player.Animations.WalkRight : Constants.Player.Animations.WalkLeft);
+        if (inputs.MoveUp)
+            _animationSystem.SetAnimation(_player, Constants.Animations.Walk, Constants.Animations.Up);
 
+        if (inputs.MoveDown)
+            _animationSystem.SetAnimation(_player, Constants.Animations.Walk, Constants.Animations.Down);
+
+
+        // idle check
         if (!movement.IsMoving || (speedVector.X == 0 && speedVector.Y == 0))
-            _animationSystem.SetAnimation(_player, facingRight ? Constants.Player.Animations.IdleRight : Constants.Player.Animations.IdleLeft);
+        {
+            switch (movement.LastDir)
+            {
+                case Constants.Directions.Left:
+                    _animationSystem.SetAnimation(_player, Constants.Animations.Idle, Constants.Animations.Sideways, true);
+                    break;
+                case Constants.Directions.Right:
+                    _animationSystem.SetAnimation(_player, Constants.Animations.Idle, Constants.Animations.Sideways);
+                    break;
+                case Constants.Directions.Up:
+                    _animationSystem.SetAnimation(_player, Constants.Animations.Idle, Constants.Animations.Up);
+                    break;
+                case Constants.Directions.Down:
+                    _animationSystem.SetAnimation(_player, Constants.Animations.Idle, Constants.Animations.Down);
+                    break;
+            }
+        }
     }
 
     public void InitMovement(int direction)

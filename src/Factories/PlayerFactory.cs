@@ -8,17 +8,17 @@ public static class PlayerFactory
     {
         var player = entityManager.CreateEntity();
 
-        Color[][] colourChanges = [
-            [Constants.ColourIndex.Hair, new Color(0, 0, 0)],
-            [Constants.ColourIndex.HairShine, new Color(40, 40, 40)]
-        ];
-        Texture2D hairSheet = SpriteProcessor.ChangeColours(colourChanges, assets.PlayerHair, graphicsDevice);
-        Texture2D layeredSheet = SpriteProcessor.LayerSheets([assets.PlayerBody, hairSheet, assets.PlayerTools], graphicsDevice);
+        // Color[][] colourChanges = [
+        //     [Constants.ColourIndex.Hair, new Color(0, 0, 0)],
+        //     [Constants.ColourIndex.HairShine, new Color(40, 40, 40)]
+        // ];
+        // Texture2D hairSheet = SpriteProcessor.ChangeColours(colourChanges, assets.PlayerHair, graphicsDevice);
+        // Texture2D layeredSheet = SpriteProcessor.LayerSheets([assets.PlayerBody, hairSheet, assets.PlayerTools], graphicsDevice);
 
         player.AddComponent(new CharacterComponent());
         player.AddComponent(new PositionComponent(x, y, Constants.Player.SpriteSize, Constants.Player.SpriteSize));
-        player.AddComponent(new SpriteComponent(layeredSheet, new Rectangle(0, 0, Constants.Player.SpriteSize, Constants.Player.SpriteSize)) { Color = Color.White });
-        player.AddComponent(new AnimationComponent(Constants.Player.Animations.IdleRight));
+        player.AddComponent(new SpriteComponent(assets.PlayerSheet, new Rectangle(0, 0, Constants.Player.SpriteSize, Constants.Player.SpriteSize)) { Color = Color.White });
+        player.AddComponent(new AnimationComponent(Constants.Animations.Idle));
         player.AddComponent(new CollisionComponent(
             player.GetComponent<PositionComponent>(),
             Constants.Player.XOffset,

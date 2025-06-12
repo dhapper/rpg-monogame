@@ -26,7 +26,7 @@ public class MapSystem
     public void InitMap()
     {
         string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-        string jsonPath = Path.Combine(baseDir, "Data", "map.json");
+        string jsonPath = Path.Combine(baseDir, "Data", "shop_tent.json");
         string jsonText = File.ReadAllText(jsonPath);
         var tileMap = JsonConvert.DeserializeObject<List<List<TileData>>>(jsonText);
         int rows = tileMap.Count;
@@ -53,6 +53,8 @@ public class MapSystem
         MapHeightInPixels = (int)(mapData.GetLength(0) * Constants.DefaultTileSize * Constants.ScaleFactor);
         _camera.SetWorldBounds(MapWidthInPixels, MapHeightInPixels);
     }
+
+    
 
     public class TileData
     {

@@ -35,7 +35,7 @@ public class InteractionSystem
             _plantInteractions.GrowPlants();   
     }
 
-    public void HandleInteractions(Entity player, InputState inputs, bool facingRight, ref bool isAnimationLocked)
+    public void HandleInteractions(Entity player, InputState inputs, bool facingRight, ref bool isAnimationLocked, int lastDir)
     {
         var inv = player.GetComponent<InventoryComponent>();
         inv.activeItemIndices = inputs.IsNumberChanging ? (inputs.Number - 1 ?? 0, 0) : inv.activeItemIndices;
@@ -55,14 +55,15 @@ public class InteractionSystem
                     return;
                 }
 
+                var aniVars = _animationSystem.GetAniInitVars(lastDir);
                 switch (activeItem.Name)
                 {
-                    case "WateringCan":
-                        _animationSystem.SetAnimation(player, facingRight ? Constants.Player.Animations.WateringCanRight : Constants.Player.Animations.WateringCanLeft);
+                    case "Pickaxe":
+                        _animationSystem.SetAnimation(player, Constants.Animations.Pickaxe, aniVars.aniDirIndex, aniVars.mirrored);
                         isAnimationLocked = true;
                         break;
-                    case "Pickaxe":
-                        _animationSystem.SetAnimation(player, facingRight ? Constants.Player.Animations.PickAxeRight : Constants.Player.Animations.PickAxeLeft);
+                    case "WateringCan":
+                        _animationSystem.SetAnimation(player, Constants.Animations.Watering, aniVars.aniDirIndex, aniVars.mirrored);
                         isAnimationLocked = true;
                         break;
                 }

@@ -17,6 +17,8 @@ public class AssetStore
 
     public Texture2D CropSprites;
 
+    public Texture2D PlayerSheet;
+
     private ContentManager _content;
 
     public AssetStore(ContentManager content)
@@ -49,6 +51,7 @@ public class AssetStore
 
         CropSprites = _content.Load<Texture2D>("farming");
 
+        PlayerSheet = _content.Load<Texture2D>("Master File");
 
     }
 

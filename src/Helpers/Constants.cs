@@ -5,31 +5,35 @@ using Microsoft.Xna.Framework;
 public static class Constants
 {
     public const float ScaleFactor = 3;
-    public const float DroppedItemScaleFactor = ScaleFactor/2;
+    public const float DroppedItemScaleFactor = ScaleFactor / 2;
     public const int DefaultTileSize = 16; // 16x16
     public const int TileSize = (int)(DefaultTileSize * ScaleFactor);
 
     public static class Player
     {
-        public const int SpriteSize = 48;
-        public const int XOffset = 19;
-        public const int YOffset = 18;
-        public const int HitboxWidth = 10;
-        public const int HitboxHeight = 13;
+
+        public const int SpriteSize = 80;
+        public const int XOffset = 34;
+        public const int YOffset = 33;
+        public const int HitboxWidth = 11;
+        public const int HitboxHeight = 14;
 
         public const float Speed = ScaleFactor;
 
-        public static class Animations
-        {
-            public static readonly AnimationConfig IdleRight = new AnimationConfig(0, 4, 0.5f);
-            public static readonly AnimationConfig IdleLeft = new AnimationConfig(0, 4, 0.5f, true);
-            public static readonly AnimationConfig WalkRight = new AnimationConfig(3, 8, 0.1f);
-            public static readonly AnimationConfig WalkLeft = new AnimationConfig(3, 8, 0.1f, true);
-            public static readonly AnimationConfig WateringCanRight = new AnimationConfig(9, 6, 0.1f);
-            public static readonly AnimationConfig WateringCanLeft = new AnimationConfig(9, 6, 0.1f, true);
-            public static readonly AnimationConfig PickAxeRight = new AnimationConfig(10, 5, 0.1f, false, [0.15f, 0.15f, 0.075f, 0.075f, 0.2f]);
-            public static readonly AnimationConfig PickAxeLeft = new AnimationConfig(10, 5, 0.1f, true, [0.15f, 0.15f, 0.075f, 0.075f, 0.2f]);
-        }
+    }
+
+    public static class Animations
+    {
+        public const int DefaultIndex = -1;
+        public const int Sideways = 0;
+        public const int Down = 1;
+        public const int Up = 2;
+
+        public static readonly AnimationConfig Idle = new AnimationConfig(0, 4, 0.5f);
+        public static readonly AnimationConfig Walk = new AnimationConfig(1, 8, 0.1f);
+
+        public static readonly AnimationConfig Pickaxe = new AnimationConfig(7, 6, 0.1f);
+        public static readonly AnimationConfig Watering = new AnimationConfig(14, 6, 0.1f);
     }
 
     public static class Tile
@@ -40,7 +44,7 @@ public static class Constants
 
         public static readonly string[] SolidTilesets = { CollisionSheetIndex, WaterSheetIndex };
 
-        public static readonly int[] PlantableTiles = [ 41, 49 ];
+        public static readonly int[] PlantableTiles = [41, 49];
     }
 
     public static class Items

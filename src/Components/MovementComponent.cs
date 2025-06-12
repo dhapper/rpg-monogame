@@ -4,7 +4,7 @@ public class MovementComponent
 {
     public float Speed;
     public Boolean IsMoving;
-    public int LastDir = -1;
+    public int LastDir = Constants.Directions.Right;
 
     public MovementComponent(float speed)
     {

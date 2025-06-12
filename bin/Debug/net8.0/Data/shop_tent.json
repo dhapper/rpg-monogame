@@ -1,0 +1,984 @@
+[
+  [
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset2",
+      "id": 4
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    }
+  ],
+  [
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset2",
+      "id": 6,
+      "background": 35
+    },
+    {
+      "type": "Tileset2",
+      "id": 7,
+      "background": 35
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset2",
+      "id": 16,
+      "background": 35
+    },
+    {
+      "type": "Tileset2",
+      "id": 17,
+      "background": 35
+    },
+    {
+      "type": "Tileset2",
+      "id": 18,
+      "background": 35
+    },
+    {
+      "type": "Tileset1",
+      "id": 0,
+      "background": 35
+    }
+  ],
+  [
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset2",
+      "id": 14,
+      "background": 35
+    },
+    {
+      "type": "Tileset2",
+      "id": 15,
+      "background": 35
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset2",
+      "id": 4
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset2",
+      "id": 24,
+      "background": 35
+    },
+    {
+      "type": "Tileset2",
+      "id": 25,
+      "background": 35
+    },
+    {
+      "type": "Tileset2",
+      "id": 26,
+      "background": 35
+    },
+    {
+      "type": "Tileset1",
+      "id": 0,
+      "background": 35
+    }
+  ],
+  [
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset2",
+      "id": 22,
+      "background": 35
+    },
+    {
+      "type": "Tileset2",
+      "id": 23,
+      "background": 35
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    }
+  ],
+  [
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 0
+    },
+    {
+      "type": "Tileset1",
+      "id": 10,
+      "background": 36
+    },
+    {
+      "type": "Tileset1",
+      "id": 17,
+      "background": 36
+    },
+    {
+      "type": "Tileset1",
+      "id": 17,
+      "background": 36
+    },
+    {
+      "type": "Tileset1",
+      "id": 17,
+      "background": 36
+    },
+    {
+      "type": "Tileset1",
+      "id": 17,
+      "background": 36
+    },
+    {
+      "type": "Tileset1",
+      "id": 17,
+      "background": 36
+    },
+    {
+      "type": "Tileset1",
+      "id": 17,
+      "background": 36
+    },
+    {
+      "type": "Tileset1",
+      "id": 17,
+      "background": 36
+    },
+    {
+      "type": "Tileset1",
+      "id": 17,
+      "background": 36
+    },
+    {
+      "type": "Tileset1",
+      "id": 17,
+      "background": 36
+    }
+  ],
+  [
+    {
+      "type": "Tileset1",
+      "id": 10,
+      "background": 38
+    },
+    {
+      "type": "Tileset1",
+      "id": 17,
+      "background": 38
+    },
+    {
+      "type": "Tileset1",
+      "id": 17,
+      "background": 38
+    },
+    {
+      "type": "Tileset1",
+      "id": 17,
+      "background": 38
+    },
+    {
+      "type": "Tileset1",
+      "id": 11,
+      "background": 38
+    },
+    {
+      "type": "Tileset1",
+      "id": 9,
+      "background": 36
+    },
+    {
+      "type": "Tileset1",
+      "id": 28,
+      "background": 36
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    }
+  ],
+  [
+    {
+      "type": "Tileset1",
+      "id": 9,
+      "background": 38
+    },
+    {
+      "type": "Tileset1",
+      "id": 41
+    },
+    {
+      "type": "Tileset1",
+      "id": 41
+    },
+    {
+      "type": "Tileset1",
+      "id": 41
+    },
+    {
+      "type": "Tileset1",
+      "id": 16,
+      "background": 38
+    },
+    {
+      "type": "Tileset1",
+      "id": 9,
+      "background": 36
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 33
+    },
+    {
+      "type": "Tileset1",
+      "id": 33
+    },
+    {
+      "type": "Tileset1",
+      "id": 33
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    }
+  ],
+  [
+    {
+      "type": "Tileset1",
+      "id": 9,
+      "background": 38
+    },
+    {
+      "type": "Tileset1",
+      "id": 41
+    },
+    {
+      "type": "Tileset1",
+      "id": 41
+    },
+    {
+      "type": "Tileset1",
+      "id": 41
+    },
+    {
+      "type": "Tileset1",
+      "id": 16,
+      "background": 38
+    },
+    {
+      "type": "Tileset1",
+      "id": 9,
+      "background": 36
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset2",
+      "id": 3
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 25
+    },
+    {
+      "type": "Tileset1",
+      "id": 49
+    },
+    {
+      "type": "Tileset1",
+      "id": 49
+    },
+    {
+      "type": "Tileset1",
+      "id": 49
+    },
+    {
+      "type": "Tileset1",
+      "id": 32
+    }
+  ],
+  [
+    {
+      "type": "Tileset1",
+      "id": 9,
+      "background": 38
+    },
+    {
+      "type": "Tileset1",
+      "id": 41
+    },
+    {
+      "type": "Tileset1",
+      "id": 41
+    },
+    {
+      "type": "Tileset1",
+      "id": 41
+    },
+    {
+      "type": "Tileset1",
+      "id": 16,
+      "background": 38
+    },
+    {
+      "type": "Tileset1",
+      "id": 9,
+      "background": 36
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 25
+    },
+    {
+      "type": "Tileset1",
+      "id": 49
+    },
+    {
+      "type": "Tileset1",
+      "id": 49
+    },
+    {
+      "type": "Tileset1",
+      "id": 49
+    },
+    {
+      "type": "Tileset1",
+      "id": 32
+    }
+  ],
+  [
+    {
+      "type": "Tileset1",
+      "id": 18,
+      "background": 38
+    },
+    {
+      "type": "Tileset1",
+      "id": 8,
+      "background": 38
+    },
+    {
+      "type": "Tileset1",
+      "id": 8,
+      "background": 38
+    },
+    {
+      "type": "Tileset1",
+      "id": 8,
+      "background": 38
+    },
+    {
+      "type": "Tileset1",
+      "id": 19
+    },
+    {
+      "type": "Tileset1",
+      "id": 9,
+      "background": 36
+    },
+    {
+      "type": "Tileset1",
+      "id": 28,
+      "background": 36
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 25
+    },
+    {
+      "type": "Tileset1",
+      "id": 49
+    },
+    {
+      "type": "Tileset1",
+      "id": 49
+    },
+    {
+      "type": "Tileset1",
+      "id": 49
+    },
+    {
+      "type": "Tileset1",
+      "id": 32
+    }
+  ],
+  [
+    {
+      "type": "Tileset1",
+      "id": 17,
+      "background": 36
+    },
+    {
+      "type": "Tileset1",
+      "id": 17,
+      "background": 36
+    },
+    {
+      "type": "Tileset1",
+      "id": 17,
+      "background": 36
+    },
+    {
+      "type": "Tileset1",
+      "id": 17,
+      "background": 36
+    },
+    {
+      "type": "Tileset1",
+      "id": 17,
+      "background": 36
+    },
+    {
+      "type": "Tileset1",
+      "id": 21,
+      "background": 36
+    },
+    {
+      "type": "Tileset1",
+      "id": 28,
+      "background": 36
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset2",
+      "id": 3
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 24
+    },
+    {
+      "type": "Tileset1",
+      "id": 24
+    },
+    {
+      "type": "Tileset1",
+      "id": 24
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    }
+  ],
+  [
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset2",
+      "id": 3
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset2",
+      "id": 16,
+      "background": 36
+    },
+    {
+      "type": "Tileset2",
+      "id": 17,
+      "background": 36
+    },
+    {
+      "type": "Tileset2",
+      "id": 18,
+      "background": 36
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    }
+  ],
+  [
+    {
+      "type": "Tileset1",
+      "id": 33
+    },
+    {
+      "type": "Tileset1",
+      "id": 33
+    },
+    {
+      "type": "Tileset1",
+      "id": 33
+    },
+    {
+      "type": "Tileset1",
+      "id": 33
+    },
+    {
+      "type": "Tileset1",
+      "id": 33
+    },
+    {
+      "type": "Tileset1",
+      "id": 33
+    },
+    {
+      "type": "Tileset1",
+      "id": 33
+    },
+    {
+      "type": "Tileset1",
+      "id": 33
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset2",
+      "id": 24,
+      "background": 36
+    },
+    {
+      "type": "Tileset2",
+      "id": 25,
+      "background": 36
+    },
+    {
+      "type": "Tileset2",
+      "id": 26,
+      "background": 36
+    },
+    {
+      "type": "Tileset1",
+      "id": 28,
+      "background": 36
+    }
+  ],
+  [
+    {
+      "background": 26
+    },
+    {
+      "background": 26
+    },
+    {
+      "background": 26
+    },
+    {
+      "background": 26
+    },
+    {
+      "background": 26
+    },
+    {
+      "background": 26
+    },
+    {
+      "background": 26
+    },
+    {
+      "background": 26
+    },
+    {
+      "type": "Tileset1",
+      "id": 32
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 28
+    },
+    {
+      "type": "Tileset1",
+      "id": 33
+    },
+    {
+      "type": "Tileset1",
+      "id": 33
+    },
+    {
+      "type": "Tileset1",
+      "id": 33
+    }
+  ],
+  [
+    {
+      "type": "Tileset2",
+      "id": 9
+    },
+    {
+      "type": "Tileset2",
+      "id": 9
+    },
+    {
+      "type": "Tileset2",
+      "id": 9
+    },
+    {
+      "type": "Tileset2",
+      "id": 9
+    },
+    {
+      "type": "Tileset2",
+      "id": 9
+    },
+    {
+      "type": "Tileset2",
+      "id": 9
+    },
+    {
+      "type": "Tileset2",
+      "id": 9
+    },
+    {
+      "type": "Tileset2",
+      "id": 9
+    },
+    {
+      "type": "Tileset1",
+      "id": 34
+    },
+    {
+      "type": "Tileset1",
+      "id": 33
+    },
+    {
+      "type": "Tileset1",
+      "id": 33
+    },
+    {
+      "type": "Tileset1",
+      "id": 35
+    },
+    {
+      "type": "Tileset1",
+      "id": 36
+    },
+    {
+      "type": "Tileset1",
+      "id": 36
+    },
+    {
+      "type": "Tileset1",
+      "id": 36
+    }
+  ]
+]

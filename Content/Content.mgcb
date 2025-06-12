@@ -80,7 +80,7 @@
 /processorParam:TextureFormat=Color
 /build:icons.png
 
-#begin icons.png
+#begin Master File.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -90,7 +90,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:icons.png
+/build:Master File.png
 
 #begin new_player_body.png
 /importer:TextureImporter

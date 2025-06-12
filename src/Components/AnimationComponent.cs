@@ -9,8 +9,10 @@ public class AnimationComponent
     public int Row { get; set; } = 0;
     public bool IsMirrored;
     public float[] FrameDurations;
-    public int AnimationIndex;
+    public int AnimationIndex;  // index of current frame
     public bool EndOfOneAnimationCycle = false;
+
+    public int Index;   // index of type, eg sideways, up, and down idle on same row
 
     public AnimationComponent(AnimationConfig config)
     {
@@ -23,6 +25,9 @@ public class AnimationComponent
         Timer = 0f;
         AnimationIndex = 0;
         EndOfOneAnimationCycle = false;
+
+
+        // no index? idk tbh
     }
 
 }
