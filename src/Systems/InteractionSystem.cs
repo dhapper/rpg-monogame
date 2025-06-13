@@ -7,10 +7,10 @@ public class InteractionSystem
     private AssetStore _assets;
     private AnimationSystem _animationSystem;
     private Camera2D _camera;
+    private InventorySystem _inventorySystem;
 
     private PlantInteractions _plantInteractions;
     public PlantInteractions PlantInteractions => _plantInteractions;
-    private InventorySystem _inventorySystem;
 
     public InteractionSystem(EntityManager entityManager, InputSystem inputSystem, AssetStore assets, AnimationSystem animationSystem, Camera2D camera, InventorySystem inventorySystem)
     {

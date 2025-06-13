@@ -1,4 +1,3 @@
-using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -16,6 +15,7 @@ public class GameInitializer
     private GameStateManager _gameStateManager;
     private InventorySystem _inventorySystem;
     private InteractionSystem _interactionSystem;
+    private SleepSystem _sleepSystem;
 
     public Entity PlayerEntity { get; private set; }
     public PlayerController PlayerController { get; private set; }
@@ -50,9 +50,10 @@ public class GameInitializer
         _inventorySystem = new InventorySystem(_entityManager, _assets);
         _animationSystem = new AnimationSystem(_entityManager);
         _interactionSystem = new InteractionSystem(_entityManager, _inputSystem, _assets, _animationSystem, _camera, _inventorySystem);
+        _sleepSystem = new SleepSystem(_entityManager, _assets, _interactionSystem);
 
         RenderSystem = new RenderSystem(_spriteBatch, _entityManager, _assets, _camera, _graphicsDevice, _inventoryUI, _gameStateManager, _inputSystem);
-        _mapSystem = new MapSystem(_entityManager, _assets, _camera);
+        _mapSystem = new MapSystem(_entityManager, _assets, _camera, _sleepSystem);
 
         // Create Player
         PlayerEntity = PlayerFactory.CreatePlayer(200, 200, _entityManager, _assets, _graphicsDevice, _inventorySystem);

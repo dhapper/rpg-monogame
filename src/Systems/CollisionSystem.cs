@@ -38,10 +38,10 @@ public class CollisionSystem
             {
                 if (!previouslyInZone)
                 {
-                    Console.WriteLine("sleepin");
                     zone.InZone = true;
 
                     // zone specific code invoked only on initial entry
+                    zone.ZoneAction();
                 }
             }
             else

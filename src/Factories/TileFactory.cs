@@ -11,7 +11,7 @@ public static class TileFactory
     public static Entity CreateTile(int id, string type, int? background, int row, int col, EntityManager entityManager, AssetStore assets)
     {
 
-        var tile = entityManager.CreateEntity();
+        var tile = entityManager.CreateEntity(false);
 
         // tile.AddComponent(new TileComponent());
         tile.AddComponent(new TileComponent

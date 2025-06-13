@@ -14,7 +14,7 @@ public class MapSystem
     public int MapHeightInPixels { get; private set; }
     TileData[,] mapData;
 
-    public MapSystem(EntityManager entityManager, AssetStore assetStore, Camera2D camera)
+    public MapSystem(EntityManager entityManager, AssetStore assetStore, Camera2D camera, SleepSystem sleepSystem)
     {
         _entityManager = entityManager;
         _assetStore = assetStore;
@@ -22,7 +22,7 @@ public class MapSystem
 
         InitMap();
 
-        InteractionZone interactionZone = new InteractionZone(this, _entityManager);
+        InteractionZone interactionZone = new InteractionZone(this, _entityManager, sleepSystem);
     }
 
     public void InitMap()

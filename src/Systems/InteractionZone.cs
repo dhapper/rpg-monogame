@@ -6,11 +6,13 @@ public class InteractionZone
 
     private MapSystem _mapSystem;
     private EntityManager _entityManager;
+    private SleepSystem _sleepSystem;
 
-    public InteractionZone(MapSystem mapSystem, EntityManager entityManager)
+    public InteractionZone(MapSystem mapSystem, EntityManager entityManager, SleepSystem sleepSystem)
     {
         _mapSystem = mapSystem;
         _entityManager = entityManager;
+        _sleepSystem = sleepSystem;
 
         LoadTentZones();
         LoadShopZones();
@@ -32,10 +34,15 @@ public class InteractionZone
 
         foreach (var pos in matchingPositions)
         {
-            // Console.WriteLine(pos.col + " " + pos.row);
+
+            Action action = delegate ()
+            {
+                _sleepSystem.StartSleepCycle();
+            };
+
             Entity zone = _entityManager.CreateEntity();
-            zone.AddComponent(new ZoneComponent());
-            zone.AddComponent(new PositionComponent(pos.col * Constants.TileSize + Constants.TileSize/2, pos.row * Constants.TileSize + Constants.TileSize));
+            zone.AddComponent(new ZoneComponent(ZoneType.Tent, action));
+            zone.AddComponent(new PositionComponent(pos.col * Constants.TileSize + Constants.TileSize / 2, pos.row * Constants.TileSize + Constants.TileSize));
             var posComp = zone.GetComponent<PositionComponent>();
             zone.AddComponent(new CollisionComponent(
                 posComp,
@@ -45,6 +52,12 @@ public class InteractionZone
                 (int)(2 * Constants.ScaleFactor),
                 false
             ));
-        }       
+        }
     }
+}
+
+public enum ZoneType
+{
+    Tent,
+    Shop,
 }

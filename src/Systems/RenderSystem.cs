@@ -95,8 +95,10 @@ public class RenderSystem
             redTexture.SetData(new[] { redColor });
 
             var pos = entity.GetComponent<PositionComponent>();
+            var collision = entity.GetComponent<CollisionComponent>();
+
             // Draw the rectangle using the texture.
-            _spriteBatch.Draw(redTexture, new Rectangle((int)pos.X, (int)pos.Y, 16, 16), redColor);
+            _spriteBatch.Draw(redTexture, new Rectangle((int)pos.X, (int)pos.Y, collision.Hitbox.Width, collision.Hitbox.Height), redColor);
 
             redTexture.Dispose();
         }

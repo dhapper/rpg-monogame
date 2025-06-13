@@ -95,11 +95,14 @@ public class PlayerController
             facingRight = true;
         }
 
-        if (inputs.MoveUp)
-            _animationSystem.SetAnimation(_player, Constants.Animations.Walk, Constants.Animations.Up);
+        if (!inputs.MoveLeft && !inputs.MoveRight)
+        {
+            if (inputs.MoveUp)
+                _animationSystem.SetAnimation(_player, Constants.Animations.Walk, Constants.Animations.Up);
 
-        if (inputs.MoveDown)
-            _animationSystem.SetAnimation(_player, Constants.Animations.Walk, Constants.Animations.Down);
+            if (inputs.MoveDown)
+                _animationSystem.SetAnimation(_player, Constants.Animations.Walk, Constants.Animations.Down);
+        }
 
 
         // idle check

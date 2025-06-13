@@ -43,11 +43,29 @@ public class EntityManager
         }
     }
 
-    public Entity CreateEntity()
+    public void ChangeTiles(string oldSheet, int oldId, string newSheet, int newId, AssetStore assets)
+    {
+        for (int i = 0; i < _tileEntities.Count; i++)
+        {
+            var tile = _tileEntities[i];
+            var pos = tile.GetComponent<PositionComponent>();
+            var tileComp = tile.GetComponent<TileComponent>();
+            if (tileComp.Type == oldSheet && tileComp.Id == oldId)
+            {
+                var col = pos.X / Constants.TileSize;
+                var row = pos.Y / Constants.TileSize;
+                _tileEntities[i] = TileFactory.CreateTile(newId, newSheet, null, (int)row, (int)col, this, assets);
+            }
+        }
+    }
+
+ 
+    public Entity CreateEntity(bool refresh = true)
     {
         var entity = new Entity(_nextId++);
         _entities.Add(entity);
-        RefreshFilteredLists(); // guard check?
+        if(refresh)
+            RefreshFilteredLists(); // guard check?
         return entity;
     }
 
