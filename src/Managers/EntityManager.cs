@@ -20,7 +20,7 @@ public class EntityManager
     public IReadOnlyList<Entity> Zones => _zones.AsReadOnly();
 
 
-    public void RefreshFilteredLists()
+    public void RefreshFilteredLists()  // not zones
     {
         _tileEntities.Clear();
         _spriteEntities.Clear();
@@ -37,34 +37,72 @@ public class EntityManager
                 _dropperdOverworldItems.Add(entity);
             if (entity.HasComponent<CropComponent>())
                 _cropEntities.Add(entity);
-            if (entity.HasComponent<ZoneComponent>())
-                _zones.Add(entity);
+            // if (entity.HasComponent<ZoneComponent>())
+            //     _zones.Add(entity);
 
         }
     }
 
+    public void RefreshZones()
+    {
+        _zones.Clear();
+        foreach (var entity in _entities)
+        {
+            if (entity.HasComponent<ZoneComponent>())
+                _zones.Add(entity);
+        }
+    }
+
+    // maybe move this to child class?
     public void ChangeTiles(string oldSheet, int oldId, string newSheet, int newId, AssetStore assets)
     {
         for (int i = 0; i < _tileEntities.Count; i++)
         {
             var tile = _tileEntities[i];
-            var pos = tile.GetComponent<PositionComponent>();
             var tileComp = tile.GetComponent<TileComponent>();
             if (tileComp.Type == oldSheet && tileComp.Id == oldId)
             {
-                var col = pos.X / Constants.TileSize;
-                var row = pos.Y / Constants.TileSize;
-                _tileEntities[i] = TileFactory.CreateTile(newId, newSheet, null, (int)row, (int)col, this, assets);
+                var col = tileComp.Col;
+                var row = tileComp.Row;
+
+                _entities.Remove(tile);
+
+                var newTile = TileFactory.CreateTile(newId, newSheet, null, (int)row, (int)col, this, assets);
+                _tileEntities[i] = newTile;
+            }
+        }
+        RefreshFilteredLists();
+    }
+
+    public void ChangeTile(Entity selectedTile, string newSheet, int newId, AssetStore assets)
+    {
+        for (int i = 0; i < _tileEntities.Count; i++)
+        {
+            var tile = _tileEntities[i];
+            if (tile == selectedTile)
+            {
+                var tileComp = tile.GetComponent<TileComponent>();
+                var col = tileComp.Col;
+                var row = tileComp.Row;
+
+                _entities.Remove(tile);
+                _tileEntities.RemoveAt(i);
+
+                var newTile = TileFactory.CreateTile(newId, newSheet, null, (int)row, (int)col, this, assets);
+                _tileEntities.Insert(i, newTile);
+                _entities.Add(newTile);
+                RefreshFilteredLists();
+                return;
             }
         }
     }
 
- 
+
     public Entity CreateEntity(bool refresh = true)
     {
         var entity = new Entity(_nextId++);
         _entities.Add(entity);
-        if(refresh)
+        if (refresh)
             RefreshFilteredLists(); // guard check?
         return entity;
     }

@@ -16,6 +16,8 @@ public class InteractionZone
 
         LoadTentZones();
         LoadShopZones();
+
+        _entityManager.RefreshZones();
     }
 
     public void LoadShopZones()

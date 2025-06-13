@@ -19,14 +19,27 @@ public class SleepSystem
 
     public void Update()
     {
-        
+
     }
 
     public void StartSleepCycle()
     {
         Console.WriteLine("StartSleepCycle");
+
+        // grow plants
         _interactionSystem.PlantInteractions.GrowPlants();
-        _entityManager.ChangeTiles(Constants.Tile.PathsSheetName, 41, Constants.Tile.PathsSheetName, 40, _assets);
-        _entityManager.ChangeTiles(Constants.Tile.PathsSheetName, 49, Constants.Tile.PathsSheetName, 48, _assets);
+
+        // make soil dry overnight
+        var sheet = Constants.Tile.PathsSheetName;
+        foreach (var tileId in Constants.Tile.WetSoilTiles)
+        {
+            _entityManager.ChangeTiles(sheet, tileId, sheet, Constants.Tile.OvernightSoilTransform[tileId], _assets);
+        }
+        _entityManager.RefreshFilteredLists();
+    }
+
+    public void EndSleepCycle()
+    {
+        // _entityManager.RefreshFilteredLists();
     }
 }

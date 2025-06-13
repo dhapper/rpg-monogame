@@ -8,5 +8,9 @@ public class TileComponent
     public string Type;
     public Rectangle Background = default;
 
+    // newly added, might be able to refactor more code with this
+    public int Col;
+    public int Row;
+
     public TileComponent() { }
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.VisualBasic.FileIO;
 using Microsoft.Xna.Framework;
 
@@ -42,9 +43,31 @@ public static class Constants
         public const string CollisionSheetIndex = "Tileset2";
         public const string WaterSheetIndex = "Tileset3";
 
+        public const int DrySoil = 40;
+        public const int WetSoil = 41;
+        public const int DryFertilizedSoil = 48;
+        public const int WetFertilizedSoil = 49;
+
+
         public static readonly string[] SolidTilesets = { CollisionSheetIndex, WaterSheetIndex };
 
-        public static readonly int[] PlantableTiles = [41, 49];
+        // public static readonly int[] PlantableTiles = [DrySoil, WetSoil, DryFertilizedSoil, WetFertilizedSoil];
+        public static readonly int[] WetSoilTiles = [WetSoil, WetFertilizedSoil];
+        public static readonly int[] DrySoilTiles = [DrySoil, DryFertilizedSoil];
+        public static readonly int[] PlantableTiles = WetSoilTiles.Concat(DrySoilTiles).ToArray();
+
+        public static readonly Dictionary<int, int> OvernightSoilTransform = new()
+        {
+            { WetSoil, DrySoil },
+            { WetFertilizedSoil, DryFertilizedSoil }
+        };
+
+        public static readonly Dictionary<int, int> WaterSoilTransform = new()
+        {
+            { DrySoil, WetSoil },
+            { DryFertilizedSoil, WetFertilizedSoil }
+        };
+
     }
 
     public static class Items

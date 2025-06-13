@@ -28,6 +28,7 @@ public class CollisionSystem
 
     public void CheckZones(Rectangle futureHitbox)
     {
+        bool inZoneEndFlag = false;
         foreach (var entity in _entityManager.Zones)
         {
             var zone = entity.GetComponent<ZoneComponent>();
@@ -39,9 +40,9 @@ public class CollisionSystem
                 if (!previouslyInZone)
                 {
                     zone.InZone = true;
-
-                    // zone specific code invoked only on initial entry
                     zone.ZoneAction();
+                    inZoneEndFlag = true;
+                    break;
                 }
             }
             else
@@ -49,6 +50,8 @@ public class CollisionSystem
                 zone.InZone = false;
             }
         }
+
+
     }
 
     // public void PickUp()    // move to invsys

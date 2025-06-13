@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 public class InteractionSystem
 {
@@ -26,13 +27,13 @@ public class InteractionSystem
 
     public void MiscControls(Entity player, InputState inputs)
     {
-     // misc
+        // misc
         if (inputs.ToggleHitbox)
             GameInitializer.ShowHitbox = !GameInitializer.ShowHitbox;
         if (inputs.Save)
             SaveManager.SaveData(player);
         if (inputs.Grow)
-            _plantInteractions.GrowPlants();   
+            _plantInteractions.GrowPlants();
     }
 
     public void HandleInteractions(Entity player, InputState inputs, bool facingRight, ref bool isAnimationLocked, int lastDir)
@@ -47,11 +48,11 @@ public class InteractionSystem
             if (inputs.Interact && activeItem != null)
             {
 
-                _plantInteractions.HarvestCrop(this, _inputSystem, _camera, _assets, player.GetComponent<InventoryComponent>());
+                _plantInteractions.HarvestCrop(this, _inputSystem, _assets, player.GetComponent<InventoryComponent>());
 
                 if (activeItem.Type == ItemType.Plantable)
                 {
-                    _plantInteractions.PlantCrop(activeItemEntity, this, _inputSystem, _camera, _assets);
+                    _plantInteractions.PlantCrop(activeItemEntity, this, _inputSystem, _assets);
                     return;
                 }
 
@@ -64,6 +65,20 @@ public class InteractionSystem
                         break;
                     case "WateringCan":
                         _animationSystem.SetAnimation(player, Constants.Animations.Watering, aniVars.aniDirIndex, aniVars.mirrored);
+                        if (!isAnimationLocked)
+                        {
+                            var wateredTile = GetTile(_inputSystem.GetMouseLocation());
+                            if (wateredTile == null) { return; }
+                            var wateredTileComp = wateredTile.GetComponent<TileComponent>();
+
+                            // TODO: check if tile is within range?
+
+                            // check if tile is waterable
+                            if (wateredTileComp.Type == Constants.Tile.PathsSheetName && Constants.Tile.DrySoilTiles.Contains(wateredTileComp.Id))
+                            {
+                                _entityManager.ChangeTile(wateredTile, Constants.Tile.PathsSheetName, Constants.Tile.WaterSoilTransform[wateredTileComp.Id], _assets);
+                            }
+                        }
                         isAnimationLocked = true;
                         break;
                 }
@@ -71,14 +86,15 @@ public class InteractionSystem
         }
     }
 
-    public Entity GetTile((int x, int y) mouse, Camera2D camera)
+    public Entity GetTile((int x, int y) mouse)
     {
-        float worldX = mouse.x + camera.Position.X;
-        float worldY = mouse.y + camera.Position.Y;
+        float worldX = mouse.x + _camera.Position.X;
+        float worldY = mouse.y + _camera.Position.Y;
         int tileSize = (int)(Constants.DefaultTileSize * Constants.ScaleFactor);
         int col = (int)(worldX / tileSize);
         int row = (int)(worldY / tileSize);
-        foreach (var entity in _entityManager.EntitiesWithComponent<TileComponent>())
+        // foreach (var entity in _entityManager.EntitiesWithComponent<TileComponent>())
+        foreach (var entity in _entityManager.TileEntities)
         {
             var position = entity.GetComponent<PositionComponent>();
             if ((int)(position.X / tileSize) == col && (int)(position.Y / tileSize) == row)

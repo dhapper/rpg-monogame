@@ -14,9 +14,9 @@ public class PlantInteractions
         _inventorySystem = inventorySystem;
     }
 
-    public void HarvestCrop(InteractionSystem _interactionSystem, InputSystem _inputSystem, Camera2D _camera, AssetStore _assets, InventoryComponent inventory)
+    public void HarvestCrop(InteractionSystem _interactionSystem, InputSystem _inputSystem, AssetStore _assets, InventoryComponent inventory)
     {
-        var tile = _interactionSystem.GetTile(_inputSystem.GetMouseLocation(), _camera);
+        var tile = _interactionSystem.GetTile(_inputSystem.GetMouseLocation());
         if (tile == null) { return; }
         if (!tile.HasComponent<TileComponent>()) { return; }
         var tileComp = tile.GetComponent<TileComponent>();
@@ -52,9 +52,9 @@ public class PlantInteractions
         }
     }
 
-    public void PlantCrop(Entity seed, InteractionSystem _interactionSystem, InputSystem _inputSystem, Camera2D _camera, AssetStore _assets)
+    public void PlantCrop(Entity seed, InteractionSystem _interactionSystem, InputSystem _inputSystem, AssetStore _assets)
     {
-        var tile = _interactionSystem.GetTile(_inputSystem.GetMouseLocation(), _camera);
+        var tile = _interactionSystem.GetTile(_inputSystem.GetMouseLocation());
         if (tile == null) { return; }
         if (!tile.HasComponent<TileComponent>()) { return; }
 
@@ -73,7 +73,7 @@ public class PlantInteractions
         var itemName = seed.GetComponent<ItemComponent>().config.Name;
         if (Constants.SeedCropMapping.SeedNameToCrop.TryGetValue(itemName, out var cropConfig))
         {
-            CropFactory.CreateCrop(cropConfig, _entityManager, _assets, tilePos);
+            CropFactory.CreateCrop(cropConfig, tileComp.Row, tileComp.Col, _entityManager, _assets, tilePos);
             _entityManager.RefreshFilteredLists();
         }
 
@@ -83,15 +83,30 @@ public class PlantInteractions
     {
         foreach (var entity in _entityManager.CropEntities)
         {
-            var config = entity.GetComponent<CropComponent>().config;
-            if (config.CurrentStage < config.Stages)
+            bool flag = false;
+            var cropComp = entity.GetComponent<CropComponent>();
+            foreach (var tile in _entityManager.TileEntities)
             {
-                var spriteComp = entity.GetComponent<SpriteComponent>();
-                Rectangle rect = spriteComp.SourceRectangle;
-                rect.X += Constants.Crops.DefaultSpriteSize;
-                spriteComp.SourceRectangle = rect;
-                config.CurrentStage++;
+                if (flag) { break; }
+                var tileComp = tile.GetComponent<TileComponent>();
+                if (tileComp.Col == cropComp.Col && tileComp.Row == cropComp.Row)
+                {
+                    if (tileComp.Type == Constants.Tile.PathsSheetName && Constants.Tile.WetSoilTiles.Contains(tileComp.Id))
+                    {
+                        Console.WriteLine(tileComp.Type + " " + tileComp.Id + " " + cropComp.config.CurrentStage + " " + cropComp.config.Stages);
+                        if (cropComp.config.CurrentStage < cropComp.config.Stages)
+                        {
+                            var spriteComp = entity.GetComponent<SpriteComponent>();
+                            Rectangle rect = spriteComp.SourceRectangle;
+                            rect.X += Constants.Crops.DefaultSpriteSize;
+                            spriteComp.SourceRectangle = rect;
+                            cropComp.config.CurrentStage++;
+                            flag = true;
+                        }
+                    }
+                }
             }
+
         }
     }
 }
