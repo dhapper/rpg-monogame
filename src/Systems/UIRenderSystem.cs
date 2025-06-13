@@ -13,8 +13,11 @@ public class UIRenderSystem
     private EntityManager _entityManager;
     private InputSystem _inputSystem;
     private Camera2D _camera;
-    private GameStateManager _gameStateManager;
+    // private GameStateManager _gameStateManager;
     private InventoryUI _inventoryUI;
+
+    private GraphicsDevice _graphicsDevice;
+    private MenuSystem _menuSystem;
 
     public UIRenderSystem(
          SpriteBatch spriteBatch,
@@ -22,16 +25,20 @@ public class UIRenderSystem
          EntityManager entityManager,
          InputSystem inputSystem,
          Camera2D camera,
-         GameStateManager gameStateManager,
-         InventoryUI inventoryUI)
+        //  GameStateManager gameStateManager,
+         InventoryUI inventoryUI,
+         GraphicsDevice graphicsDevice,
+         MenuSystem menuSystem)
     {
         _spriteBatch = spriteBatch;
         _assetStore = assetStore;
         _entityManager = entityManager;
         _inputSystem = inputSystem;
         _camera = camera;
-        _gameStateManager = gameStateManager;
+        // _gameStateManager = gameStateManager;
         _inventoryUI = inventoryUI;
+        _graphicsDevice = graphicsDevice;
+        _menuSystem = menuSystem;
     }
 
     public void Draw()
@@ -40,15 +47,37 @@ public class UIRenderSystem
         _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
 
         DrawHotbar();
-        if (_gameStateManager.CurrentGameState == GameState.Inventory)
+
+        if (GameStateManager.CurrentGameState == GameState.Inventory)
         {
             DrawInventory();
-
             if (_inventoryUI.CurrentlyDragging)
                 DrawDraggedItem();
         }
 
+        if (GameStateManager.CurrentGameState == GameState.DialogueBox)
+            DrawDialogueBox();
+
         _spriteBatch.End();
+    }
+
+    public void DrawDialogueBox()
+    {
+        Texture2D _pixelTexture;
+        _pixelTexture = new Texture2D(_graphicsDevice, 1, 1);
+        _pixelTexture.SetData(new[] { Color.White });
+        int x = TileSize;
+        int y = TileSize;
+        Vector2 textSize = _assetStore.GameFont.MeasureString(_menuSystem.Line);
+        int width = (int)textSize.X;
+        int height = (int)(3 * textSize.Y);
+        _spriteBatch.Draw(_pixelTexture, new Rectangle(x, y, width, height), Color.Black);
+        _spriteBatch.DrawString(_assetStore.GameFont, _menuSystem.Line, new Vector2(x, y), Color.White);
+        for (int i = 0; i < _menuSystem.Options.Length; i++)
+        {
+            _spriteBatch.DrawString(_assetStore.GameFont, _menuSystem.Options[i], new Vector2(x, y + (int)((1 + i) * textSize.Y)), _menuSystem.choice == i ? Color.Yellow : Color.White);
+        }
+
     }
 
     public void DrawDraggedItem()

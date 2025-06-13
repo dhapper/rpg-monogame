@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using Microsoft.Xna.Framework;
 
 public class InteractionZone
 {
@@ -7,6 +8,7 @@ public class InteractionZone
     private MapSystem _mapSystem;
     private EntityManager _entityManager;
     private SleepSystem _sleepSystem;
+    // private GameStateManager _gameStateManager;
 
     public InteractionZone(MapSystem mapSystem, EntityManager entityManager, SleepSystem sleepSystem)
     {
@@ -39,7 +41,8 @@ public class InteractionZone
 
             Action action = delegate ()
             {
-                _sleepSystem.StartSleepCycle();
+                GameStateManager.SetState(GameState.DialogueBox);
+                // _sleepSystem.StartSleepCycle();
             };
 
             Entity zone = _entityManager.CreateEntity();

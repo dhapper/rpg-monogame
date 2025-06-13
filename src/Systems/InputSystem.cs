@@ -79,6 +79,7 @@ public class InputSystem
         state.Grow = IsKeyPressed(Keys.G);
 
         state.Save = IsKeyPressed(Keys.O);
+        state.Enter = IsKeyPressed(Keys.Enter);
         state.Interact = IsMousePressed(MouseButton.Left);
 
         state.IsNumberChanging = false;

@@ -13,14 +13,14 @@ public class RenderSystem
     private Camera2D _camera;
     private GraphicsDevice _graphicsDevice;
     private InventoryUI _inventoryUI;
-    private GameStateManager _gameStateManager;
+    // private GameStateManager _gameStateManager;
     private InputSystem _inputSystem;
 
     private UIRenderSystem _uiRenderSystem;
 
     private Rectangle _cameraView;
 
-    public RenderSystem(SpriteBatch spriteBatch, EntityManager entityManager, AssetStore assetStore, Camera2D camera, GraphicsDevice graphicsDevice, InventoryUI inventoryUI, GameStateManager gameStateManager, InputSystem inputSystem)
+    public RenderSystem(SpriteBatch spriteBatch, EntityManager entityManager, AssetStore assetStore, Camera2D camera, GraphicsDevice graphicsDevice, InventoryUI inventoryUI, InputSystem inputSystem, MenuSystem menuSystem)
     {
         _spriteBatch = spriteBatch;
         _entityManager = entityManager;
@@ -28,10 +28,10 @@ public class RenderSystem
         _camera = camera;
         _graphicsDevice = graphicsDevice;
         _inventoryUI = inventoryUI;
-        _gameStateManager = gameStateManager;
+        // _gameStateManager = gameStateManager;
         _inputSystem = inputSystem;
 
-        _uiRenderSystem = new UIRenderSystem(_spriteBatch, _assetStore, _entityManager, _inputSystem, _camera, _gameStateManager, _inventoryUI);
+        _uiRenderSystem = new UIRenderSystem(_spriteBatch, _assetStore, _entityManager, _inputSystem, _camera, _inventoryUI, _graphicsDevice, menuSystem);
     }
 
     public void Draw()

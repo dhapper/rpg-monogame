@@ -12,10 +12,11 @@ public class GameInitializer
     private Camera2D _camera;
     private MapSystem _mapSystem;
     private InventoryUI _inventoryUI;
-    private GameStateManager _gameStateManager;
+    // private GameStateManager _gameStateManager;
     private InventorySystem _inventorySystem;
     private InteractionSystem _interactionSystem;
     private SleepSystem _sleepSystem;
+    private MenuSystem _menuSystem;
 
     public Entity PlayerEntity { get; private set; }
     public PlayerController PlayerController { get; private set; }
@@ -44,15 +45,16 @@ public class GameInitializer
     public void Initialize()
     {
         _inputSystem = new InputSystem();
-        _gameStateManager = new GameStateManager();
+        // _gameStateManager = new GameStateManager();
         _camera = new Camera2D(_graphicsDevice.Viewport);
-        _inventoryUI = new InventoryUI(_camera, _graphicsDevice.Viewport, _entityManager, _inputSystem, _gameStateManager);
+        _inventoryUI = new InventoryUI(_camera, _graphicsDevice.Viewport, _entityManager, _inputSystem);
         _inventorySystem = new InventorySystem(_entityManager, _assets);
         _animationSystem = new AnimationSystem(_entityManager);
         _interactionSystem = new InteractionSystem(_entityManager, _inputSystem, _assets, _animationSystem, _camera, _inventorySystem);
         _sleepSystem = new SleepSystem(_entityManager, _assets, _interactionSystem);
+        _menuSystem = new MenuSystem(_inputSystem, _sleepSystem);
 
-        RenderSystem = new RenderSystem(_spriteBatch, _entityManager, _assets, _camera, _graphicsDevice, _inventoryUI, _gameStateManager, _inputSystem);
+        RenderSystem = new RenderSystem(_spriteBatch, _entityManager, _assets, _camera, _graphicsDevice, _inventoryUI, _inputSystem, _menuSystem);
         _mapSystem = new MapSystem(_entityManager, _assets, _camera, _sleepSystem);
 
         // Create Player
@@ -79,9 +81,9 @@ public class GameInitializer
 
         var inputs = _inputSystem.GetInputState();
         if (inputs.ToggleInventory)
-            _gameStateManager.ToggleBetweenStates(GameState.Playing, GameState.Inventory);
+            GameStateManager.ToggleBetweenStates(GameState.Playing, GameState.Inventory);
 
-        switch (_gameStateManager.CurrentGameState)
+        switch (GameStateManager.CurrentGameState)
         {
             case GameState.Playing:
                 // _inputSystem.Update();
@@ -90,6 +92,9 @@ public class GameInitializer
                 // _inventoryUI.Update();
                 break;
             case GameState.Inventory:
+                break;
+            case GameState.DialogueBox:
+                _menuSystem.Update();
                 break;
         }
     }

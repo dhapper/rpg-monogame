@@ -15,4 +15,5 @@ public class InputState
     // temp vars
     public bool Grow;
 
+    public bool Enter;
 }

@@ -14,7 +14,7 @@ public class InventoryUI
     private EntityManager _entityManager;
     private InventoryComponent _inventory;
     private InputSystem _inputSystem;
-    private GameStateManager _gameStateManager;
+    // private GameStateManager _gameStateManager;
 
     public Vector2[][] InventorySlotPositions, InventoryIconPositions;
     public Rectangle[][] InventorySlotRectangles;
@@ -24,13 +24,13 @@ public class InventoryUI
     private int _draggedItemCol, _draggedItemRow;
     private Entity _draggedItem;
 
-    public InventoryUI(Camera2D camera, Viewport viewport, EntityManager entityManager, InputSystem inputSystem, GameStateManager gameStateManager)
+    public InventoryUI(Camera2D camera, Viewport viewport, EntityManager entityManager, InputSystem inputSystem)
     {
         _camera = camera;
         _viewport = viewport;
         _entityManager = entityManager;
         _inputSystem = inputSystem;
-        _gameStateManager = gameStateManager;
+        // _gameStateManager = gameStateManager;
 
         InventorySlotPositions = new Vector2[Cols][];
         InventoryIconPositions = new Vector2[Cols][];
@@ -72,7 +72,7 @@ public class InventoryUI
 
     public void DraggingItemLogic()
     {
-        if (_gameStateManager.CurrentGameState != GameState.Inventory)
+        if (GameStateManager.CurrentGameState != GameState.Inventory)
             return;
 
         var drag = _inputSystem.GetMouseDragState(InputSystem.MouseButton.Left);
