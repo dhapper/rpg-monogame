@@ -18,6 +18,7 @@ public class UIRenderSystem
 
     private GraphicsDevice _graphicsDevice;
     private DialogueSystem _dialogueSystem;
+    private ShopSystem _shopSystem;
 
     public UIRenderSystem(
          SpriteBatch spriteBatch,
@@ -25,10 +26,12 @@ public class UIRenderSystem
          EntityManager entityManager,
          InputSystem inputSystem,
          Camera2D camera,
-        //  GameStateManager gameStateManager,
+         //  GameStateManager gameStateManager,
          InventoryUI inventoryUI,
          GraphicsDevice graphicsDevice,
-         DialogueSystem dialogueSystem)
+         DialogueSystem dialogueSystem,
+         ShopSystem shopSystem
+         )
     {
         _spriteBatch = spriteBatch;
         _assetStore = assetStore;
@@ -39,6 +42,7 @@ public class UIRenderSystem
         _inventoryUI = inventoryUI;
         _graphicsDevice = graphicsDevice;
         _dialogueSystem = dialogueSystem;
+        _shopSystem = shopSystem;
     }
 
     public void Draw()
@@ -58,14 +62,33 @@ public class UIRenderSystem
         if (GameStateManager.CurrentGameState == GameState.DialogueBox)
             DrawDialogueBox();
 
+        if (GameStateManager.CurrentGameState == GameState.Shop)
+            DrawShopMenu();
+
         _spriteBatch.End();
+    }
+
+    public void DrawShopMenu()
+    {
+        Texture2D _pixelTexture;
+        _pixelTexture = new Texture2D(_graphicsDevice, 1, 1);
+        _pixelTexture.SetData([Color.White]);
+        int x = TileSize;
+        int y = TileSize;
+        Vector2 textSize = _assetStore.GameFont.MeasureString(_shopSystem.Line);
+        int width = (int)textSize.X;
+        int height = (int)(3 * textSize.Y);
+        _spriteBatch.Draw(_pixelTexture, new Rectangle(x, y, width, height), Color.Black);
+        _spriteBatch.DrawString(_assetStore.GameFont, _shopSystem.Line, new Vector2(x, y), Color.White);
+        for (int i = 0; i < _shopSystem.Options.Length; i++)
+            _spriteBatch.DrawString(_assetStore.GameFont, _shopSystem.Options[i], new Vector2(x, y + (int)((1 + i) * textSize.Y)), Color.Yellow);
     }
 
     public void DrawDialogueBox()
     {
         Texture2D _pixelTexture;
         _pixelTexture = new Texture2D(_graphicsDevice, 1, 1);
-        _pixelTexture.SetData(new[] { Color.White });
+        _pixelTexture.SetData([Color.White]);
         int x = TileSize;
         int y = TileSize;
         Vector2 textSize = _assetStore.GameFont.MeasureString(_dialogueSystem.Line);
@@ -74,10 +97,7 @@ public class UIRenderSystem
         _spriteBatch.Draw(_pixelTexture, new Rectangle(x, y, width, height), Color.Black);
         _spriteBatch.DrawString(_assetStore.GameFont, _dialogueSystem.Line, new Vector2(x, y), Color.White);
         for (int i = 0; i < _dialogueSystem.Options.Length; i++)
-        {
             _spriteBatch.DrawString(_assetStore.GameFont, _dialogueSystem.Options[i], new Vector2(x, y + (int)((1 + i) * textSize.Y)), _dialogueSystem.choice == i ? Color.Yellow : Color.White);
-        }
-
     }
 
     public void DrawDraggedItem()

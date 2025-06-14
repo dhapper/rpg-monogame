@@ -12,6 +12,7 @@ public class InputSystem
 
     private Dictionary<MouseButton, MouseDragState> _dragStates = new();
 
+    private int currentSelectedNumber = 0;
     private bool lastKeyBasedswitching = false;
     private int prevDirection = 0;
 
@@ -23,8 +24,6 @@ public class InputSystem
         }
     }
 
-    int currentSelectedNumber = 0;
-
     public void Update()
     {
         _previousKeyboardState = _currentKeyboardState;
@@ -33,6 +32,16 @@ public class InputSystem
         _currentKeyboardState = Keyboard.GetState();
         _currentMouseState = Mouse.GetState();
 
+        UpdateDrag();
+
+        var inputState = GetInputState();
+        if (inputState.IsNumberChanging && inputState.Number.HasValue)
+            currentSelectedNumber = inputState.Number.Value;
+
+    }
+
+    public void UpdateDrag()
+    {
         foreach (var pair in _dragStates)
         {
             var button = pair.Key;
@@ -65,15 +74,6 @@ public class InputSystem
                 dragState.IsDragging = false;
             }
         }
-
-        var inputState = GetInputState();
-
-        if (inputState.IsNumberChanging && inputState.Number.HasValue)
-        {
-            currentSelectedNumber = inputState.Number.Value;
-            // update active inventory slot in UI/game logic
-        }
-
     }
 
     public InputState GetInputState()
@@ -93,8 +93,14 @@ public class InputSystem
         state.Enter = IsKeyPressed(Keys.Enter);
         state.Interact = IsMousePressed(MouseButton.Left);
 
-        state.IsNumberChanging = false;
+        HandleHotbarState(state);
 
+        return state;
+    }
+
+    public void HandleHotbarState(InputState state)
+    {
+        state.IsNumberChanging = false;
         for (int i = 0; i < 9; i++)
         {
             if (IsKeyPressed(Keys.D0 + i))
@@ -122,8 +128,8 @@ public class InputSystem
                     if (direction == -1) newNumber++;
                 }
 
-                if (difference == 2)    newNumber++;
-                else if (difference == -2)  newNumber--;
+                if (difference == 2) newNumber++;
+                else if (difference == -2) newNumber--;
             }
 
             if (newNumber < 0) newNumber = 0;
@@ -134,8 +140,6 @@ public class InputSystem
             lastKeyBasedswitching = false;
             prevDirection = direction;
         }
-
-        return state;
     }
 
 

@@ -14,13 +14,13 @@ public class PlantInteractions
         _inventorySystem = inventorySystem;
     }
 
-    public void HarvestCrop(InteractionSystem _interactionSystem, InputSystem _inputSystem, AssetStore _assets, InventoryComponent inventory)
+    public bool HarvestCrop(InteractionSystem _interactionSystem, InputSystem _inputSystem, AssetStore _assets, InventoryComponent inventory)
     {
         var tile = _interactionSystem.GetTile(_inputSystem.GetMouseLocation());
-        if (tile == null) { return; }
-        if (!tile.HasComponent<TileComponent>()) { return; }
+        if (tile == null) { return false; }
+        if (!tile.HasComponent<TileComponent>()) { return false; }
         var tileComp = tile.GetComponent<TileComponent>();
-        if (!(tileComp.Type == Constants.Tile.PathsSheetName && Constants.Tile.PlantableTiles.Contains(tileComp.Id))) { return; }
+        if (!(tileComp.Type == Constants.Tile.PathsSheetName && Constants.Tile.PlantableTiles.Contains(tileComp.Id))) { return false; }
 
         var tilePosComp = tile.GetComponent<PositionComponent>();
         var tilePos = (tilePosComp.X, tilePosComp.Y);
@@ -41,15 +41,17 @@ public class PlantInteractions
                     {
                         inventory.InventoryItems[slot.Value.j][slot.Value.i] = ItemFactory.CreateItem(itemConfig, _entityManager, _assets);
                         _entityManager.RefreshFilteredLists();
+                        return true;
                     }
-                    return;
+                    return false;
                 }
                 else
                 {
-                    return;
+                    return false;
                 }
             }
         }
+        return false;
     }
 
     public void PlantCrop(Entity seed, InteractionSystem _interactionSystem, InputSystem _inputSystem, AssetStore _assets)
@@ -93,7 +95,7 @@ public class PlantInteractions
                 {
                     if (tileComp.Type == Constants.Tile.PathsSheetName && Constants.Tile.WetSoilTiles.Contains(tileComp.Id))
                     {
-                        Console.WriteLine(tileComp.Type + " " + tileComp.Id + " " + cropComp.config.CurrentStage + " " + cropComp.config.Stages);
+                        // Console.WriteLine(tileComp.Type + " " + tileComp.Id + " " + cropComp.config.CurrentStage + " " + cropComp.config.Stages);
                         if (cropComp.config.CurrentStage < cropComp.config.Stages)
                         {
                             var spriteComp = entity.GetComponent<SpriteComponent>();

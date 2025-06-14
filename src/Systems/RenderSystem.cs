@@ -85,7 +85,7 @@ public class RenderSystem
                 DrawHitbox(_spriteBatch, entity.GetComponent<CollisionComponent>().Hitbox);
         }
 
-        // Draw entities
+        // Temporary draw zones
         foreach (var entity in _entityManager.Zones)
         {
 

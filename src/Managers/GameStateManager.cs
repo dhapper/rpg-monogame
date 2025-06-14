@@ -22,4 +22,5 @@ public enum GameState
     Paused,
     Inventory,
     DialogueBox,
+    Shop,
 }

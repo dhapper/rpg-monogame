@@ -14,7 +14,7 @@ public class DialogueSystem
         _inputSystem = inputSystem;
         _sleepSystem = sleepSystem;
 
-        InitText(
+        InitDialogue(
             "Sleep for the night?",
             [
                 "Yes",
@@ -23,13 +23,26 @@ public class DialogueSystem
         );
     }
 
-    public void InitText(string line, string[] options)
+    public void InitDialogue(string line, string[] options)
     {
         Line = line;
         Options = options;
     }
 
     public void Update()
+    {
+
+        ManageInputs();
+        // var inputs = _inputSystem.GetInputState();
+        // if (inputs.MoveDown)
+        //     choice = choice < Options.Length - 1 ? ++choice : choice;
+        // else if (inputs.MoveUp)
+        //     choice = choice > 0 ? --choice : choice;
+        // else if (inputs.Enter)
+        //     ComputeChoice();
+    }
+
+    public void ManageInputs()
     {
         var inputs = _inputSystem.GetInputState();
         if (inputs.MoveDown)
@@ -54,7 +67,5 @@ public class DialogueSystem
             GameStateManager.SetState(GameState.Playing);
         }
     }
-
-
 
 }

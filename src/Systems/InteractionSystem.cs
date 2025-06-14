@@ -56,7 +56,8 @@ public class InteractionSystem
             if (inputs.Interact && activeItem != null)
             {
 
-                _plantInteractions.HarvestCrop(this, _inputSystem, _assets, player.GetComponent<InventoryComponent>());
+                if (_plantInteractions.HarvestCrop(this, _inputSystem, _assets, player.GetComponent<InventoryComponent>()))
+                    return;
 
                 if (activeItem.Type == ItemType.Plantable)
                 {

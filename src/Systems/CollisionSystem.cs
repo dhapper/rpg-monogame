@@ -28,7 +28,7 @@ public class CollisionSystem
 
     public void CheckZones(Rectangle futureHitbox)
     {
-        bool inZoneEndFlag = false;
+        // bool inZoneEndFlag = false;
         foreach (var entity in _entityManager.Zones)
         {
             var zone = entity.GetComponent<ZoneComponent>();
@@ -41,7 +41,7 @@ public class CollisionSystem
                 {
                     zone.InZone = true;
                     zone.ZoneAction();
-                    inZoneEndFlag = true;
+                    // inZoneEndFlag = true;
                     break;
                 }
             }
