@@ -2,7 +2,7 @@ using System;
 using System.Drawing;
 using Microsoft.Xna.Framework;
 
-public class InteractionZone
+public class ZoneSystem
 {
 
     private MapSystem _mapSystem;
@@ -10,7 +10,7 @@ public class InteractionZone
     private SleepSystem _sleepSystem;
     // private GameStateManager _gameStateManager;
 
-    public InteractionZone(MapSystem mapSystem, EntityManager entityManager, SleepSystem sleepSystem)
+    public ZoneSystem(MapSystem mapSystem, EntityManager entityManager, SleepSystem sleepSystem)
     {
         _mapSystem = mapSystem;
         _entityManager = entityManager;

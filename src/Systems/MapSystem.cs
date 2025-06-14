@@ -22,7 +22,7 @@ public class MapSystem
 
         InitMap();
 
-        InteractionZone interactionZone = new InteractionZone(this, _entityManager, sleepSystem);
+        ZoneSystem zoneSystem = new ZoneSystem(this, _entityManager, sleepSystem);
     }
 
     public void InitMap()

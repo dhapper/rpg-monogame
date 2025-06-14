@@ -12,6 +12,9 @@ public class InputSystem
 
     private Dictionary<MouseButton, MouseDragState> _dragStates = new();
 
+    private bool lastKeyBasedswitching = false;
+    private int prevDirection = 0;
+
     public InputSystem()
     {
         foreach (MouseButton button in Enum.GetValues(typeof(MouseButton)))
@@ -20,7 +23,7 @@ public class InputSystem
         }
     }
 
-
+    int currentSelectedNumber = 0;
 
     public void Update()
     {
@@ -63,6 +66,14 @@ public class InputSystem
             }
         }
 
+        var inputState = GetInputState();
+
+        if (inputState.IsNumberChanging && inputState.Number.HasValue)
+        {
+            currentSelectedNumber = inputState.Number.Value;
+            // update active inventory slot in UI/game logic
+        }
+
     }
 
     public InputState GetInputState()
@@ -88,14 +99,45 @@ public class InputSystem
         {
             if (IsKeyPressed(Keys.D0 + i))
             {
-                state.Number = i;
+                state.Number = i - 1;
                 state.IsNumberChanging = true;
+                lastKeyBasedswitching = true;
                 break;
             }
         }
 
+        // Check scroll wheel input
+        int scrollDelta = _currentMouseState.ScrollWheelValue - _previousMouseState.ScrollWheelValue;
+        if (scrollDelta != 0)
+        {
+            int direction = Math.Sign(scrollDelta);
+            int newNumber = currentSelectedNumber;
+            int difference = direction + prevDirection;
+
+            if (!lastKeyBasedswitching)
+            {
+                if (difference == 0)
+                {
+                    if (direction == 1) newNumber--;
+                    if (direction == -1) newNumber++;
+                }
+
+                if (difference == 2)    newNumber++;
+                else if (difference == -2)  newNumber--;
+            }
+
+            if (newNumber < 0) newNumber = 0;
+            if (newNumber > 8) newNumber = 8;
+
+            state.Number = newNumber;
+            state.IsNumberChanging = true;
+            lastKeyBasedswitching = false;
+            prevDirection = direction;
+        }
+
         return state;
     }
+
 
     // calls continously upon key hold
     public bool IsKeyDown(Keys key)

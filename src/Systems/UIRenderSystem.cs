@@ -17,7 +17,7 @@ public class UIRenderSystem
     private InventoryUI _inventoryUI;
 
     private GraphicsDevice _graphicsDevice;
-    private MenuSystem _menuSystem;
+    private DialogueSystem _dialogueSystem;
 
     public UIRenderSystem(
          SpriteBatch spriteBatch,
@@ -28,7 +28,7 @@ public class UIRenderSystem
         //  GameStateManager gameStateManager,
          InventoryUI inventoryUI,
          GraphicsDevice graphicsDevice,
-         MenuSystem menuSystem)
+         DialogueSystem dialogueSystem)
     {
         _spriteBatch = spriteBatch;
         _assetStore = assetStore;
@@ -38,7 +38,7 @@ public class UIRenderSystem
         // _gameStateManager = gameStateManager;
         _inventoryUI = inventoryUI;
         _graphicsDevice = graphicsDevice;
-        _menuSystem = menuSystem;
+        _dialogueSystem = dialogueSystem;
     }
 
     public void Draw()
@@ -68,14 +68,14 @@ public class UIRenderSystem
         _pixelTexture.SetData(new[] { Color.White });
         int x = TileSize;
         int y = TileSize;
-        Vector2 textSize = _assetStore.GameFont.MeasureString(_menuSystem.Line);
+        Vector2 textSize = _assetStore.GameFont.MeasureString(_dialogueSystem.Line);
         int width = (int)textSize.X;
         int height = (int)(3 * textSize.Y);
         _spriteBatch.Draw(_pixelTexture, new Rectangle(x, y, width, height), Color.Black);
-        _spriteBatch.DrawString(_assetStore.GameFont, _menuSystem.Line, new Vector2(x, y), Color.White);
-        for (int i = 0; i < _menuSystem.Options.Length; i++)
+        _spriteBatch.DrawString(_assetStore.GameFont, _dialogueSystem.Line, new Vector2(x, y), Color.White);
+        for (int i = 0; i < _dialogueSystem.Options.Length; i++)
         {
-            _spriteBatch.DrawString(_assetStore.GameFont, _menuSystem.Options[i], new Vector2(x, y + (int)((1 + i) * textSize.Y)), _menuSystem.choice == i ? Color.Yellow : Color.White);
+            _spriteBatch.DrawString(_assetStore.GameFont, _dialogueSystem.Options[i], new Vector2(x, y + (int)((1 + i) * textSize.Y)), _dialogueSystem.choice == i ? Color.Yellow : Color.White);
         }
 
     }

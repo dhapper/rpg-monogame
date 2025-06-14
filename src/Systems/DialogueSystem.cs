@@ -1,6 +1,6 @@
 using System;
 
-public class MenuSystem
+public class DialogueSystem
 {
     public string Line;
     public string[] Options;
@@ -9,7 +9,7 @@ public class MenuSystem
     private InputSystem _inputSystem;
     private SleepSystem _sleepSystem;
 
-    public MenuSystem(InputSystem inputSystem, SleepSystem sleepSystem)
+    public DialogueSystem(InputSystem inputSystem, SleepSystem sleepSystem)
     {
         _inputSystem = inputSystem;
         _sleepSystem = sleepSystem;

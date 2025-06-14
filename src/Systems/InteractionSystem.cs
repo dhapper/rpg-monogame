@@ -39,7 +39,15 @@ public class InteractionSystem
     public void HandleInteractions(Entity player, InputState inputs, bool facingRight, ref bool isAnimationLocked, int lastDir)
     {
         var inv = player.GetComponent<InventoryComponent>();
-        inv.activeItemIndices = inputs.IsNumberChanging ? (inputs.Number - 1 ?? 0, 0) : inv.activeItemIndices;
+        var colIndex = inputs.Number  ?? 0;
+        inv.activeItemIndices = inputs.IsNumberChanging ? (colIndex, 0) : inv.activeItemIndices;
+        
+
+
+        // colIndex = colIndex < 10 ? colIndex : 9;
+        // colIndex = colIndex > 0 ? colIndex : 0;
+        // inv.activeItemIndices = inv.activeItemIndices < 9 ? inv.activeItemIndices : 8;
+
 
         var activeItemEntity = inv.InventoryItems[inv.activeItemIndices.Item1][inv.activeItemIndices.Item2];
         if (activeItemEntity != null)

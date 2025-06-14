@@ -20,7 +20,7 @@ public class RenderSystem
 
     private Rectangle _cameraView;
 
-    public RenderSystem(SpriteBatch spriteBatch, EntityManager entityManager, AssetStore assetStore, Camera2D camera, GraphicsDevice graphicsDevice, InventoryUI inventoryUI, InputSystem inputSystem, MenuSystem menuSystem)
+    public RenderSystem(SpriteBatch spriteBatch, EntityManager entityManager, AssetStore assetStore, Camera2D camera, GraphicsDevice graphicsDevice, InventoryUI inventoryUI, InputSystem inputSystem, DialogueSystem dialogueSystem)
     {
         _spriteBatch = spriteBatch;
         _entityManager = entityManager;
@@ -31,7 +31,7 @@ public class RenderSystem
         // _gameStateManager = gameStateManager;
         _inputSystem = inputSystem;
 
-        _uiRenderSystem = new UIRenderSystem(_spriteBatch, _assetStore, _entityManager, _inputSystem, _camera, _inventoryUI, _graphicsDevice, menuSystem);
+        _uiRenderSystem = new UIRenderSystem(_spriteBatch, _assetStore, _entityManager, _inputSystem, _camera, _inventoryUI, _graphicsDevice, dialogueSystem);
     }
 
     public void Draw()

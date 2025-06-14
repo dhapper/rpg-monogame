@@ -16,7 +16,7 @@ public class GameInitializer
     private InventorySystem _inventorySystem;
     private InteractionSystem _interactionSystem;
     private SleepSystem _sleepSystem;
-    private MenuSystem _menuSystem;
+    private DialogueSystem _dialogueSystem;
 
     public Entity PlayerEntity { get; private set; }
     public PlayerController PlayerController { get; private set; }
@@ -52,9 +52,9 @@ public class GameInitializer
         _animationSystem = new AnimationSystem(_entityManager);
         _interactionSystem = new InteractionSystem(_entityManager, _inputSystem, _assets, _animationSystem, _camera, _inventorySystem);
         _sleepSystem = new SleepSystem(_entityManager, _assets, _interactionSystem);
-        _menuSystem = new MenuSystem(_inputSystem, _sleepSystem);
+        _dialogueSystem = new DialogueSystem(_inputSystem, _sleepSystem);
 
-        RenderSystem = new RenderSystem(_spriteBatch, _entityManager, _assets, _camera, _graphicsDevice, _inventoryUI, _inputSystem, _menuSystem);
+        RenderSystem = new RenderSystem(_spriteBatch, _entityManager, _assets, _camera, _graphicsDevice, _inventoryUI, _inputSystem, _dialogueSystem);
         _mapSystem = new MapSystem(_entityManager, _assets, _camera, _sleepSystem);
 
         // Create Player
@@ -94,7 +94,7 @@ public class GameInitializer
             case GameState.Inventory:
                 break;
             case GameState.DialogueBox:
-                _menuSystem.Update();
+                _dialogueSystem.Update();
                 break;
         }
     }
