@@ -2,21 +2,19 @@ public class InventorySystem
 {
 
     private EntityManager _entityManager;
-    private AssetStore _assets;
 
-    public InventorySystem(EntityManager entityManager, AssetStore assets)
+    public InventorySystem(EntityManager entityManager)
     {
         _entityManager = entityManager;
-        _assets = assets;
     }
 
     public void InitInventory(InventoryComponent inventory)
     {
-        var wateringCan = ItemFactory.CreateItem(Constants.Items.WateringCan, _entityManager, _assets);
-        var pickaxe = ItemFactory.CreateItem(Constants.Items.Pickaxe, _entityManager, _assets);
-        var seeds1 = ItemFactory.CreateItem(Constants.Items.PumpkinSeeds, _entityManager, _assets);
-        var seeds2 = ItemFactory.CreateItem(Constants.Items.PotatoSeeds, _entityManager, _assets);
-        var seeds3 = ItemFactory.CreateItem(Constants.Items.PotatoSeeds, _entityManager, _assets);
+        var wateringCan = ItemFactory.CreateItem(Constants.Items.WateringCan, _entityManager);
+        var pickaxe = ItemFactory.CreateItem(Constants.Items.Pickaxe, _entityManager);
+        var seeds1 = ItemFactory.CreateItem(Constants.Items.PumpkinSeeds, _entityManager);
+        var seeds2 = ItemFactory.CreateItem(Constants.Items.PotatoSeeds, _entityManager);
+        var seeds3 = ItemFactory.CreateItem(Constants.Items.PotatoSeeds, _entityManager);
 
         inventory.InventoryItems[0][0] = wateringCan;
         inventory.InventoryItems[1][0] = pickaxe;

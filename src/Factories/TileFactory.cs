@@ -8,7 +8,7 @@ public static class TileFactory
     private static int size = Constants.DefaultTileSize;
     private static float scale = Constants.ScaleFactor;
 
-    public static Entity CreateTile(int id, string type, int? background, int row, int col, EntityManager entityManager, AssetStore assets)
+    public static Entity CreateTile(int id, string type, int? background, int row, int col, EntityManager entityManager)
     {
 
         var tile = entityManager.CreateEntity(false);
@@ -24,7 +24,7 @@ public static class TileFactory
 
         tile.AddComponent(new PositionComponent(col * size * scale, row * size * scale, size, size));
 
-        var sheet = GetTileset(type, assets);
+        var sheet = GetTileset(type);
 
         int sheetWidth = sheet.Width;
         int tilesPerRow = sheetWidth / size;
@@ -37,29 +37,29 @@ public static class TileFactory
             tile.AddComponent(new CollisionComponent(tile.GetComponent<PositionComponent>(), 0, 0, size, size));
 
         if (background.HasValue)
-            SetBackground(sheetWidth, background, tile, assets);
+            SetBackground(sheetWidth, background, tile);
 
         return tile;
     }
 
-    public static Texture2D GetTileset(string type, AssetStore assets)
+    public static Texture2D GetTileset(string type)
     {
         switch (type)
         {
             case "Tileset1":
-                return assets.PathTiles;
+                return AssetStore.PathTiles;
             case "Tileset2":
-                return assets.CollisionTiles;
+                return AssetStore.CollisionTiles;
             case "Tileset3":
-                return assets.WaterTiles;
+                return AssetStore.WaterTiles;
             default:
-                return assets.PathTiles;
+                return AssetStore.PathTiles;
         }
     }
 
-    public static void SetBackground(int sheetWidth, int? background, Entity tile, AssetStore assets)
+    public static void SetBackground(int sheetWidth, int? background, Entity tile)
     {
-        sheetWidth = assets.BackgroundTiles.Width;
+        sheetWidth = AssetStore.BackgroundTiles.Width;
         int tilesInRow = sheetWidth / size;
         int bgRow = background.Value / tilesInRow;
         int bgCol = background.Value % tilesInRow;

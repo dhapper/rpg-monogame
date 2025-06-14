@@ -54,7 +54,7 @@ public class EntityManager
     }
 
     // maybe move this to child class?
-    public void ChangeTiles(string oldSheet, int oldId, string newSheet, int newId, AssetStore assets)
+    public void ChangeTiles(string oldSheet, int oldId, string newSheet, int newId)
     {
         for (int i = 0; i < _tileEntities.Count; i++)
         {
@@ -67,14 +67,14 @@ public class EntityManager
 
                 _entities.Remove(tile);
 
-                var newTile = TileFactory.CreateTile(newId, newSheet, null, (int)row, (int)col, this, assets);
+                var newTile = TileFactory.CreateTile(newId, newSheet, null, (int)row, (int)col, this);
                 _tileEntities[i] = newTile;
             }
         }
         RefreshFilteredLists();
     }
 
-    public void ChangeTile(Entity selectedTile, string newSheet, int newId, AssetStore assets)
+    public void ChangeTile(Entity selectedTile, string newSheet, int newId)
     {
         for (int i = 0; i < _tileEntities.Count; i++)
         {
@@ -88,7 +88,7 @@ public class EntityManager
                 _entities.Remove(tile);
                 _tileEntities.RemoveAt(i);
 
-                var newTile = TileFactory.CreateTile(newId, newSheet, null, (int)row, (int)col, this, assets);
+                var newTile = TileFactory.CreateTile(newId, newSheet, null, (int)row, (int)col, this);
                 _tileEntities.Insert(i, newTile);
                 _entities.Add(newTile);
                 RefreshFilteredLists();

@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 public class GameInitializer
 {
     private EntityManager _entityManager;
-    private AssetStore _assets;
+    // private AssetStore _assets;
     private InputSystem _inputSystem;
     private AnimationSystem _animationSystem;
     private SpriteBatch _spriteBatch;
@@ -17,6 +17,7 @@ public class GameInitializer
     private InteractionSystem _interactionSystem;
     private SleepSystem _sleepSystem;
     private DialogueSystem _dialogueSystem;
+    private ShopSystem _shopSystem;
 
     public Entity PlayerEntity { get; private set; }
     public PlayerController PlayerController { get; private set; }
@@ -31,15 +32,11 @@ public class GameInitializer
 
 
 
-    public GameInitializer(EntityManager entityManager, SpriteBatch spriteBatch, AssetStore assets)
+    public GameInitializer(EntityManager entityManager, SpriteBatch spriteBatch)
     {
         _entityManager = entityManager;
-        _assets = assets;
         _spriteBatch = spriteBatch;
         _graphicsDevice = _spriteBatch.GraphicsDevice;
-
-        _assets.UpdateSheets(_graphicsDevice);
-
     }
 
     public void Initialize()
@@ -48,18 +45,19 @@ public class GameInitializer
         // _gameStateManager = new GameStateManager();
         _camera = new Camera2D(_graphicsDevice.Viewport);
         _inventoryUI = new InventoryUI(_camera, _graphicsDevice.Viewport, _entityManager, _inputSystem);
-        _inventorySystem = new InventorySystem(_entityManager, _assets);
+        _inventorySystem = new InventorySystem(_entityManager);
         _animationSystem = new AnimationSystem(_entityManager);
-        _interactionSystem = new InteractionSystem(_entityManager, _inputSystem, _assets, _animationSystem, _camera, _inventorySystem);
-        _sleepSystem = new SleepSystem(_entityManager, _assets, _interactionSystem);
+        _interactionSystem = new InteractionSystem(_entityManager, _inputSystem, _animationSystem, _camera, _inventorySystem);
+        _sleepSystem = new SleepSystem(_entityManager, _interactionSystem);
         _dialogueSystem = new DialogueSystem(_inputSystem, _sleepSystem);
+        _shopSystem = new ShopSystem(_entityManager);
 
-        RenderSystem = new RenderSystem(_spriteBatch, _entityManager, _assets, _camera, _graphicsDevice, _inventoryUI, _inputSystem, _dialogueSystem);
-        _mapSystem = new MapSystem(_entityManager, _assets, _camera, _sleepSystem);
+        RenderSystem = new RenderSystem(_spriteBatch, _entityManager, _camera, _graphicsDevice, _inventoryUI, _inputSystem, _dialogueSystem, _shopSystem);
+        _mapSystem = new MapSystem(_entityManager, _camera, _sleepSystem);
 
         // Create Player
-        PlayerEntity = PlayerFactory.CreatePlayer(200, 200, _entityManager, _assets, _graphicsDevice, _inventorySystem);
-        PlayerController = new PlayerController(PlayerEntity, _inputSystem, _animationSystem, _mapSystem, _camera, _entityManager, _inventorySystem, _interactionSystem, _assets);
+        PlayerEntity = PlayerFactory.CreatePlayer(200, 200, _entityManager, _graphicsDevice, _inventorySystem);
+        PlayerController = new PlayerController(PlayerEntity, _inputSystem, _animationSystem, _mapSystem, _camera, _entityManager, _inventorySystem, _interactionSystem);
         PlayerEntity.AddComponent(new PlayerComponent());   // should move to factory?
         var (x, y) = SaveManager.LoadData();
         var position = PlayerEntity.GetComponent<PositionComponent>();

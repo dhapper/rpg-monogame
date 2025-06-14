@@ -28,7 +28,23 @@ public class ZoneSystem
 
         foreach (var pos in matchingPositions)
         {
-            // Console.WriteLine(pos.col+" "+pos.row); 
+            Action action = delegate ()
+            {
+                GameStateManager.SetState(GameState.Shop);
+            };
+
+            Entity zone = _entityManager.CreateEntity();
+            zone.AddComponent(new ZoneComponent(ZoneType.Tent, action));
+            zone.AddComponent(new PositionComponent(pos.col * Constants.TileSize, pos.row * Constants.TileSize + Constants.TileSize));
+            var posComp = zone.GetComponent<PositionComponent>();
+            zone.AddComponent(new CollisionComponent(
+                posComp,
+                0,
+                0,
+                Constants.DefaultTileSize,
+                (int)(2 * Constants.ScaleFactor),
+                false
+            ));
         }
     }
 

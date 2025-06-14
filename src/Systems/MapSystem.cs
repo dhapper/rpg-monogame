@@ -7,17 +7,15 @@ public class MapSystem
 {
 
     private EntityManager _entityManager;
-    private AssetStore _assetStore;
     private Camera2D _camera;
 
     public int MapWidthInPixels { get; private set; }
     public int MapHeightInPixels { get; private set; }
     TileData[,] mapData;
 
-    public MapSystem(EntityManager entityManager, AssetStore assetStore, Camera2D camera, SleepSystem sleepSystem)
+    public MapSystem(EntityManager entityManager, Camera2D camera, SleepSystem sleepSystem)
     {
         _entityManager = entityManager;
-        _assetStore = assetStore;
         _camera = camera;
 
         InitMap();
@@ -46,7 +44,7 @@ public class MapSystem
                 int id = mapData[row, col].Id ?? 1;
                 string type = mapData[row, col].Type ?? "Tilesheet1";
                 int? background = mapData[row, col].Background;
-                Entity Tile = TileFactory.CreateTile(id, type, background, row, col, _entityManager, _assetStore);
+                Entity Tile = TileFactory.CreateTile(id, type, background, row, col, _entityManager);
 
             }
         }

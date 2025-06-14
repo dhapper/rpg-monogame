@@ -15,12 +15,11 @@ public class PlayerController
     private EntityManager _entityManager;
     private InventorySystem _inventorySystem;
     private InteractionSystem _interactionSystem;
-    private AssetStore _assets;
     // private PlantInteractions _plantInteractions;
 
     private bool isAnimationLocked = false;
 
-    public PlayerController(Entity player, InputSystem inputSystem, AnimationSystem animationSystem, MapSystem mapSystem, Camera2D camera, EntityManager entityManager, InventorySystem inventorySystem, InteractionSystem interactionSystem, AssetStore assets)
+    public PlayerController(Entity player, InputSystem inputSystem, AnimationSystem animationSystem, MapSystem mapSystem, Camera2D camera, EntityManager entityManager, InventorySystem inventorySystem, InteractionSystem interactionSystem)
     {
         _player = player;
         _inputSystem = inputSystem;
@@ -32,7 +31,6 @@ public class PlayerController
         _entityManager = entityManager;
         _collisionSystem = new CollisionSystem(_player, _entityManager);
         _interactionSystem = interactionSystem;
-        _assets = assets;
         // _plantInteractions = new PlantInteractions(_entityManager);
 
         _inventorySystem = inventorySystem;

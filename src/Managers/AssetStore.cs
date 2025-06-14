@@ -2,31 +2,32 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-public class AssetStore
+public static class AssetStore
 {
-    public SpriteFont GameFont { get; private set; }
-    public Texture2D PlayerTexture { get; private set; }
-    public Texture2D TileSheet;
-    public Texture2D GroundTiles, AnimatedTiles;
+    public static SpriteFont GameFont { get; private set; }
+    public static Texture2D PlayerTexture { get; private set; }
+    public static Texture2D TileSheet;
+    public static Texture2D GroundTiles, AnimatedTiles;
 
-    public Texture2D PlayerBody, PlayerHair, PlayerTools;
+    public static Texture2D PlayerBody, PlayerHair, PlayerTools;
+    public static Texture2D BackgroundTiles, PathTiles, WaterTiles, CollisionTiles;
+    public static Texture2D UIsheet, IconSheet;
+    public static Texture2D CropSprites;
+    public static Texture2D PlayerSheet;
+    private static ContentManager _content;
 
-    public Texture2D BackgroundTiles, PathTiles, WaterTiles, CollisionTiles;
+    // public AssetStore(ContentManager content)
+    // {
+    //     _content = content;
+    // }
 
-    public Texture2D UIsheet, IconSheet;
-
-    public Texture2D CropSprites;
-
-    public Texture2D PlayerSheet;
-
-    private ContentManager _content;
-
-    public AssetStore(ContentManager content)
+    public static void Initialize(ContentManager content)
     {
         _content = content;
+        LoadAll();
     }
 
-    public void LoadAll()
+    public static void LoadAll()
     {
         GameFont = _content.Load<SpriteFont>("gameFont");
         PlayerTexture = _content.Load<Texture2D>("custom_player_sheet");
@@ -55,12 +56,12 @@ public class AssetStore
 
     }
 
-    public void UpdateSheets(GraphicsDevice graphicsDevice)
-    {
+    // public void UpdateSheets(GraphicsDevice graphicsDevice)
+    // {
         // Color[][] colourChanges = [
         //     [new Color(0, 0, 0), new Color(200, 200, 200)],
         // ];
         // PathTiles = SpriteProcessor.ChangeColours(colourChanges, PathTiles, graphicsDevice);
         // CollisionTiles = SpriteProcessor.ChangeColours(colourChanges, CollisionTiles, graphicsDevice);
-    }
+    // }
 }

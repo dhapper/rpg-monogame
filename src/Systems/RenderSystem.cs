@@ -9,7 +9,6 @@ public class RenderSystem
 {
     private SpriteBatch _spriteBatch;
     private EntityManager _entityManager;
-    private AssetStore _assetStore;
     private Camera2D _camera;
     private GraphicsDevice _graphicsDevice;
     private InventoryUI _inventoryUI;
@@ -20,18 +19,17 @@ public class RenderSystem
 
     private Rectangle _cameraView;
 
-    public RenderSystem(SpriteBatch spriteBatch, EntityManager entityManager, AssetStore assetStore, Camera2D camera, GraphicsDevice graphicsDevice, InventoryUI inventoryUI, InputSystem inputSystem, DialogueSystem dialogueSystem)
+    public RenderSystem(SpriteBatch spriteBatch, EntityManager entityManager, Camera2D camera, GraphicsDevice graphicsDevice, InventoryUI inventoryUI, InputSystem inputSystem, DialogueSystem dialogueSystem, ShopSystem shopSystem)
     {
         _spriteBatch = spriteBatch;
         _entityManager = entityManager;
-        _assetStore = assetStore;
         _camera = camera;
         _graphicsDevice = graphicsDevice;
         _inventoryUI = inventoryUI;
         // _gameStateManager = gameStateManager;
         _inputSystem = inputSystem;
 
-        _uiRenderSystem = new UIRenderSystem(_spriteBatch, _assetStore, _entityManager, _inputSystem, _camera, _inventoryUI, _graphicsDevice, dialogueSystem);
+        _uiRenderSystem = new UIRenderSystem(_spriteBatch, _entityManager, _inputSystem, _camera, _inventoryUI, _graphicsDevice, dialogueSystem, shopSystem);
     }
 
     public void Draw()
@@ -137,7 +135,7 @@ public class RenderSystem
         var sprite = entity.GetComponent<SpriteComponent>();
 
         _spriteBatch.Draw(
-            hasBackground ? _assetStore.BackgroundTiles : sprite.Texture,
+            hasBackground ? AssetStore.BackgroundTiles : sprite.Texture,
             // new Vector2(position.X, position.Y),
             new Vector2((float)Math.Floor(position.X), (float)Math.Floor(position.Y)),
             hasBackground ? entity.GetComponent<TileComponent>().Background : sprite.SourceRectangle,

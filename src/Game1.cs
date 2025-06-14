@@ -9,7 +9,7 @@ public class Game1 : Game
     private SpriteBatch _spriteBatch;
 
     private EntityManager _entityManager;
-    private AssetStore _assetStore;
+    // private AssetStore _assetStore;
     private GameInitializer _gameInitializer;
 
     public Game1()
@@ -35,11 +35,13 @@ public class Game1 : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-        _assetStore = new AssetStore(Content);
-        _assetStore.LoadAll();
+        // _assetStore = new AssetStore(Content);
+        // _assetStore.LoadAll();
+        AssetStore.Initialize(Content);
+
 
         _entityManager = new EntityManager();
-        _gameInitializer = new GameInitializer(_entityManager, _spriteBatch, _assetStore);
+        _gameInitializer = new GameInitializer(_entityManager, _spriteBatch);
         _gameInitializer.Initialize();
 
     }

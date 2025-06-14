@@ -14,7 +14,7 @@ public class PlantInteractions
         _inventorySystem = inventorySystem;
     }
 
-    public bool HarvestCrop(InteractionSystem _interactionSystem, InputSystem _inputSystem, AssetStore _assets, InventoryComponent inventory)
+    public bool HarvestCrop(InteractionSystem _interactionSystem, InputSystem _inputSystem, InventoryComponent inventory)
     {
         var tile = _interactionSystem.GetTile(_inputSystem.GetMouseLocation());
         if (tile == null) { return false; }
@@ -39,7 +39,7 @@ public class PlantInteractions
                     var slot = _inventorySystem.GetNextEmptySlot(inventory);
                     if (Constants.SeedCropMapping.PlantedCropNameToCrop.TryGetValue(cropName, out var itemConfig))
                     {
-                        inventory.InventoryItems[slot.Value.j][slot.Value.i] = ItemFactory.CreateItem(itemConfig, _entityManager, _assets);
+                        inventory.InventoryItems[slot.Value.j][slot.Value.i] = ItemFactory.CreateItem(itemConfig, _entityManager);
                         _entityManager.RefreshFilteredLists();
                         return true;
                     }
@@ -54,7 +54,7 @@ public class PlantInteractions
         return false;
     }
 
-    public void PlantCrop(Entity seed, InteractionSystem _interactionSystem, InputSystem _inputSystem, AssetStore _assets)
+    public void PlantCrop(Entity seed, InteractionSystem _interactionSystem, InputSystem _inputSystem)
     {
         var tile = _interactionSystem.GetTile(_inputSystem.GetMouseLocation());
         if (tile == null) { return; }
@@ -75,7 +75,7 @@ public class PlantInteractions
         var itemName = seed.GetComponent<ItemComponent>().config.Name;
         if (Constants.SeedCropMapping.SeedNameToCrop.TryGetValue(itemName, out var cropConfig))
         {
-            CropFactory.CreateCrop(cropConfig, tileComp.Row, tileComp.Col, _entityManager, _assets, tilePos);
+            CropFactory.CreateCrop(cropConfig, tileComp.Row, tileComp.Col, _entityManager, tilePos);
             _entityManager.RefreshFilteredLists();
         }
 

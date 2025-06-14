@@ -5,7 +5,6 @@ public class InteractionSystem
 {
     private EntityManager _entityManager;
     private InputSystem _inputSystem;
-    private AssetStore _assets;
     private AnimationSystem _animationSystem;
     private Camera2D _camera;
     private InventorySystem _inventorySystem;
@@ -13,11 +12,10 @@ public class InteractionSystem
     private PlantInteractions _plantInteractions;
     public PlantInteractions PlantInteractions => _plantInteractions;
 
-    public InteractionSystem(EntityManager entityManager, InputSystem inputSystem, AssetStore assets, AnimationSystem animationSystem, Camera2D camera, InventorySystem inventorySystem)
+    public InteractionSystem(EntityManager entityManager, InputSystem inputSystem, AnimationSystem animationSystem, Camera2D camera, InventorySystem inventorySystem)
     {
         _entityManager = entityManager;
         _inputSystem = inputSystem;
-        _assets = assets;
         _animationSystem = animationSystem;
         _camera = camera;
         _inventorySystem = inventorySystem;
@@ -56,12 +54,12 @@ public class InteractionSystem
             if (inputs.Interact && activeItem != null)
             {
 
-                if (_plantInteractions.HarvestCrop(this, _inputSystem, _assets, player.GetComponent<InventoryComponent>()))
+                if (_plantInteractions.HarvestCrop(this, _inputSystem, player.GetComponent<InventoryComponent>()))
                     return;
 
                 if (activeItem.Type == ItemType.Plantable)
                 {
-                    _plantInteractions.PlantCrop(activeItemEntity, this, _inputSystem, _assets);
+                    _plantInteractions.PlantCrop(activeItemEntity, this, _inputSystem);
                     return;
                 }
 
@@ -85,7 +83,7 @@ public class InteractionSystem
                             // check if tile is waterable
                             if (wateredTileComp.Type == Constants.Tile.PathsSheetName && Constants.Tile.DrySoilTiles.Contains(wateredTileComp.Id))
                             {
-                                _entityManager.ChangeTile(wateredTile, Constants.Tile.PathsSheetName, Constants.Tile.WaterSoilTransform[wateredTileComp.Id], _assets);
+                                _entityManager.ChangeTile(wateredTile, Constants.Tile.PathsSheetName, Constants.Tile.WaterSoilTransform[wateredTileComp.Id]);
                             }
                         }
                         isAnimationLocked = true;

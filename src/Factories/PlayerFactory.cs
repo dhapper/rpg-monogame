@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 public static class PlayerFactory
 {
 
-    public static Entity CreatePlayer(int x, int y, EntityManager entityManager, AssetStore assets, GraphicsDevice graphicsDevice, InventorySystem inventorySystem)
+    public static Entity CreatePlayer(int x, int y, EntityManager entityManager, GraphicsDevice graphicsDevice, InventorySystem inventorySystem)
     {
         var player = entityManager.CreateEntity();
 
@@ -17,7 +17,7 @@ public static class PlayerFactory
 
         player.AddComponent(new CharacterComponent());
         player.AddComponent(new PositionComponent(x, y, Constants.Player.SpriteSize, Constants.Player.SpriteSize));
-        player.AddComponent(new SpriteComponent(assets.PlayerSheet, new Rectangle(0, 0, Constants.Player.SpriteSize, Constants.Player.SpriteSize)) { Color = Color.White });
+        player.AddComponent(new SpriteComponent(AssetStore.PlayerSheet, new Rectangle(0, 0, Constants.Player.SpriteSize, Constants.Player.SpriteSize)) { Color = Color.White });
         player.AddComponent(new AnimationComponent(Constants.Animations.Idle));
         player.AddComponent(new CollisionComponent(
             player.GetComponent<PositionComponent>(),
