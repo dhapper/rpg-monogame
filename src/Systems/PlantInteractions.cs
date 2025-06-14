@@ -14,9 +14,9 @@ public class PlantInteractions
         _inventorySystem = inventorySystem;
     }
 
-    public bool HarvestCrop(InteractionSystem _interactionSystem, InputSystem _inputSystem, InventoryComponent inventory)
+    public bool HarvestCrop(InteractionSystem _interactionSystem, InventoryComponent inventory)
     {
-        var tile = _interactionSystem.GetTile(_inputSystem.GetMouseLocation());
+        var tile = _interactionSystem.GetTile(InputSystem.GetMouseLocation());
         if (tile == null) { return false; }
         if (!tile.HasComponent<TileComponent>()) { return false; }
         var tileComp = tile.GetComponent<TileComponent>();
@@ -54,9 +54,9 @@ public class PlantInteractions
         return false;
     }
 
-    public void PlantCrop(Entity seed, InteractionSystem _interactionSystem, InputSystem _inputSystem)
+    public void PlantCrop(Entity seed, InteractionSystem _interactionSystem)
     {
-        var tile = _interactionSystem.GetTile(_inputSystem.GetMouseLocation());
+        var tile = _interactionSystem.GetTile(InputSystem.GetMouseLocation());
         if (tile == null) { return; }
         if (!tile.HasComponent<TileComponent>()) { return; }
 

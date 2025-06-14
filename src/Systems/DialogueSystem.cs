@@ -6,12 +6,11 @@ public class DialogueSystem
     public string[] Options;
     public int choice = 0;
 
-    private InputSystem _inputSystem;
+    // private InputSystem _inputSystem;
     private SleepSystem _sleepSystem;
 
-    public DialogueSystem(InputSystem inputSystem, SleepSystem sleepSystem)
+    public DialogueSystem(SleepSystem sleepSystem)
     {
-        _inputSystem = inputSystem;
         _sleepSystem = sleepSystem;
 
         InitDialogue(
@@ -44,7 +43,7 @@ public class DialogueSystem
 
     public void ManageInputs()
     {
-        var inputs = _inputSystem.GetInputState();
+        var inputs = InputSystem.GetInputState();
         if (inputs.MoveDown)
             choice = choice < Options.Length - 1 ? ++choice : choice;
         else if (inputs.MoveUp)

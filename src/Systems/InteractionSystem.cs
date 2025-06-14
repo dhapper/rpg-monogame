@@ -4,7 +4,6 @@ using System.Linq;
 public class InteractionSystem
 {
     private EntityManager _entityManager;
-    private InputSystem _inputSystem;
     private AnimationSystem _animationSystem;
     private Camera2D _camera;
     private InventorySystem _inventorySystem;
@@ -12,10 +11,9 @@ public class InteractionSystem
     private PlantInteractions _plantInteractions;
     public PlantInteractions PlantInteractions => _plantInteractions;
 
-    public InteractionSystem(EntityManager entityManager, InputSystem inputSystem, AnimationSystem animationSystem, Camera2D camera, InventorySystem inventorySystem)
+    public InteractionSystem(EntityManager entityManager, AnimationSystem animationSystem, Camera2D camera, InventorySystem inventorySystem)
     {
         _entityManager = entityManager;
-        _inputSystem = inputSystem;
         _animationSystem = animationSystem;
         _camera = camera;
         _inventorySystem = inventorySystem;
@@ -54,12 +52,12 @@ public class InteractionSystem
             if (inputs.Interact && activeItem != null)
             {
 
-                if (_plantInteractions.HarvestCrop(this, _inputSystem, player.GetComponent<InventoryComponent>()))
+                if (_plantInteractions.HarvestCrop(this, player.GetComponent<InventoryComponent>()))
                     return;
 
                 if (activeItem.Type == ItemType.Plantable)
                 {
-                    _plantInteractions.PlantCrop(activeItemEntity, this, _inputSystem);
+                    _plantInteractions.PlantCrop(activeItemEntity, this);
                     return;
                 }
 
@@ -74,7 +72,7 @@ public class InteractionSystem
                         _animationSystem.SetAnimation(player, Constants.Animations.Watering, aniVars.aniDirIndex, aniVars.mirrored);
                         if (!isAnimationLocked)
                         {
-                            var wateredTile = GetTile(_inputSystem.GetMouseLocation());
+                            var wateredTile = GetTile(InputSystem.GetMouseLocation());
                             if (wateredTile == null) { return; }
                             var wateredTileComp = wateredTile.GetComponent<TileComponent>();
 

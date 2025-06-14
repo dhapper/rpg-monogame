@@ -13,7 +13,6 @@ public class InventoryUI
     private Viewport _viewport;
     private EntityManager _entityManager;
     private InventoryComponent _inventory;
-    private InputSystem _inputSystem;
     // private GameStateManager _gameStateManager;
 
     public Vector2[][] InventorySlotPositions, InventoryIconPositions;
@@ -24,12 +23,11 @@ public class InventoryUI
     private int _draggedItemCol, _draggedItemRow;
     private Entity _draggedItem;
 
-    public InventoryUI(Camera2D camera, Viewport viewport, EntityManager entityManager, InputSystem inputSystem)
+    public InventoryUI(Camera2D camera, Viewport viewport, EntityManager entityManager)
     {
         _camera = camera;
         _viewport = viewport;
         _entityManager = entityManager;
-        _inputSystem = inputSystem;
         // _gameStateManager = gameStateManager;
 
         InventorySlotPositions = new Vector2[Cols][];
@@ -62,7 +60,7 @@ public class InventoryUI
         var config = item.GetComponent<ItemComponent>().config;
         var pos = item.GetComponent<PositionComponent>();
         config.IsInOverworld = true;
-        var (x, y) = _inputSystem.GetMouseLocationRelativeCamera(_camera);
+        var (x, y) = InputSystem.GetMouseLocationRelativeCamera(_camera);
         pos.X = x;
         pos.Y = y;
         item.GetComponent<CollisionComponent>().Hitbox = new Rectangle(x, y, CollectBoxSize, CollectBoxSize);
@@ -75,7 +73,7 @@ public class InventoryUI
         if (GameStateManager.CurrentGameState != GameState.Inventory)
             return;
 
-        var drag = _inputSystem.GetMouseDragState(InputSystem.MouseButton.Left);
+        var drag = InputSystem.GetMouseDragState(InputSystem.MouseButton.Left);
 
         if (drag.DragStarted)
         {
@@ -121,7 +119,7 @@ public class InventoryUI
 
     public (int, int)? IsHoveringSlot()
     {
-        var (x, y) = _inputSystem.GetMouseLocation();
+        var (x, y) = InputSystem.GetMouseLocation();
         for (int i = 0; i < Cols; i++)
         {
             for (int j = 0; j < Rows; j++)

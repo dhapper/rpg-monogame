@@ -10,7 +10,6 @@ public class UIRenderSystem
 
     private SpriteBatch _spriteBatch;
     private EntityManager _entityManager;
-    private InputSystem _inputSystem;
     private Camera2D _camera;
     // private GameStateManager _gameStateManager;
     private InventoryUI _inventoryUI;
@@ -22,7 +21,6 @@ public class UIRenderSystem
     public UIRenderSystem(
          SpriteBatch spriteBatch,
          EntityManager entityManager,
-         InputSystem inputSystem,
          Camera2D camera,
          //  GameStateManager gameStateManager,
          InventoryUI inventoryUI,
@@ -33,7 +31,6 @@ public class UIRenderSystem
     {
         _spriteBatch = spriteBatch;
         _entityManager = entityManager;
-        _inputSystem = inputSystem;
         _camera = camera;
         // _gameStateManager = gameStateManager;
         _inventoryUI = inventoryUI;
@@ -108,7 +105,7 @@ public class UIRenderSystem
     public void DrawDraggedItem()
     {
         // var (x, y) = _inputSystem.GetMouseLocationRelativeCamera(_camera);
-        var (x, y) = _inputSystem.GetMouseLocation();
+        var (x, y) = InputSystem.GetMouseLocation();
         _spriteBatch.Draw(
             AssetStore.IconSheet,
             new Vector2(x, y),

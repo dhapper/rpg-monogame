@@ -13,13 +13,13 @@ public class RenderSystem
     private GraphicsDevice _graphicsDevice;
     private InventoryUI _inventoryUI;
     // private GameStateManager _gameStateManager;
-    private InputSystem _inputSystem;
+    // private InputSystem _inputSystem;
 
     private UIRenderSystem _uiRenderSystem;
 
     private Rectangle _cameraView;
 
-    public RenderSystem(SpriteBatch spriteBatch, EntityManager entityManager, Camera2D camera, GraphicsDevice graphicsDevice, InventoryUI inventoryUI, InputSystem inputSystem, DialogueSystem dialogueSystem, ShopSystem shopSystem)
+    public RenderSystem(SpriteBatch spriteBatch, EntityManager entityManager, Camera2D camera, GraphicsDevice graphicsDevice, InventoryUI inventoryUI, DialogueSystem dialogueSystem, ShopSystem shopSystem)
     {
         _spriteBatch = spriteBatch;
         _entityManager = entityManager;
@@ -27,9 +27,9 @@ public class RenderSystem
         _graphicsDevice = graphicsDevice;
         _inventoryUI = inventoryUI;
         // _gameStateManager = gameStateManager;
-        _inputSystem = inputSystem;
+        // _inputSystem = inputSystem;
 
-        _uiRenderSystem = new UIRenderSystem(_spriteBatch, _entityManager, _inputSystem, _camera, _inventoryUI, _graphicsDevice, dialogueSystem, shopSystem);
+        _uiRenderSystem = new UIRenderSystem(_spriteBatch, _entityManager, _camera, _inventoryUI, _graphicsDevice, dialogueSystem, shopSystem);
     }
 
     public void Draw()

@@ -2,21 +2,21 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Input;
 
-public class InputSystem
+public static class InputSystem
 {
-    private KeyboardState _previousKeyboardState;
-    private MouseState _previousMouseState;
+    private static KeyboardState _previousKeyboardState;
+    private static MouseState _previousMouseState;
 
-    private KeyboardState _currentKeyboardState;
-    private MouseState _currentMouseState;
+    private static KeyboardState _currentKeyboardState;
+    private static MouseState _currentMouseState;
 
-    private Dictionary<MouseButton, MouseDragState> _dragStates = new();
+    private static Dictionary<MouseButton, MouseDragState> _dragStates = new();
 
-    private int currentSelectedNumber = 0;
-    private bool lastKeyBasedswitching = false;
-    private int prevDirection = 0;
+    private static int currentSelectedNumber = 0;
+    private static bool lastKeyBasedswitching = false;
+    private static int prevDirection = 0;
 
-    public InputSystem()
+    static InputSystem()
     {
         foreach (MouseButton button in Enum.GetValues(typeof(MouseButton)))
         {
@@ -24,7 +24,7 @@ public class InputSystem
         }
     }
 
-    public void Update()
+    public static void Update()
     {
         _previousKeyboardState = _currentKeyboardState;
         _previousMouseState = _currentMouseState;
@@ -40,7 +40,7 @@ public class InputSystem
 
     }
 
-    public void UpdateDrag()
+    public static void UpdateDrag()
     {
         foreach (var pair in _dragStates)
         {
@@ -76,7 +76,7 @@ public class InputSystem
         }
     }
 
-    public InputState GetInputState()
+    public static InputState GetInputState()
     {
         var state = new InputState();
 
@@ -98,7 +98,7 @@ public class InputSystem
         return state;
     }
 
-    public void HandleHotbarState(InputState state)
+    public static void HandleHotbarState(InputState state)
     {
         state.IsNumberChanging = false;
         for (int i = 0; i < 9; i++)
@@ -144,18 +144,18 @@ public class InputSystem
 
 
     // calls continously upon key hold
-    public bool IsKeyDown(Keys key)
+    public static bool IsKeyDown(Keys key)
     {
         return _currentKeyboardState.IsKeyDown(key);
     }
 
     // calls once upon initial key press
-    public bool IsKeyPressed(Keys key)
+    public static bool IsKeyPressed(Keys key)
     {
         return _currentKeyboardState.IsKeyDown(key) && !_previousKeyboardState.IsKeyDown(key);
     }
 
-    public bool IsMousePressed(MouseButton button)
+    public static bool IsMousePressed(MouseButton button)
     {
         switch (button)
         {
@@ -179,7 +179,7 @@ public class InputSystem
         }
     }
 
-    private bool IsMouseButtonDown(MouseState state, MouseButton button)
+    private static bool IsMouseButtonDown(MouseState state, MouseButton button)
     {
         return button switch
         {
@@ -192,19 +192,19 @@ public class InputSystem
         };
     }
 
-    public MouseDragState GetMouseDragState(MouseButton button)
+    public static MouseDragState GetMouseDragState(MouseButton button)
     {
         return _dragStates[button];
     }
 
 
 
-    public (int x, int y) GetMouseLocation()
+    public static (int x, int y) GetMouseLocation()
     {
         return (_currentMouseState.Position.X, _currentMouseState.Position.Y);
     }
 
-    public (int x, int y) GetMouseLocationRelativeCamera(Camera2D camera)
+    public static (int x, int y) GetMouseLocationRelativeCamera(Camera2D camera)
     {
         int x = (int)(_currentMouseState.Position.X + camera.Position.X);
         int y = (int)(_currentMouseState.Position.Y + camera.Position.Y);

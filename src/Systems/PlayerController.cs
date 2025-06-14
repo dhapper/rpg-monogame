@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework;
 public class PlayerController
 {
     private Entity _player;
-    private InputSystem _inputSystem;
     private CollisionSystem _collisionSystem;
     private MovementSystem _movementSystem;
     private AnimationSystem _animationSystem;
@@ -19,10 +18,9 @@ public class PlayerController
 
     private bool isAnimationLocked = false;
 
-    public PlayerController(Entity player, InputSystem inputSystem, AnimationSystem animationSystem, MapSystem mapSystem, Camera2D camera, EntityManager entityManager, InventorySystem inventorySystem, InteractionSystem interactionSystem)
+    public PlayerController(Entity player, AnimationSystem animationSystem, MapSystem mapSystem, Camera2D camera, EntityManager entityManager, InventorySystem inventorySystem, InteractionSystem interactionSystem)
     {
         _player = player;
-        _inputSystem = inputSystem;
         // _collisionSystem = new CollisionSystem(_player, _entities);
         _movementSystem = new MovementSystem();
         _animationSystem = animationSystem;
@@ -41,7 +39,7 @@ public class PlayerController
         ResetDirVars();
         var movement = _player.GetComponent<MovementComponent>();
         movement.IsMoving = false;
-        var inputs = _inputSystem.GetInputState();
+        var inputs = InputSystem.GetInputState();
 
         _inventorySystem.PickUp(_player);
 

@@ -5,7 +5,7 @@ public class GameInitializer
 {
     private EntityManager _entityManager;
     // private AssetStore _assets;
-    private InputSystem _inputSystem;
+    // private InputSystem _inputSystem;
     private AnimationSystem _animationSystem;
     private SpriteBatch _spriteBatch;
     private GraphicsDevice _graphicsDevice;
@@ -41,23 +41,23 @@ public class GameInitializer
 
     public void Initialize()
     {
-        _inputSystem = new InputSystem();
+        // _inputSystem = new InputSystem();
         // _gameStateManager = new GameStateManager();
         _camera = new Camera2D(_graphicsDevice.Viewport);
-        _inventoryUI = new InventoryUI(_camera, _graphicsDevice.Viewport, _entityManager, _inputSystem);
+        _inventoryUI = new InventoryUI(_camera, _graphicsDevice.Viewport, _entityManager);
         _inventorySystem = new InventorySystem(_entityManager);
         _animationSystem = new AnimationSystem(_entityManager);
-        _interactionSystem = new InteractionSystem(_entityManager, _inputSystem, _animationSystem, _camera, _inventorySystem);
+        _interactionSystem = new InteractionSystem(_entityManager, _animationSystem, _camera, _inventorySystem);
         _sleepSystem = new SleepSystem(_entityManager, _interactionSystem);
-        _dialogueSystem = new DialogueSystem(_inputSystem, _sleepSystem);
-        _shopSystem = new ShopSystem(_entityManager);
+        _dialogueSystem = new DialogueSystem(_sleepSystem);
+        _shopSystem = new ShopSystem();
 
-        RenderSystem = new RenderSystem(_spriteBatch, _entityManager, _camera, _graphicsDevice, _inventoryUI, _inputSystem, _dialogueSystem, _shopSystem);
+        RenderSystem = new RenderSystem(_spriteBatch, _entityManager, _camera, _graphicsDevice, _inventoryUI, _dialogueSystem, _shopSystem);
         _mapSystem = new MapSystem(_entityManager, _camera, _sleepSystem);
 
         // Create Player
         PlayerEntity = PlayerFactory.CreatePlayer(200, 200, _entityManager, _graphicsDevice, _inventorySystem);
-        PlayerController = new PlayerController(PlayerEntity, _inputSystem, _animationSystem, _mapSystem, _camera, _entityManager, _inventorySystem, _interactionSystem);
+        PlayerController = new PlayerController(PlayerEntity, _animationSystem, _mapSystem, _camera, _entityManager, _inventorySystem, _interactionSystem);
         PlayerEntity.AddComponent(new PlayerComponent());   // should move to factory?
         var (x, y) = SaveManager.LoadData();
         var position = PlayerEntity.GetComponent<PositionComponent>();
@@ -74,10 +74,10 @@ public class GameInitializer
     public void Update(GameTime gameTime)
     {
 
-        _inputSystem.Update();
+        InputSystem.Update();
         _inventoryUI.Update();
 
-        var inputs = _inputSystem.GetInputState();
+        var inputs = InputSystem.GetInputState();
         if (inputs.ToggleInventory)
             GameStateManager.ToggleBetweenStates(GameState.Playing, GameState.Inventory);
 
