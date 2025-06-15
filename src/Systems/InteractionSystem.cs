@@ -30,6 +30,8 @@ public class InteractionSystem
             SaveManager.SaveData(player);
         if (inputs.Grow)
             _plantInteractions.GrowPlants();
+        if (inputs.ToggleInventory)
+            GameStateManager.SetState(GameState.Inventory);
     }
 
     public void HandleInteractions(Entity player, InputState inputs, bool facingRight, ref bool isAnimationLocked, int lastDir)

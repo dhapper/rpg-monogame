@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 public static class PlayerFactory
 {
 
-    public static Entity CreatePlayer(int x, int y, EntityManager entityManager, GraphicsDevice graphicsDevice, InventorySystem inventorySystem)
+    public static Entity CreatePlayer(int x, int y, EntityManager entityManager, GraphicsDevice graphicsDevice)
     {
         var player = entityManager.CreateEntity();
 
@@ -27,9 +27,7 @@ public static class PlayerFactory
             Constants.Player.HitboxHeight));
         player.AddComponent(new MovementComponent(Constants.Player.Speed));
 
-        var inv = new InventoryComponent();
-        player.AddComponent(inv);
-        inventorySystem.InitInventory(inv);
+        player.AddComponent(new InventoryComponent());
 
 
         return player;

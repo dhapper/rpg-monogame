@@ -26,6 +26,7 @@ public static class InputSystem
 
     public static void Update()
     {
+        
         _previousKeyboardState = _currentKeyboardState;
         _previousMouseState = _currentMouseState;
 
@@ -92,6 +93,7 @@ public static class InputSystem
         state.Save = IsKeyPressed(Keys.O);
         state.Enter = IsKeyPressed(Keys.Enter);
         state.Interact = IsMousePressed(MouseButton.Left);
+        state.Escape = IsKeyPressed(Keys.Escape);
 
         HandleHotbarState(state);
 

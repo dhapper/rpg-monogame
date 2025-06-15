@@ -2,6 +2,7 @@ public class InventorySystem
 {
 
     private EntityManager _entityManager;
+    private InventoryComponent _inventory;
 
     public InventorySystem(EntityManager entityManager)
     {
@@ -10,6 +11,8 @@ public class InventorySystem
 
     public void InitInventory(InventoryComponent inventory)
     {
+        _inventory = inventory;
+
         var wateringCan = ItemFactory.CreateItem(Constants.Items.WateringCan, _entityManager);
         var pickaxe = ItemFactory.CreateItem(Constants.Items.Pickaxe, _entityManager);
         var seeds1 = ItemFactory.CreateItem(Constants.Items.PumpkinSeeds, _entityManager);
@@ -23,17 +26,24 @@ public class InventorySystem
         inventory.InventoryItems[3][0] = seeds3;
     }
 
-    public (int j, int i)? GetNextEmptySlot(InventoryComponent inventory)
+    public (int j, int i)? GetNextEmptySlot()
     {
         for (int i = 0; i < Constants.UI.Inventory.Rows; i++)
         {
             for (int j = 0; j < Constants.UI.Inventory.Cols; j++)
             {
-                if (inventory.InventoryItems[j][i] == null)
+                if (_inventory.InventoryItems[j][i] == null)
                     return (j, i);
             }
         }
         return null;
+    }
+
+    public void PlaceInNextEmptySlot(Entity item)
+    {
+        var slots = GetNextEmptySlot();
+        if(slots == null) { return; }
+        _inventory.InventoryItems[slots.Value.j][slots.Value.i] = item;
     }
 
     public void PickUp(Entity entity)
@@ -44,13 +54,12 @@ public class InventorySystem
             var inCollectionBox = item.GetComponent<CollisionComponent>().Hitbox.Intersects(hitbox);
             if (inCollectionBox)
             {
-                var inv = entity.GetComponent<InventoryComponent>();
-                var slots = GetNextEmptySlot(inv);
+                var slots = GetNextEmptySlot();
 
-                if (inv.InventoryItems[slots.Value.j][slots.Value.i] == null)
+                if (_inventory.InventoryItems[slots.Value.j][slots.Value.i] == null)
                 {
                     item.GetComponent<ItemComponent>().config.IsInOverworld = false;
-                    inv.InventoryItems[slots.Value.j][slots.Value.i] = item;
+                    _inventory.InventoryItems[slots.Value.j][slots.Value.i] = item;
                     _entityManager.RefreshFilteredLists();
                     return;
                 }

@@ -67,22 +67,16 @@ public class UIRenderSystem
         Texture2D _pixelTexture;
         _pixelTexture = new Texture2D(_graphicsDevice, 1, 1);
         _pixelTexture.SetData([Color.White]);
-        // int x = TileSize;
-        // int y = TileSize;
-        // Vector2 textSize = AssetStore.GameFont.MeasureString(_shopSystem.Line);
-        // // int width = (int)textSize.X;
-        // // int height = (int)((_shopSystem.Options.Length + 1) * textSize.Y);
-        // int width = _shopSystem.ItemBoxes[0].Width + _shopSystem.Spacer * 2;
-        // int height = (int)textSize.Y + _shopSystem.Options.Length * (_shopSystem.ItemBoxes[0].Height + _shopSystem.Spacer);
 
         _spriteBatch.Draw(_pixelTexture, _shopSystem.MenuBox, Color.Black);
         _spriteBatch.DrawString(AssetStore.GameFont, _shopSystem.Line, new Vector2(_shopSystem.MenuBox.X, _shopSystem.MenuBox.Y), Color.White);
 
         for (int i = 0; i < _shopSystem.Options.Length; i++)
         {
-            _spriteBatch.Draw(_pixelTexture, _shopSystem.ItemBoxes[i], Color.DarkBlue);
             var offset = _shopSystem.Spacer / 2;
-            _spriteBatch.DrawString(AssetStore.GameFont, _shopSystem.Options[i].Name, new Vector2(_shopSystem.ItemBoxes[i].X + offset, _shopSystem.ItemBoxes[i].Y + offset), Color.White);
+            _spriteBatch.Draw(_pixelTexture, _shopSystem.ItemBoxes[i], _shopSystem.Choice == i ? Color.CornflowerBlue : Color.DarkBlue);
+            _spriteBatch.DrawString(AssetStore.GameFont, _shopSystem.Options[i].Name, new Vector2(_shopSystem.ItemBoxes[i].X + offset, _shopSystem.ItemBoxes[i].Y + offset),
+                _shopSystem.Choice == i ? Color.Black : Color.White);
         }
     }
 
@@ -99,7 +93,7 @@ public class UIRenderSystem
         _spriteBatch.Draw(_pixelTexture, new Rectangle(x, y, width, height), Color.Black);
         _spriteBatch.DrawString(AssetStore.GameFont, _dialogueSystem.Line, new Vector2(x, y), Color.White);
         for (int i = 0; i < _dialogueSystem.Options.Length; i++)
-            _spriteBatch.DrawString(AssetStore.GameFont, _dialogueSystem.Options[i], new Vector2(x, y + (int)((1 + i) * textSize.Y)), _dialogueSystem.choice == i ? Color.Yellow : Color.White);
+            _spriteBatch.DrawString(AssetStore.GameFont, _dialogueSystem.Options[i], new Vector2(x, y + (int)((1 + i) * textSize.Y)), _dialogueSystem.Choice == i ? Color.Yellow : Color.White);
     }
 
     public void DrawDraggedItem()

@@ -16,4 +16,5 @@ public class InputState
     public bool Grow;
 
     public bool Enter;
+    public bool Escape;
 }

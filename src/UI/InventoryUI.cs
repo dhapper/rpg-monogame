@@ -46,12 +46,22 @@ public class InventoryUI
     public void Update()
     {
         DraggingItemLogic();
+        HandleInputs();
+    }
+
+    private void HandleInputs()
+    {
+        var inputs = InputSystem.GetInputState();
+        if (inputs.ToggleInventory)
+        {
+            GameStateManager.SetState(GameState.Playing);
+        }
     }
 
     // Delayed initilaization word around
-    public void InitializePlayerInventory()
+    public void InitializePlayerInventory(InventoryComponent inventory)
     {
-        _inventory = _entityManager.EntitiesWithComponent<InventoryComponent>().FirstOrDefault().GetComponent<InventoryComponent>();
+        _inventory = inventory;
     }
 
     public void DropItem()

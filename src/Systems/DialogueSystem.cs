@@ -4,7 +4,7 @@ public class DialogueSystem
 {
     public string Line;
     public string[] Options;
-    public int choice = 0;
+    public int Choice = 0;
 
     // private InputSystem _inputSystem;
     private SleepSystem _sleepSystem;
@@ -30,31 +30,23 @@ public class DialogueSystem
 
     public void Update()
     {
-
         ManageInputs();
-        // var inputs = _inputSystem.GetInputState();
-        // if (inputs.MoveDown)
-        //     choice = choice < Options.Length - 1 ? ++choice : choice;
-        // else if (inputs.MoveUp)
-        //     choice = choice > 0 ? --choice : choice;
-        // else if (inputs.Enter)
-        //     ComputeChoice();
     }
 
     public void ManageInputs()
     {
         var inputs = InputSystem.GetInputState();
         if (inputs.MoveDown)
-            choice = choice < Options.Length - 1 ? ++choice : choice;
+            Choice = Choice < Options.Length - 1 ? ++Choice : Choice;
         else if (inputs.MoveUp)
-            choice = choice > 0 ? --choice : choice;
+            Choice = Choice > 0 ? --Choice : Choice;
         else if (inputs.Enter)
             ComputeChoice();
     }
 
     public void ComputeChoice()
     {
-        if (choice == 0)
+        if (Choice == 0)
         {
             // Sleep
             _sleepSystem.StartSleepCycle();

@@ -1,3 +1,5 @@
+using System;
+using System.Xml.Serialization;
 using Microsoft.Xna.Framework;
 
 public class ShopSystem
@@ -5,13 +7,15 @@ public class ShopSystem
     public string Line;
     // public Entity[] Options;
     public ItemConfig[] Options;
+    public int Choice = 0;
 
-    // private EntityManager _entityManager;
-    
+    private EntityManager _entityManager;
+    private InventorySystem _inventorySystem;
 
-    public ShopSystem()
+    public ShopSystem(EntityManager entityManager, InventorySystem inventorySystem)
     {
-        // _entityManager = entityManager;
+        _entityManager = entityManager;
+        _inventorySystem = inventorySystem;
 
         InitShop(
             "Need for seed?",
@@ -25,12 +29,38 @@ public class ShopSystem
 
     public void Update()
     {
-        CheckIfHoveringSlot();
+        HandleMouseInputs();
+
+        HandleKeyboardInputs();
     }
 
-    private void CheckIfHoveringSlot()
+    private void HandleKeyboardInputs()
     {
-        
+        var inputs = InputSystem.GetInputState();
+        if (inputs.Escape)
+        {
+            GameStateManager.SetState(GameState.Playing);
+        }
+    }
+
+    private void HandleMouseInputs()
+    {
+        var mouse = InputSystem.GetMouseLocation();
+        // bool mousePressed = InputSystem.IsMousePressed(InputSystem.MouseButton.Left);
+
+        for (int i = 0; i < Options.Length; i++)
+        {
+            if (ItemBoxes[i].Contains(mouse.x, mouse.y))
+            {
+                Choice = i;
+                bool mousePressed = InputSystem.IsMousePressed(InputSystem.MouseButton.Left);
+                if (mousePressed)
+                {
+                    var item = ItemFactory.CreateItem(Options[Choice], _entityManager);
+                    _inventorySystem.PlaceInNextEmptySlot(item);
+                }
+            }   
+        }
     }
 
     public void InitShop(string line, ItemConfig[] options)
@@ -47,7 +77,7 @@ public class ShopSystem
 
     private void CreateLayout()
     {
-        Vector2 textSize = AssetStore.GameFont.MeasureString("abc");
+        Vector2 textSize = AssetStore.GameFont.MeasureString("abcdefg");
         int yOffset = (int)textSize.Y;
         int width = (int)(100 * Constants.ScaleFactor);
         int height = (int)textSize.Y + Spacer;

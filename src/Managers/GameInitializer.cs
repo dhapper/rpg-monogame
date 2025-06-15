@@ -41,6 +41,8 @@ public class GameInitializer
 
     public void Initialize()
     {
+        // InventoryComponent playerInventory = new InventoryComponent();
+
         // _inputSystem = new InputSystem();
         // _gameStateManager = new GameStateManager();
         _camera = new Camera2D(_graphicsDevice.Viewport);
@@ -50,20 +52,23 @@ public class GameInitializer
         _interactionSystem = new InteractionSystem(_entityManager, _animationSystem, _camera, _inventorySystem);
         _sleepSystem = new SleepSystem(_entityManager, _interactionSystem);
         _dialogueSystem = new DialogueSystem(_sleepSystem);
-        _shopSystem = new ShopSystem();
+        _shopSystem = new ShopSystem(_entityManager, _inventorySystem);
 
         RenderSystem = new RenderSystem(_spriteBatch, _entityManager, _camera, _graphicsDevice, _inventoryUI, _dialogueSystem, _shopSystem);
         _mapSystem = new MapSystem(_entityManager, _camera, _sleepSystem);
 
         // Create Player
-        PlayerEntity = PlayerFactory.CreatePlayer(200, 200, _entityManager, _graphicsDevice, _inventorySystem);
+        PlayerEntity = PlayerFactory.CreatePlayer(200, 200, _entityManager, _graphicsDevice);
         PlayerController = new PlayerController(PlayerEntity, _animationSystem, _mapSystem, _camera, _entityManager, _inventorySystem, _interactionSystem);
         PlayerEntity.AddComponent(new PlayerComponent());   // should move to factory?
         var (x, y) = SaveManager.LoadData();
         var position = PlayerEntity.GetComponent<PositionComponent>();
         position.X = x;
         position.Y = y;
-        _inventoryUI.InitializePlayerInventory();
+
+        var inv = PlayerEntity.GetComponent<InventoryComponent>();
+        _inventoryUI.InitializePlayerInventory(inv);
+        _inventorySystem.InitInventory(inv);
 
         // Create an Entity
         // npc = PlayerFactory.CreatePlayer(50, 300, _entityManager, _assets, _graphicsDevice);
@@ -75,11 +80,11 @@ public class GameInitializer
     {
 
         InputSystem.Update();
-        _inventoryUI.Update();
+        // _inventoryUI.Update();
 
-        var inputs = InputSystem.GetInputState();
-        if (inputs.ToggleInventory)
-            GameStateManager.ToggleBetweenStates(GameState.Playing, GameState.Inventory);
+        // var inputs = InputSystem.GetInputState();
+        // if (inputs.ToggleInventory)
+        //     GameStateManager.ToggleBetweenStates(GameState.Playing, GameState.Inventory);
 
         switch (GameStateManager.CurrentGameState)
         {
@@ -90,9 +95,13 @@ public class GameInitializer
                 // _inventoryUI.Update();
                 break;
             case GameState.Inventory:
+                _inventoryUI.Update();
                 break;
             case GameState.DialogueBox:
                 _dialogueSystem.Update();
+                break;
+            case GameState.Shop:
+                _shopSystem.Update();
                 break;
         }
     }

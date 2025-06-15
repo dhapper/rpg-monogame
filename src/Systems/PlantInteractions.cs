@@ -36,10 +36,11 @@ public class PlantInteractions
                 {
                     var cropName = plantedCropConfig.Name;
                     _entityManager.DeleteEntity(entity);
-                    var slot = _inventorySystem.GetNextEmptySlot(inventory);
+                    // var slot = _inventorySystem.GetNextEmptySlot();
                     if (Constants.SeedCropMapping.PlantedCropNameToCrop.TryGetValue(cropName, out var itemConfig))
                     {
-                        inventory.InventoryItems[slot.Value.j][slot.Value.i] = ItemFactory.CreateItem(itemConfig, _entityManager);
+                        _inventorySystem.PlaceInNextEmptySlot(ItemFactory.CreateItem(itemConfig, _entityManager));
+                        // inventory.InventoryItems[slot.Value.j][slot.Value.i] = ItemFactory.CreateItem(itemConfig, _entityManager);  //refactor out inventory
                         _entityManager.RefreshFilteredLists();
                         return true;
                     }
