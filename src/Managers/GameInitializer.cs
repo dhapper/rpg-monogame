@@ -3,7 +3,8 @@ using Microsoft.Xna.Framework.Graphics;
 
 public class GameInitializer
 {
-    private EntityManager _entityManager;
+    // private EntityManager _entityManager;
+    private EntityManager _currentEntityManager;
     // private AssetStore _assets;
     // private InputSystem _inputSystem;
     private AnimationSystem _animationSystem;
@@ -28,39 +29,71 @@ public class GameInitializer
     public static bool ShowHitbox = false;
 
 
-    public GameInitializer(EntityManager entityManager, SpriteBatch spriteBatch)
+    public GameInitializer(SpriteBatch spriteBatch)
     {
-        _entityManager = entityManager;
+        // _entityManager = entityManager;
         _spriteBatch = spriteBatch;
         _graphicsDevice = _spriteBatch.GraphicsDevice;
+
+
     }
+
+    public void LoadMap(string mapName)
+    {
+        _currentEntityManager = _mapEntityStorage.GetEntityManager(mapName);
+        _mapSystem = new MapSystem(_currentEntityManager, _camera, mapName);
+
+        _inventoryUI = new InventoryUI(_camera, _graphicsDevice.Viewport, _currentEntityManager);
+        _inventorySystem = new InventorySystem(_currentEntityManager);
+        _animationSystem = new AnimationSystem(_currentEntityManager);
+        _interactionSystem = new InteractionSystem(_currentEntityManager, _animationSystem, _camera, _inventorySystem);
+        _sleepSystem = new SleepSystem(_currentEntityManager, _interactionSystem);
+        _dialogueSystem = new DialogueSystem(_sleepSystem);
+        _shopSystem = new ShopSystem(_currentEntityManager, _inventorySystem);
+
+        RenderSystem = new RenderSystem(_spriteBatch, _currentEntityManager, _camera, _graphicsDevice, _inventoryUI, _dialogueSystem, _shopSystem);
+
+        if (PlayerController != null)
+            PlayerController.UpdateEntityManager(_currentEntityManager);
+
+        // if (PlayerEntity != null)
+        // {
+            var inv = PlayerEntity.GetComponent<InventoryComponent>();
+            _inventoryUI.InitializePlayerInventory(inv);
+            _inventorySystem.InitInventory(inv);
+        // }
+
+        _currentEntityManager.LoadPlayer(PlayerEntity);
+    }
+
+    private MapEntityStorage _mapEntityStorage;
+    // private EntityManager _currentEntityManager;Ks
 
     public void Initialize()
     {
-        _camera = new Camera2D(_graphicsDevice.Viewport);
-        _inventoryUI = new InventoryUI(_camera, _graphicsDevice.Viewport, _entityManager);
-        _inventorySystem = new InventorySystem(_entityManager);
-        _animationSystem = new AnimationSystem(_entityManager);
-        _interactionSystem = new InteractionSystem(_entityManager, _animationSystem, _camera, _inventorySystem);
-        _sleepSystem = new SleepSystem(_entityManager, _interactionSystem);
-        _dialogueSystem = new DialogueSystem(_sleepSystem);
-        _shopSystem = new ShopSystem(_entityManager, _inventorySystem);
 
-        RenderSystem = new RenderSystem(_spriteBatch, _entityManager, _camera, _graphicsDevice, _inventoryUI, _dialogueSystem, _shopSystem);
-        _mapSystem = new MapSystem(_entityManager, _camera, "shop_tent.json");
+        PlayerEntity = PlayerFactory.CreatePlayer(200, 200);
+
+        _mapEntityStorage = new MapEntityStorage();
+
+        _camera = new Camera2D(_graphicsDevice.Viewport);
+
+        LoadMap("shop_tent.json");
+
+        ////////////////
 
         // Create Player
-        PlayerEntity = PlayerFactory.CreatePlayer(200, 200, _entityManager, _graphicsDevice);
-        PlayerController = new PlayerController(PlayerEntity, _animationSystem, _mapSystem, _camera, _entityManager, _inventorySystem, _interactionSystem);
-        PlayerEntity.AddComponent(new PlayerComponent());   // should move to factory?
+        // PlayerEntity = PlayerFactory.CreatePlayer(200, 200, _currentEntityManager, _graphicsDevice);
+        PlayerController = new PlayerController(this, PlayerEntity, _animationSystem, _mapSystem, _camera, _currentEntityManager, _inventorySystem, _interactionSystem);
+        // PlayerEntity.AddComponent(new PlayerComponent());   // should move to factory?
         var (x, y) = SaveManager.LoadData();
         var position = PlayerEntity.GetComponent<PositionComponent>();
         position.X = x;
         position.Y = y;
 
-        var inv = PlayerEntity.GetComponent<InventoryComponent>();
-        _inventoryUI.InitializePlayerInventory(inv);
-        _inventorySystem.InitInventory(inv);
+        // var inv = PlayerEntity.GetComponent<InventoryComponent>();
+        // _inventoryUI.InitializePlayerInventory(inv);
+        // _inventorySystem.InitInventory(inv);
 
         // Create an Entity
         // npc = PlayerFactory.CreatePlayer(50, 300, _entityManager, _assets, _graphicsDevice);

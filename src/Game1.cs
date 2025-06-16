@@ -8,7 +8,7 @@ public class Game1 : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
 
-    private EntityManager _entityManager;
+    // private EntityManager _entityManager;
     // private AssetStore _assetStore;
     private GameInitializer _gameInitializer;
 
@@ -40,8 +40,9 @@ public class Game1 : Game
         AssetStore.Initialize(Content);
 
 
-        _entityManager = new EntityManager();
-        _gameInitializer = new GameInitializer(_entityManager, _spriteBatch);
+        // _entityManager = new EntityManager();
+        // _gameInitializer = new GameInitializer(_entityManager, _spriteBatch);
+        _gameInitializer = new GameInitializer(_spriteBatch);
         _gameInitializer.Initialize();
 
     }

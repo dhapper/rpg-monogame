@@ -15,10 +15,11 @@ public class PlayerController
     private InventorySystem _inventorySystem;
     private InteractionSystem _interactionSystem;
     // private PlantInteractions _plantInteractions;
+    GameInitializer _gameInitializer;
 
     private bool isAnimationLocked = false;
 
-    public PlayerController(Entity player, AnimationSystem animationSystem, MapSystem mapSystem, Camera2D camera, EntityManager entityManager, InventorySystem inventorySystem, InteractionSystem interactionSystem)
+    public PlayerController(GameInitializer gameInitializer, Entity player, AnimationSystem animationSystem, MapSystem mapSystem, Camera2D camera, EntityManager entityManager, InventorySystem inventorySystem, InteractionSystem interactionSystem)
     {
         _player = player;
         // _collisionSystem = new CollisionSystem(_player, _entities);
@@ -30,6 +31,7 @@ public class PlayerController
         _collisionSystem = new CollisionSystem(_player, _entityManager);
         _interactionSystem = interactionSystem;
         // _plantInteractions = new PlantInteractions(_entityManager);
+        _gameInitializer = gameInitializer;
 
         _inventorySystem = inventorySystem;
     }
@@ -62,13 +64,16 @@ public class PlayerController
 
         if (inputs.changeLocation1)
         {
-            Console.WriteLine("town.json");
-            _mapSystem.InitMap("town.json");
+            Console.WriteLine("shop_tent.json");
+            _gameInitializer.LoadMap("shop_tent.json");
+            // _mapSystem.InitMap("town.json");
         }
         if (inputs.changeLocation2)
         {
-            Console.WriteLine("shop_tent.json");
-            _mapSystem.InitMap("shop_tent.json");
+            Console.WriteLine("town.json");
+            _gameInitializer.LoadMap("town.json");
+
+            // _mapSystem.InitMap("shop_tent.json");
         }
 
         _interactionSystem.MiscControls(_player, inputs);
@@ -155,6 +160,12 @@ public class PlayerController
         dir[Constants.Directions.Down] = false;
         dir[Constants.Directions.Left] = false;
         dir[Constants.Directions.Right] = false;
+    }
+
+    public void UpdateEntityManager(EntityManager entityManager)
+    {
+        _entityManager = entityManager;
+        _collisionSystem = new CollisionSystem(_player, _entityManager); // very rough fix, dont like this
     }
 
 }

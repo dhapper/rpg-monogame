@@ -157,4 +157,13 @@ public class EntityManager
             }
         }
     }
+
+    public void LoadPlayer(Entity player)
+    {
+        if (!_entities.Contains(player))
+        {
+            _entities.Add(player);
+            RefreshFilteredLists();
+        }
+    }
 }

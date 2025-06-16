@@ -171,7 +171,7 @@ public class UIRenderSystem
         for (int i = 0; i < 9; i++)
         {
             // Draw active hotbar slot
-            var inv = _entityManager.EntitiesWithComponent<InventoryComponent>().First().GetComponent<InventoryComponent>();
+            var inv = _inventoryUI.Inventory;
             if (i == inv.activeItemIndices.Item1)
             {
                 _spriteBatch.Draw(

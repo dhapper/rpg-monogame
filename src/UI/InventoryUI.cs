@@ -13,6 +13,7 @@ public class InventoryUI
     private Viewport _viewport;
     private EntityManager _entityManager;
     private InventoryComponent _inventory;
+    public InventoryComponent Inventory => _inventory;
     // private GameStateManager _gameStateManager;
 
     public Vector2[][] InventorySlotPositions, InventoryIconPositions;

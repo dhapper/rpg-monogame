@@ -4,9 +4,11 @@ using Microsoft.Xna.Framework.Graphics;
 public static class PlayerFactory
 {
 
-    public static Entity CreatePlayer(int x, int y, EntityManager entityManager, GraphicsDevice graphicsDevice)
+    // public static Entity CreatePlayer(int x, int y, EntityManager entityManager, GraphicsDevice graphicsDevice)
+    public static Entity CreatePlayer(int x, int y)
     {
-        var player = entityManager.CreateEntity();
+        // var player = entityManager.CreateEntity();
+        var player = new EntityManager().CreateEntity();
 
         // Color[][] colourChanges = [
         //     [Constants.ColourIndex.Hair, new Color(0, 0, 0)],
@@ -28,6 +30,8 @@ public static class PlayerFactory
         player.AddComponent(new MovementComponent(Constants.Player.Speed));
 
         player.AddComponent(new InventoryComponent());
+
+        player.AddComponent(new PlayerComponent());
 
 
         return player;
