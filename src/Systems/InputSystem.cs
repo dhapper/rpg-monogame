@@ -95,6 +95,10 @@ public static class InputSystem
         state.Interact = IsMousePressed(MouseButton.Left);
         state.Escape = IsKeyPressed(Keys.Escape);
 
+        // temp vars
+        state.changeLocation1 = IsKeyPressed(Keys.J);
+        state.changeLocation2 = IsKeyPressed(Keys.K);
+
         HandleHotbarState(state);
 
         return state;

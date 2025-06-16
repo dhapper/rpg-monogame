@@ -43,6 +43,24 @@ public class EntityManager
         }
     }
 
+    public void ClearTileEntities()
+    {
+        foreach (var tile in _tileEntities)
+        {
+            _entities.Remove(tile);
+        }
+        RefreshFilteredLists();
+    }
+
+    public void ClearZones()
+    {
+        foreach (var zone in _zones)
+        {
+            _entities.Remove(zone);
+        }
+        RefreshZones();
+    }
+
     public void RefreshZones()
     {
         _zones.Clear();

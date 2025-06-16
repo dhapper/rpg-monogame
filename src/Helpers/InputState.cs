@@ -12,9 +12,13 @@ public class InputState
     public bool IsNumberChanging;
     public int? Number;
 
-    // temp vars
     public bool Grow;
+
+    // temp vars
+    public bool changeLocation1;
+    public bool changeLocation2;
 
     public bool Enter;
     public bool Escape;
+
 }

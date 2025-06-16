@@ -8,25 +8,31 @@ public class MapSystem
 
     private EntityManager _entityManager;
     private Camera2D _camera;
+    private string _mapName;
+
+    private ZoneSystem _zoneSystem;
 
     public int MapWidthInPixels { get; private set; }
     public int MapHeightInPixels { get; private set; }
     TileData[,] mapData;
 
-    public MapSystem(EntityManager entityManager, Camera2D camera, SleepSystem sleepSystem)
+    public MapSystem(EntityManager entityManager, Camera2D camera, string mapName)
     {
         _entityManager = entityManager;
         _camera = camera;
+        _mapName = mapName;
+        _zoneSystem = new ZoneSystem(this, _entityManager);
 
-        InitMap();
-
-        ZoneSystem zoneSystem = new ZoneSystem(this, _entityManager, sleepSystem);
+        InitMap(mapName);
     }
 
-    public void InitMap()
+    public void InitMap(string mapName)
     {
+        _entityManager.ClearTileEntities();
+
         string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-        string jsonPath = Path.Combine(baseDir, "Data", "shop_tent.json");
+        // string jsonPath = Path.Combine(baseDir, "Data", "shop_tent.json");
+        string jsonPath = Path.Combine(baseDir, "Data", mapName);
         string jsonText = File.ReadAllText(jsonPath);
         var tileMap = JsonConvert.DeserializeObject<List<List<TileData>>>(jsonText);
         int rows = tileMap.Count;
@@ -52,6 +58,12 @@ public class MapSystem
         MapWidthInPixels = (int)(mapData.GetLength(1) * Constants.DefaultTileSize * Constants.ScaleFactor);
         MapHeightInPixels = (int)(mapData.GetLength(0) * Constants.DefaultTileSize * Constants.ScaleFactor);
         _camera.SetWorldBounds(MapWidthInPixels, MapHeightInPixels);
+
+        _entityManager.RefreshFilteredLists();
+
+        //init zones
+        _zoneSystem.LoadZones();
+        // _entityManager.RefreshZones();
     }
 
     public List<(int row, int col)> MatchingTiles(string type, int id)

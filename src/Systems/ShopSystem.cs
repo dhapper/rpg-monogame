@@ -46,8 +46,7 @@ public class ShopSystem
     private void HandleMouseInputs()
     {
         var mouse = InputSystem.GetMouseLocation();
-        // bool mousePressed = InputSystem.IsMousePressed(InputSystem.MouseButton.Left);
-
+        
         for (int i = 0; i < Options.Length; i++)
         {
             if (ItemBoxes[i].Contains(mouse.x, mouse.y))
@@ -59,7 +58,7 @@ public class ShopSystem
                     var item = ItemFactory.CreateItem(Options[Choice], _entityManager);
                     _inventorySystem.PlaceInNextEmptySlot(item);
                 }
-            }   
+            }
         }
     }
 

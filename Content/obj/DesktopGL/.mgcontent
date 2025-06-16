@@ -16,6 +16,7 @@
     <File>c:/Users/Dhaarshan. P/Desktop/main/Coding/VS projects/C#/MonoGame/rpg/Content/new_player_tool.png</File>
     <File>c:/Users/Dhaarshan. P/Desktop/main/Coding/VS projects/C#/MonoGame/rpg/Content/paths.png</File>
     <File>c:/Users/Dhaarshan. P/Desktop/main/Coding/VS projects/C#/MonoGame/rpg/Content/player.png</File>
+    <File>c:/Users/Dhaarshan. P/Desktop/main/Coding/VS projects/C#/MonoGame/rpg/Content/RenderAboveSprites.png</File>
     <File>c:/Users/Dhaarshan. P/Desktop/main/Coding/VS projects/C#/MonoGame/rpg/Content/ui.png</File>
     <File>c:/Users/Dhaarshan. P/Desktop/main/Coding/VS projects/C#/MonoGame/rpg/Content/water.png</File>
   </SourceFiles>
@@ -25,6 +26,7 @@
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File>gameFont.spritefont</File>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

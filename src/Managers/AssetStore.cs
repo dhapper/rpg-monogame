@@ -10,7 +10,7 @@ public static class AssetStore
     public static Texture2D GroundTiles, AnimatedTiles;
 
     public static Texture2D PlayerBody, PlayerHair, PlayerTools;
-    public static Texture2D BackgroundTiles, PathTiles, WaterTiles, CollisionTiles;
+    public static Texture2D BackgroundTiles, PathTiles, WaterTiles, CollisionTiles, RenderAboveSprites;
     public static Texture2D UIsheet, IconSheet;
     public static Texture2D CropSprites;
     public static Texture2D PlayerSheet;
@@ -46,6 +46,7 @@ public static class AssetStore
         CollisionTiles = _content.Load<Texture2D>("collision");
         PathTiles = _content.Load<Texture2D>("paths");
         WaterTiles = _content.Load<Texture2D>("water");
+        RenderAboveSprites = _content.Load<Texture2D>("RenderAboveSprites");
 
         UIsheet = _content.Load<Texture2D>("ui");
         IconSheet = _content.Load<Texture2D>("icons");

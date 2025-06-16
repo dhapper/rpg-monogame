@@ -60,6 +60,17 @@ public class PlayerController
         if (inputs.MoveRight)
             InitMovement(Constants.Directions.Right);
 
+        if (inputs.changeLocation1)
+        {
+            Console.WriteLine("town.json");
+            _mapSystem.InitMap("town.json");
+        }
+        if (inputs.changeLocation2)
+        {
+            Console.WriteLine("shop_tent.json");
+            _mapSystem.InitMap("shop_tent.json");
+        }
+
         _interactionSystem.MiscControls(_player, inputs);
 
         var movement = _player.GetComponent<MovementComponent>();

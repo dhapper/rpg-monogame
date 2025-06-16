@@ -41,7 +41,7 @@ public static class Constants
     {
         public const string PathsSheetName = "Tileset1";
         public const string CollisionSheetIndex = "Tileset2";
-        public const string WaterSheetIndex = "Tileset3";
+        public const string RenderAboveSpritesSheedIndex = "Tileset3";
 
         public const int DrySoil = 40;
         public const int WetSoil = 41;
@@ -49,7 +49,7 @@ public static class Constants
         public const int WetFertilizedSoil = 49;
 
 
-        public static readonly string[] SolidTilesets = { CollisionSheetIndex, WaterSheetIndex };
+        public static readonly string[] SolidTilesets = { CollisionSheetIndex };
 
         // public static readonly int[] PlantableTiles = [DrySoil, WetSoil, DryFertilizedSoil, WetFertilizedSoil];
         public static readonly int[] WetSoilTiles = [WetSoil, WetFertilizedSoil];

@@ -53,6 +53,8 @@ public class RenderSystem
             if (entity.GetComponent<TileComponent>().Background != default)
                 DrawTile(entity, true);
 
+            if (entity.GetComponent<TileComponent>().Type == Tile.RenderAboveSpritesSheedIndex) { continue; }
+
             DrawTile(entity);
 
             if (GameInitializer.ShowHitbox && entity.HasComponent<CollisionComponent>())
@@ -78,6 +80,20 @@ public class RenderSystem
         foreach (var entity in sortedSprites)
         {
             DrawEntity(entity);
+
+            if (GameInitializer.ShowHitbox && entity.HasComponent<CollisionComponent>())
+                DrawHitbox(_spriteBatch, entity.GetComponent<CollisionComponent>().Hitbox);
+        }
+
+        // Draw render above tiles
+        foreach (var entity in _entityManager.TileEntities)
+        {
+            if(entity.GetComponent<TileComponent>().Type != Tile.RenderAboveSpritesSheedIndex) { continue; }
+
+            // if (entity.GetComponent<TileComponent>().Background != default)
+            //     DrawTile(entity, true);
+
+            DrawTile(entity);
 
             if (GameInitializer.ShowHitbox && entity.HasComponent<CollisionComponent>())
                 DrawHitbox(_spriteBatch, entity.GetComponent<CollisionComponent>().Hitbox);

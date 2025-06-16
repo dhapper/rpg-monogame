@@ -28,10 +28,6 @@ public class GameInitializer
     public static bool ShowHitbox = false;
 
 
-    // private GameState currentGameState = GameState.Playing;
-
-
-
     public GameInitializer(EntityManager entityManager, SpriteBatch spriteBatch)
     {
         _entityManager = entityManager;
@@ -41,10 +37,6 @@ public class GameInitializer
 
     public void Initialize()
     {
-        // InventoryComponent playerInventory = new InventoryComponent();
-
-        // _inputSystem = new InputSystem();
-        // _gameStateManager = new GameStateManager();
         _camera = new Camera2D(_graphicsDevice.Viewport);
         _inventoryUI = new InventoryUI(_camera, _graphicsDevice.Viewport, _entityManager);
         _inventorySystem = new InventorySystem(_entityManager);
@@ -55,7 +47,7 @@ public class GameInitializer
         _shopSystem = new ShopSystem(_entityManager, _inventorySystem);
 
         RenderSystem = new RenderSystem(_spriteBatch, _entityManager, _camera, _graphicsDevice, _inventoryUI, _dialogueSystem, _shopSystem);
-        _mapSystem = new MapSystem(_entityManager, _camera, _sleepSystem);
+        _mapSystem = new MapSystem(_entityManager, _camera, "shop_tent.json");
 
         // Create Player
         PlayerEntity = PlayerFactory.CreatePlayer(200, 200, _entityManager, _graphicsDevice);
@@ -80,19 +72,12 @@ public class GameInitializer
     {
 
         InputSystem.Update();
-        // _inventoryUI.Update();
-
-        // var inputs = InputSystem.GetInputState();
-        // if (inputs.ToggleInventory)
-        //     GameStateManager.ToggleBetweenStates(GameState.Playing, GameState.Inventory);
 
         switch (GameStateManager.CurrentGameState)
         {
             case GameState.Playing:
-                // _inputSystem.Update();
                 PlayerController.Update();
                 _animationSystem.Update(gameTime);
-                // _inventoryUI.Update();
                 break;
             case GameState.Inventory:
                 _inventoryUI.Update();

@@ -39,13 +39,6 @@ public class InteractionSystem
         var inv = player.GetComponent<InventoryComponent>();
         var colIndex = inputs.Number  ?? 0;
         inv.activeItemIndices = inputs.IsNumberChanging ? (colIndex, 0) : inv.activeItemIndices;
-        
-
-
-        // colIndex = colIndex < 10 ? colIndex : 9;
-        // colIndex = colIndex > 0 ? colIndex : 0;
-        // inv.activeItemIndices = inv.activeItemIndices < 9 ? inv.activeItemIndices : 8;
-
 
         var activeItemEntity = inv.InventoryItems[inv.activeItemIndices.Item1][inv.activeItemIndices.Item2];
         if (activeItemEntity != null)
@@ -100,13 +93,11 @@ public class InteractionSystem
         int tileSize = (int)(Constants.DefaultTileSize * Constants.ScaleFactor);
         int col = (int)(worldX / tileSize);
         int row = (int)(worldY / tileSize);
-        // foreach (var entity in _entityManager.EntitiesWithComponent<TileComponent>())
         foreach (var entity in _entityManager.TileEntities)
         {
             var position = entity.GetComponent<PositionComponent>();
             if ((int)(position.X / tileSize) == col && (int)(position.Y / tileSize) == row)
             {
-                // Console.WriteLine(position.X / tileSize + " " + position.Y / tileSize);
                 return entity;
             }
         }

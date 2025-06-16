@@ -7,18 +7,23 @@ public class ZoneSystem
 
     private MapSystem _mapSystem;
     private EntityManager _entityManager;
-    private SleepSystem _sleepSystem;
+    // private SleepSystem _sleepSystem;
     // private GameStateManager _gameStateManager;
 
-    public ZoneSystem(MapSystem mapSystem, EntityManager entityManager, SleepSystem sleepSystem)
+    public ZoneSystem(MapSystem mapSystem, EntityManager entityManager)
     {
         _mapSystem = mapSystem;
         _entityManager = entityManager;
-        _sleepSystem = sleepSystem;
+        // _sleepSystem = sleepSystem;
 
+
+    }
+
+    public void LoadZones()
+    {
+        _entityManager.ClearZones();
         LoadTentZones();
         LoadShopZones();
-
         _entityManager.RefreshZones();
     }
 

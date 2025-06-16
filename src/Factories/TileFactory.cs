@@ -51,7 +51,7 @@ public static class TileFactory
             case "Tileset2":
                 return AssetStore.CollisionTiles;
             case "Tileset3":
-                return AssetStore.WaterTiles;
+                return AssetStore.RenderAboveSprites;
             default:
                 return AssetStore.PathTiles;
         }
