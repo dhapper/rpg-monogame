@@ -18,8 +18,7 @@ public class EntityManager
     public IReadOnlyList<Entity> DroppedOverworldItems => _dropperdOverworldItems.AsReadOnly();
     public IReadOnlyList<Entity> CropEntities => _cropEntities.AsReadOnly();
     public IReadOnlyList<Entity> Zones => _zones.AsReadOnly();
-
-
+    
     public void RefreshFilteredLists()  // not zones
     {
         _tileEntities.Clear();

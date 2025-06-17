@@ -1,0 +1,77 @@
+{
+  "LocationIndex": 0,
+  "Entities": [
+    {
+      "EntityType": "crop",
+      "EntityInfo": {
+        "Name": "Potato",
+        "Stage": 2,
+        "Row": 6,
+        "Col": 2
+      }
+    },
+    {
+      "EntityType": "crop",
+      "EntityInfo": {
+        "Name": "Potato",
+        "Stage": 4,
+        "Row": 8,
+        "Col": 2
+      }
+    },
+    {
+      "EntityType": "crop",
+      "EntityInfo": {
+        "Name": "Pumpkin",
+        "Stage": 4,
+        "Row": 7,
+        "Col": 2
+      }
+    },
+    {
+      "EntityType": "crop",
+      "EntityInfo": {
+        "Name": "Pumpkin",
+        "Stage": 2,
+        "Row": 8,
+        "Col": 1
+      }
+    },
+    {
+      "EntityType": "crop",
+      "EntityInfo": {
+        "Name": "Potato",
+        "Stage": 2,
+        "Row": 6,
+        "Col": 3
+      }
+    },
+    {
+      "EntityType": "crop",
+      "EntityInfo": {
+        "Name": "Pumpkin",
+        "Stage": 1,
+        "Row": 8,
+        "Col": 3
+      }
+    },
+    {
+      "EntityType": "crop",
+      "EntityInfo": {
+        "Name": "Potato",
+        "Stage": 2,
+        "Row": 8,
+        "Col": 12
+      }
+    },
+    {
+      "EntityType": "crop",
+      "EntityInfo": {
+        "Name": "Potato",
+        "Stage": 1,
+        "Row": 9,
+        "Col": 11
+      }
+    }
+  ]
+}

@@ -19,7 +19,8 @@ public static class TileFactory
             Type = type,
             Id = id,
             Col = col,
-            Row = row
+            Row = row,
+            BackgroundId = background
         });
 
         tile.AddComponent(new PositionComponent(col * size * scale, row * size * scale, size, size));

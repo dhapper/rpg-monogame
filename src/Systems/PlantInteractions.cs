@@ -96,7 +96,7 @@ public class PlantInteractions
                 {
                     if (tileComp.Type == Constants.Tile.PathsSheetName && Constants.Tile.WetSoilTiles.Contains(tileComp.Id))
                     {
-                        // Console.WriteLine(tileComp.Type + " " + tileComp.Id + " " + cropComp.config.CurrentStage + " " + cropComp.config.Stages);
+                        Console.WriteLine(tileComp.Type + " " + tileComp.Id + " " + cropComp.config.CurrentStage + " " + cropComp.config.Stages);
                         if (cropComp.config.CurrentStage < cropComp.config.Stages)
                         {
                             var spriteComp = entity.GetComponent<SpriteComponent>();

@@ -37,6 +37,26 @@ public static class Constants
         public static readonly AnimationConfig Watering = new AnimationConfig(14, 6, 0.1f);
     }
 
+    public static class Location
+    {
+        public const int Location1Index = 0;
+        public const int Location2Index = 1;
+
+        public const string Location1FileName = "shop_tent.json";
+        public const string Location2FileName = "town.json";
+
+        public static readonly int[] Locations = [
+            Location1Index,
+            Location2Index
+        ];
+
+        public static readonly Dictionary<int, string> IndexToFileName = new()
+        {
+            { Location1Index, Location1FileName },
+            { Location2Index, Location2FileName }
+        };
+    }
+
     public static class Tile
     {
         public const string PathsSheetName = "Tileset1";
@@ -88,6 +108,12 @@ public static class Constants
 
         public static readonly CropConfig Pumpkin = new CropConfig("Pumpkin", DefaultStages, new Rectangle(0, 0 * DefaultSpriteSize, DefaultSpriteSize, DefaultSpriteSize));
         public static readonly CropConfig Potato = new CropConfig("Potato", DefaultStages, new Rectangle(0, 1 * DefaultSpriteSize, DefaultSpriteSize, DefaultSpriteSize));
+
+        public static readonly Dictionary<string, CropConfig> NameToConfig = new()
+        {
+            { Pumpkin.Name, Pumpkin },
+            { Potato.Name, Potato }
+        };
     }
 
     public static class SeedCropMapping

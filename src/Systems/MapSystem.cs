@@ -7,8 +7,6 @@ public class MapSystem
 {
 
     private EntityManager _entityManager;
-    private Camera2D _camera;
-    private string _mapName;
 
     private ZoneSystem _zoneSystem;
 
@@ -16,18 +14,16 @@ public class MapSystem
     public int MapHeightInPixels { get; private set; }
     TileData[,] mapData;
 
-    public MapSystem(EntityManager entityManager, Camera2D camera, string mapName)
+    public MapSystem(EntityManager entityManager)
     {
         _entityManager = entityManager;
-        _camera = camera;
-        _mapName = mapName;
         _zoneSystem = new ZoneSystem(this, _entityManager);
-
-        InitMap(mapName);
     }
 
-    public void InitMap(string mapName)
+
+    public void InitMap(int locationIndex)
     {
+        var mapName = Constants.Location.IndexToFileName[locationIndex];
         _entityManager.ClearTileEntities();
 
         string baseDir = AppDomain.CurrentDomain.BaseDirectory;
@@ -54,16 +50,45 @@ public class MapSystem
 
             }
         }
+        
+        string entityFileName = Path.ChangeExtension(mapName, null) + "_entities.json";
+        string entityPath = Path.Combine(baseDir, "Data", entityFileName);
 
-        MapWidthInPixels = (int)(mapData.GetLength(1) * Constants.DefaultTileSize * Constants.ScaleFactor);
-        MapHeightInPixels = (int)(mapData.GetLength(0) * Constants.DefaultTileSize * Constants.ScaleFactor);
-        _camera.SetWorldBounds(MapWidthInPixels, MapHeightInPixels);
+        LoadEntities(entityPath, locationIndex, _entityManager);
 
         _entityManager.RefreshFilteredLists();
-
-        //init zones
         _zoneSystem.LoadZones();
-        // _entityManager.RefreshZones();
+    }
+
+
+    public static void LoadEntities(string filePath, int locationIndex, EntityManager entityManager)
+    {
+        if (!File.Exists(filePath))
+            return;
+
+        var json = File.ReadAllText(filePath);
+        var wrapper = JsonConvert.DeserializeObject<EntitySaveWrapper>(json);
+
+        if (wrapper.LocationIndex != locationIndex)
+            return;
+
+        foreach (var entityData in wrapper.Entities)
+        {
+            if (entityData.EntityType == "crop")
+            {
+                var crop = entityData.EntityInfo;
+                var tilePos = (crop.Col * Constants.TileSize, crop.Row * Constants.TileSize);
+                CropFactory.CreateCrop(Constants.Crops.NameToConfig[crop.Name], crop.Row, crop.Col, entityManager, tilePos, crop.Stage);
+            }
+        }
+    }
+
+
+    public void SetCameraBounds(Camera2D camera)
+    {
+        MapWidthInPixels = (int)(mapData.GetLength(1) * Constants.DefaultTileSize * Constants.ScaleFactor);
+        MapHeightInPixels = (int)(mapData.GetLength(0) * Constants.DefaultTileSize * Constants.ScaleFactor);
+        camera.SetWorldBounds(MapWidthInPixels, MapHeightInPixels);
     }
 
     public List<(int row, int col)> MatchingTiles(string type, int id)

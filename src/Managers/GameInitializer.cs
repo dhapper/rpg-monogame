@@ -3,22 +3,19 @@ using Microsoft.Xna.Framework.Graphics;
 
 public class GameInitializer
 {
-    // private EntityManager _entityManager;
     private EntityManager _currentEntityManager;
-    // private AssetStore _assets;
-    // private InputSystem _inputSystem;
     private AnimationSystem _animationSystem;
     private SpriteBatch _spriteBatch;
     private GraphicsDevice _graphicsDevice;
     private Camera2D _camera;
     private MapSystem _mapSystem;
     private InventoryUI _inventoryUI;
-    // private GameStateManager _gameStateManager;
     private InventorySystem _inventorySystem;
     private InteractionSystem _interactionSystem;
     private SleepSystem _sleepSystem;
     private DialogueSystem _dialogueSystem;
     private ShopSystem _shopSystem;
+    private LocationManager _locationManager;
 
     public Entity PlayerEntity { get; private set; }
     public PlayerController PlayerController { get; private set; }
@@ -28,20 +25,23 @@ public class GameInitializer
 
     public static bool ShowHitbox = false;
 
+    // move to manager?
+    public int CurrentLocationIndex = 0;
 
     public GameInitializer(SpriteBatch spriteBatch)
     {
-        // _entityManager = entityManager;
         _spriteBatch = spriteBatch;
         _graphicsDevice = _spriteBatch.GraphicsDevice;
-
-
     }
 
-    public void LoadMap(string mapName)
+    // should this be here?
+    public void LoadMap(int locationIndex)
     {
-        _currentEntityManager = _mapEntityStorage.GetEntityManager(mapName);
-        _mapSystem = new MapSystem(_currentEntityManager, _camera, mapName);
+        CurrentLocationIndex = locationIndex;
+        _currentEntityManager = _locationManager.GetEntityManager(locationIndex);
+        _mapSystem = _locationManager.GetMapSystem(locationIndex);
+
+        _mapSystem.SetCameraBounds(_camera);
 
         _inventoryUI = new InventoryUI(_camera, _graphicsDevice.Viewport, _currentEntityManager);
         _inventorySystem = new InventorySystem(_currentEntityManager);
@@ -56,49 +56,27 @@ public class GameInitializer
         if (PlayerController != null)
             PlayerController.UpdateEntityManager(_currentEntityManager);
 
-        // if (PlayerEntity != null)
-        // {
-            var inv = PlayerEntity.GetComponent<InventoryComponent>();
-            _inventoryUI.InitializePlayerInventory(inv);
-            _inventorySystem.InitInventory(inv);
-        // }
+        var inv = PlayerEntity.GetComponent<InventoryComponent>();
+        _inventoryUI.InitializePlayerInventory(inv);
+        _inventorySystem.InitInventory(inv);
 
         _currentEntityManager.LoadPlayer(PlayerEntity);
     }
-
-    private MapEntityStorage _mapEntityStorage;
-    // private EntityManager _currentEntityManager;Ks
 
     public void Initialize()
     {
 
         PlayerEntity = PlayerFactory.CreatePlayer(200, 200);
-
-        _mapEntityStorage = new MapEntityStorage();
-
         _camera = new Camera2D(_graphicsDevice.Viewport);
+        _locationManager = new LocationManager();
 
-        LoadMap("shop_tent.json");
+        LoadMap(Constants.Location.Location1Index);
 
-        ////////////////
-
-        // Create Player
-        // PlayerEntity = PlayerFactory.CreatePlayer(200, 200, _currentEntityManager, _graphicsDevice);
         PlayerController = new PlayerController(this, PlayerEntity, _animationSystem, _mapSystem, _camera, _currentEntityManager, _inventorySystem, _interactionSystem);
-        // PlayerEntity.AddComponent(new PlayerComponent());   // should move to factory?
         var (x, y) = SaveManager.LoadData();
         var position = PlayerEntity.GetComponent<PositionComponent>();
         position.X = x;
         position.Y = y;
-
-        // var inv = PlayerEntity.GetComponent<InventoryComponent>();
-        // _inventoryUI.InitializePlayerInventory(inv);
-        // _inventorySystem.InitInventory(inv);
-
-        // Create an Entity
-        // npc = PlayerFactory.CreatePlayer(50, 300, _entityManager, _assets, _graphicsDevice);
-        // npc.GetComponent<SpriteComponent>().Color = Color.Red;
-
     }
 
     public void Update(GameTime gameTime)

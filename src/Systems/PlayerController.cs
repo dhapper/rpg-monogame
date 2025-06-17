@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using Microsoft.Xna.Framework;
 
 public class PlayerController
@@ -65,16 +66,30 @@ public class PlayerController
         if (inputs.changeLocation1)
         {
             Console.WriteLine("shop_tent.json");
-            _gameInitializer.LoadMap("shop_tent.json");
-            // _mapSystem.InitMap("town.json");
+            _gameInitializer.LoadMap(Constants.Location.Location1Index);
+            UpdateCamera();
         }
         if (inputs.changeLocation2)
         {
             Console.WriteLine("town.json");
-            _gameInitializer.LoadMap("town.json");
-
+            // _gameInitializer.LoadMap("town.json");
+            _gameInitializer.LoadMap(Constants.Location.Location2Index);
+            UpdateCamera();
             // _mapSystem.InitMap("shop_tent.json");
         }
+
+        if (inputs.Save)
+        {
+            SaveManager.SaveData(_player);
+            var fileName = Constants.Location.IndexToFileName[_gameInitializer.CurrentLocationIndex];
+            SaveManager.SaveMap(fileName, _entityManager);
+            // SaveManager.SaveEntities(_gameInitializer.CurrentLocationIndex, _entityManager, fileName);
+            var entityFileName = Path.ChangeExtension(fileName, null) + "_entities.json";
+            var entityFilePath = Path.Combine("Data", entityFileName);
+            SaveManager.SaveEntities(_gameInitializer.CurrentLocationIndex, _entityManager, entityFilePath);
+
+        }
+
 
         _interactionSystem.MiscControls(_player, inputs);
 

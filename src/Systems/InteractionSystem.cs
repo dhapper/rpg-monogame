@@ -26,8 +26,8 @@ public class InteractionSystem
         // misc
         if (inputs.ToggleHitbox)
             GameInitializer.ShowHitbox = !GameInitializer.ShowHitbox;
-        if (inputs.Save)
-            SaveManager.SaveData(player);
+        // if (inputs.Save)
+        //     SaveManager.SaveData(player);
         if (inputs.Grow)
             _plantInteractions.GrowPlants();
         if (inputs.ToggleInventory)

@@ -107,7 +107,7 @@ public static class InputSystem
     public static void HandleHotbarState(InputState state)
     {
         state.IsNumberChanging = false;
-        for (int i = 0; i < 9; i++)
+        for (int i = 1; i <= 9; i++)
         {
             if (IsKeyPressed(Keys.D0 + i))
             {

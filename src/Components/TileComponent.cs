@@ -12,5 +12,7 @@ public class TileComponent
     public int Col;
     public int Row;
 
+    public int? BackgroundId;
+
     public TileComponent() { }
 }
