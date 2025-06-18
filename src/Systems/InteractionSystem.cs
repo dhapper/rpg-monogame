@@ -37,34 +37,34 @@ public class InteractionSystem
     public void HandleInteractions(Entity player, InputState inputs, bool facingRight, ref bool isAnimationLocked, int lastDir)
     {
         var inv = player.GetComponent<InventoryComponent>();
-        var colIndex = inputs.Number  ?? 0;
+        var colIndex = inputs.Number ?? 0;
         inv.activeItemIndices = inputs.IsNumberChanging ? (colIndex, 0) : inv.activeItemIndices;
 
         var activeItemEntity = inv.InventoryItems[inv.activeItemIndices.Item1][inv.activeItemIndices.Item2];
         if (activeItemEntity != null)
         {
-            var activeItem = inv.InventoryItems[inv.activeItemIndices.Item1][inv.activeItemIndices.Item2].GetComponent<ItemComponent>().config;
-            if (inputs.Interact && activeItem != null)
+            var activeItemConfig = inv.InventoryItems[inv.activeItemIndices.Item1][inv.activeItemIndices.Item2].GetComponent<ItemComponent>().config;
+            if (inputs.Interact && activeItemConfig != null)
             {
 
                 if (_plantInteractions.HarvestCrop(this, player.GetComponent<InventoryComponent>()))
                     return;
 
-                if (activeItem.Type == ItemType.Plantable)
+                if (activeItemConfig.Type == ItemType.Plantable)
                 {
                     _plantInteractions.PlantCrop(activeItemEntity, this);
                     return;
                 }
 
                 var aniVars = _animationSystem.GetAniInitVars(lastDir);
-                switch (activeItem.Name)
+                switch (activeItemConfig.Name)
                 {
                     case "Pickaxe":
                         _animationSystem.SetAnimation(player, Constants.Animations.Pickaxe, aniVars.aniDirIndex, aniVars.mirrored);
                         isAnimationLocked = true;
                         break;
                     case "WateringCan":
-                        _animationSystem.SetAnimation(player, Constants.Animations.Watering, aniVars.aniDirIndex, aniVars.mirrored);
+                        // _animationSystem.SetAnimation(player, Constants.Animations.Watering, aniVars.aniDirIndex, aniVars.mirrored);
                         if (!isAnimationLocked)
                         {
                             var wateredTile = GetTile(InputSystem.GetMouseLocation());
@@ -73,13 +73,36 @@ public class InteractionSystem
 
                             // TODO: check if tile is within range?
 
+                            // check capacity
+
+                            // Action action = () => _entityManager.ChangeTile(wateredTile, Constants.Tile.PathsSheetName, Constants.Tile.WaterSoilTransform[wateredTileComp.Id]);
+                            // new LimitedUsageSystem().UseItem(activeItemEntity, action);
+
                             // check if tile is waterable
                             if (wateredTileComp.Type == Constants.Tile.PathsSheetName && Constants.Tile.DrySoilTiles.Contains(wateredTileComp.Id))
                             {
-                                _entityManager.ChangeTile(wateredTile, Constants.Tile.PathsSheetName, Constants.Tile.WaterSoilTransform[wateredTileComp.Id]);
+                                // _entityManager.ChangeTile(wateredTile, Constants.Tile.PathsSheetName, Constants.Tile.WaterSoilTransform[wateredTileComp.Id]);
+
+                                if (new LimitedUsageSystem().CanUseItem(activeItemEntity.GetComponent<LimitedUsageComponent>())) {
+                                    isAnimationLocked = true;
+                                }
+
+                                Action action = () =>
+                                {
+                                    _animationSystem.SetAnimation(player, Constants.Animations.Watering, aniVars.aniDirIndex, aniVars.mirrored);
+                                    // isAnimationLocked = true;
+
+                                    _entityManager.ChangeTile(wateredTile, Constants.Tile.PathsSheetName, Constants.Tile.WaterSoilTransform[wateredTileComp.Id]);
+                                };
+
+                                // if (new LimitedUsageSystem().CanUseItem(activeItemEntity.GetComponent<LimitedUsageComponent>())) {
+                                //     isAnimationLocked = true;
+                                // }
+
+                                new LimitedUsageSystem().UseItem(activeItemEntity, action);
                             }
                         }
-                        isAnimationLocked = true;
+                        // isAnimationLocked = true;
                         break;
                 }
             }

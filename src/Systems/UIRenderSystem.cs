@@ -70,7 +70,7 @@ public class UIRenderSystem
 
     public void DrawMoney()
     {
-        _spriteBatch.DrawString(AssetStore.MoneyFont, ""+_inventorySystem.Coins, new Vector2(2 * Constants.ScaleFactor, 2 * Constants.ScaleFactor), Color.Black);
+        _spriteBatch.DrawString(AssetStore.MoneyFont, "" + _inventorySystem.Coins, new Vector2(2 * Constants.ScaleFactor, 2 * Constants.ScaleFactor), Color.Black);
     }
 
     public void DrawShopMenu()
@@ -143,19 +143,28 @@ public class UIRenderSystem
                     0f);
 
                 // Draw inventory items
-                var inv = _entityManager.EntitiesWithComponent<InventoryComponent>().First().GetComponent<InventoryComponent>();
+                // var inv = _entityManager.EntitiesWithComponent<InventoryComponent>().First().GetComponent<InventoryComponent>();
+                var inv = _inventorySystem.Inventory;
                 if (inv.InventoryItems[i][j] != null)
                 {
+
+                    var itemComp = inv.InventoryItems[i][j].GetComponent<ItemComponent>();
+
                     _spriteBatch.Draw(
                         AssetStore.IconSheet,
                         _inventoryUI.InventoryIconPositions[i][j],
-                        inv.InventoryItems[i][j].GetComponent<ItemComponent>().config.SourceRectangle,
+                        itemComp.config.SourceRectangle,
                         Color.White,
                         0f,
                         Vector2.Zero,
                         ScaleFactor,
                         SpriteEffects.None,
                         0f);
+
+                    if (itemComp.config.Stackable && itemComp.Quantity > 1)
+                    {
+                        _spriteBatch.DrawString(AssetStore.MoneyFont, "x" + itemComp.Quantity, _inventoryUI.InventoryIconPositions[i][j], Color.White);
+                    }
                 }
             }
         }
@@ -200,6 +209,8 @@ public class UIRenderSystem
             // Draw hotbar items
             if (inv.InventoryItems[i][0] != null)
             {
+                var itemComp = inv.InventoryItems[i][0].GetComponent<ItemComponent>();
+
                 _spriteBatch.Draw(
                     AssetStore.IconSheet,
                     _inventoryUI.InventoryIconPositions[i][0],
@@ -210,6 +221,11 @@ public class UIRenderSystem
                     ScaleFactor,
                     SpriteEffects.None,
                     0f);
+
+                if (itemComp.config.Stackable && itemComp.Quantity > 1)
+                {
+                    _spriteBatch.DrawString(AssetStore.MoneyFont, "x" + itemComp.Quantity, _inventoryUI.InventoryIconPositions[i][0], Color.White);
+                }
             }
         }
     }

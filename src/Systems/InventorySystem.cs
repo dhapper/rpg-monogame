@@ -1,3 +1,5 @@
+using System;
+
 public class InventorySystem
 {
 
@@ -43,10 +45,54 @@ public class InventorySystem
         return null;
     }
 
+    public bool PlaceItemInInventory(Entity item)
+    {
+        Console.WriteLine("Stackable: " + item.GetComponent<ItemComponent>().config.Stackable);
+        if (item.GetComponent<ItemComponent>().config.Stackable)
+        {
+            if (PlaceInAvailableStack(item))
+            {
+                return true;
+            }
+        }
+
+        var emptySlot = GetNextEmptySlot();
+        if (emptySlot != null)
+        {
+            _inventory.InventoryItems[emptySlot.Value.j][emptySlot.Value.i] = item;
+            return true;
+        }
+
+        // drop item?
+        return false;
+    }
+
+    public bool PlaceInAvailableStack(Entity item)
+    {
+        var itemComp = item.GetComponent<ItemComponent>();
+        for (int i = 0; i < Constants.UI.Inventory.Rows; i++)
+        {
+            for (int j = 0; j < Constants.UI.Inventory.Cols; j++)
+            {
+                if (_inventory.InventoryItems[j][i] == null) { continue; }
+                var slotItem = _inventory.InventoryItems[j][i].GetComponent<ItemComponent>();
+                if (slotItem.config.Name == itemComp.config.Name)
+                {
+                    if (slotItem.Quantity < itemComp.config.StackLimit)
+                    {
+                        slotItem.Quantity++;
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     public void PlaceInNextEmptySlot(Entity item)
     {
         var slots = GetNextEmptySlot();
-        if(slots == null) { return; }
+        if (slots == null) { return; }
         _inventory.InventoryItems[slots.Value.j][slots.Value.i] = item;
     }
 

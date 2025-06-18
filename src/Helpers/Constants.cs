@@ -92,13 +92,22 @@ public static class Constants
 
     public static class Items
     {
-        public static readonly ItemConfig WateringCan = new ItemConfig("WateringCan", ItemType.Tool, new Rectangle(0 * DefaultTileSize, 0 * DefaultTileSize, DefaultTileSize, DefaultTileSize));
+        public const int Bypass = -1;
+        public const int DefaultStackLimit = 9;
+        public const int DefaultCapacity = 3;
+
+        public static readonly ItemConfig WateringCan = new ItemConfig(
+            "WateringCan", ItemType.Tool, new Rectangle(0 * DefaultTileSize, 0 * DefaultTileSize, DefaultTileSize, DefaultTileSize), Bypass, DefaultCapacity);
         public static readonly ItemConfig Pickaxe = new ItemConfig("Pickaxe", ItemType.Tool, new Rectangle(1 * DefaultTileSize, 0 * DefaultTileSize, DefaultTileSize, DefaultTileSize));
-        public static readonly ItemConfig PumpkinSeeds = new ItemConfig("PumpkinSeeds", ItemType.Plantable, new Rectangle(2 * DefaultTileSize, 0 * DefaultTileSize, DefaultTileSize, DefaultTileSize));
-        public static readonly ItemConfig PotatoSeeds = new ItemConfig("PotatoSeeds", ItemType.Plantable, new Rectangle(3 * DefaultTileSize, 0 * DefaultTileSize, DefaultTileSize, DefaultTileSize));
-        public static readonly ItemConfig Pumpkin = new ItemConfig("Pumpkin", ItemType.Crop, new Rectangle(4 * DefaultTileSize, 0 * DefaultTileSize, DefaultTileSize, DefaultTileSize));
-        public static readonly ItemConfig Potato = new ItemConfig("Potato", ItemType.Crop, new Rectangle(5 * DefaultTileSize, 0 * DefaultTileSize, DefaultTileSize, DefaultTileSize));
-        // public static readonly ItemConfig Empty = new ItemConfig("Empty", ItemType.Empty, new Rectangle(0, 0, 0, 0));
+
+        public static readonly ItemConfig PumpkinSeeds =new ItemConfig(
+            "PumpkinSeeds", ItemType.Plantable, new Rectangle(2 * DefaultTileSize, 0 * DefaultTileSize, DefaultTileSize, DefaultTileSize), DefaultStackLimit);
+        public static readonly ItemConfig PotatoSeeds = new ItemConfig(
+            "PotatoSeeds", ItemType.Plantable, new Rectangle(3 * DefaultTileSize, 0 * DefaultTileSize, DefaultTileSize, DefaultTileSize), DefaultStackLimit);
+        public static readonly ItemConfig Pumpkin = new ItemConfig(
+            "Pumpkin", ItemType.Crop, new Rectangle(4 * DefaultTileSize, 0 * DefaultTileSize, DefaultTileSize, DefaultTileSize), DefaultStackLimit);
+        public static readonly ItemConfig Potato = new ItemConfig(
+            "Potato", ItemType.Crop, new Rectangle(5 * DefaultTileSize, 0 * DefaultTileSize, DefaultTileSize, DefaultTileSize), DefaultStackLimit);
     }
 
     public static class Crops

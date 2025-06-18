@@ -39,7 +39,19 @@ public class PlantInteractions
                     // var slot = _inventorySystem.GetNextEmptySlot();
                     if (Constants.SeedCropMapping.PlantedCropNameToCrop.TryGetValue(cropName, out var itemConfig))
                     {
-                        _inventorySystem.PlaceInNextEmptySlot(ItemFactory.CreateItem(itemConfig, _entityManager));
+
+                        // if stackable
+                        // check for empty unfilled stack
+
+                        // check for empty slot
+
+                        // if not placed
+                        // drop into overworld
+
+                        // _inventorySystem.PlaceInNextEmptySlot(ItemFactory.CreateItem(itemConfig, _entityManager));
+                        var item = ItemFactory.CreateItem(itemConfig, _entityManager);
+                        _inventorySystem.PlaceItemInInventory(item);
+
                         // inventory.InventoryItems[slot.Value.j][slot.Value.i] = ItemFactory.CreateItem(itemConfig, _entityManager);  //refactor out inventory
                         _entityManager.RefreshFilteredLists();
                         return true;

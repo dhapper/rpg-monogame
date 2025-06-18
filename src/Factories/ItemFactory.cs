@@ -18,6 +18,9 @@ public class ItemFactory
             false
             ));
 
+        if (itemConfig.Capacity != -1)
+            item.AddComponent(new LimitedUsageComponent(itemConfig.Capacity));
+
         return item;
     }
 }

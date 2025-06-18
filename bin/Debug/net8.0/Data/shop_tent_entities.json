@@ -5,7 +5,7 @@
       "EntityType": "crop",
       "EntityInfo": {
         "Name": "Potato",
-        "Stage": 2,
+        "Stage": 4,
         "Row": 6,
         "Col": 2
       }
@@ -41,7 +41,7 @@
       "EntityType": "crop",
       "EntityInfo": {
         "Name": "Potato",
-        "Stage": 2,
+        "Stage": 4,
         "Row": 6,
         "Col": 3
       }
@@ -71,6 +71,15 @@
         "Stage": 1,
         "Row": 9,
         "Col": 11
+      }
+    },
+    {
+      "EntityType": "crop",
+      "EntityInfo": {
+        "Name": "Potato",
+        "Stage": 4,
+        "Row": 7,
+        "Col": 3
       }
     }
   ]

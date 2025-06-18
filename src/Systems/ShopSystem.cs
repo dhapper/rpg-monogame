@@ -50,7 +50,7 @@ public class ShopSystem
         var mouse = InputSystem.GetMouseLocation();
 
         for (int i = 0; i < Options.Length; i++)
-        {
+        { 
             if (ItemBoxes[i].Contains(mouse.x, mouse.y))
             {
                 Choice = i;
@@ -61,7 +61,7 @@ public class ShopSystem
                     var itemName = item.GetComponent<ItemComponent>().config.Name;
                     var value = Constants.Value.NameToValue[itemName];
                     if(value > _inventorySystem.Coins) { continue; }
-                    _inventorySystem.PlaceInNextEmptySlot(item);
+                    _inventorySystem.PlaceItemInInventory(item);
                     _inventorySystem.Coins -= value;
                 }
             }
