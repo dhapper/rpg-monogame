@@ -126,6 +126,7 @@ public class EntityManager
 
     public void DeleteEntity(Entity entity)
     {
+        Console.WriteLine("Deleted");
         _entities.Remove(entity);
         RefreshFilteredLists();
     }

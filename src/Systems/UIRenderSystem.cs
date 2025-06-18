@@ -18,6 +18,8 @@ public class UIRenderSystem
     private DialogueSystem _dialogueSystem;
     private ShopSystem _shopSystem;
 
+    private InventorySystem _inventorySystem;
+
     public UIRenderSystem(
          SpriteBatch spriteBatch,
          EntityManager entityManager,
@@ -26,7 +28,8 @@ public class UIRenderSystem
          InventoryUI inventoryUI,
          GraphicsDevice graphicsDevice,
          DialogueSystem dialogueSystem,
-         ShopSystem shopSystem
+         ShopSystem shopSystem,
+         InventorySystem inventorySystem
          )
     {
         _spriteBatch = spriteBatch;
@@ -37,6 +40,7 @@ public class UIRenderSystem
         _graphicsDevice = graphicsDevice;
         _dialogueSystem = dialogueSystem;
         _shopSystem = shopSystem;
+        _inventorySystem = inventorySystem;
     }
 
     public void Draw()
@@ -46,7 +50,9 @@ public class UIRenderSystem
 
         DrawHotbar();
 
-        if (GameStateManager.CurrentGameState == GameState.Inventory)
+        DrawMoney();
+
+        if (GameStateManager.CurrentGameState == GameState.Inventory || GameStateManager.CurrentGameState == GameState.Shop)
         {
             DrawInventory();
             if (_inventoryUI.CurrentlyDragging)
@@ -60,6 +66,11 @@ public class UIRenderSystem
             DrawShopMenu();
 
         _spriteBatch.End();
+    }
+
+    public void DrawMoney()
+    {
+        _spriteBatch.DrawString(AssetStore.MoneyFont, ""+_inventorySystem.Coins, new Vector2(2 * Constants.ScaleFactor, 2 * Constants.ScaleFactor), Color.Black);
     }
 
     public void DrawShopMenu()

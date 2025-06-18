@@ -11,18 +11,20 @@ public class ShopSystem
 
     private EntityManager _entityManager;
     private InventorySystem _inventorySystem;
+    private InventoryUI _inventoryUI;
 
-    public ShopSystem(EntityManager entityManager, InventorySystem inventorySystem)
+    public ShopSystem(EntityManager entityManager, InventorySystem inventorySystem, InventoryUI inventoryUI)
     {
         _entityManager = entityManager;
         _inventorySystem = inventorySystem;
+        _inventoryUI = inventoryUI;
 
         InitShop(
             "Need for seed?",
             [
                 Constants.Items.PumpkinSeeds,
                 Constants.Items.PotatoSeeds,
-                Constants.Items.WateringCan,
+                // Constants.Items.WateringCan,
             ]
         );
     }
@@ -46,7 +48,7 @@ public class ShopSystem
     private void HandleMouseInputs()
     {
         var mouse = InputSystem.GetMouseLocation();
-        
+
         for (int i = 0; i < Options.Length; i++)
         {
             if (ItemBoxes[i].Contains(mouse.x, mouse.y))
@@ -56,10 +58,39 @@ public class ShopSystem
                 if (mousePressed)
                 {
                     var item = ItemFactory.CreateItem(Options[Choice], _entityManager);
+                    var itemName = item.GetComponent<ItemComponent>().config.Name;
+                    var value = Constants.Value.NameToValue[itemName];
+                    if(value > _inventorySystem.Coins) { continue; }
                     _inventorySystem.PlaceInNextEmptySlot(item);
+                    _inventorySystem.Coins -= value;
                 }
             }
         }
+
+        for (int i = 0; i < Constants.UI.Inventory.Cols; i++) {
+            for (int j = 0; j < Constants.UI.Inventory.Rows; j++)
+            {
+                bool isIn = _inventoryUI.InventorySlotRectangles[i][j].Contains(mouse.x, mouse.y);
+                if (!isIn) { continue; }
+
+                var item = _inventorySystem.Inventory.InventoryItems[i][j];
+                if (item == null) { continue; }
+
+                bool rightClicked = InputSystem.IsMousePressed(InputSystem.MouseButton.Right);
+
+                if (rightClicked)
+                {
+                    var itemName = item.GetComponent<ItemComponent>().config.Name;
+                    Console.WriteLine(itemName);
+                    if (!Constants.Value.NameToValue.ContainsKey(itemName)) { continue; }
+                    var value = Constants.Value.NameToValue[itemName];
+                    _entityManager.DeleteEntity(item);
+                    _inventorySystem.Coins += value;
+                    _inventorySystem.Inventory.InventoryItems[i][j] = null;
+                }
+            }
+        }
+        
     }
 
     public void InitShop(string line, ItemConfig[] options)

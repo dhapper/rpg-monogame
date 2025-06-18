@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 public static class AssetStore
 {
-    public static SpriteFont GameFont { get; private set; }
+    public static SpriteFont GameFont, MoneyFont;
     public static Texture2D PlayerTexture { get; private set; }
     public static Texture2D TileSheet;
     public static Texture2D GroundTiles, AnimatedTiles;
@@ -30,6 +30,7 @@ public static class AssetStore
     public static void LoadAll()
     {
         GameFont = _content.Load<SpriteFont>("gameFont");
+        MoneyFont = _content.Load<SpriteFont>("moneyFont");
         PlayerTexture = _content.Load<Texture2D>("custom_player_sheet");
 
         // TileSheet = _content.Load<Texture2D>("tilesheet");

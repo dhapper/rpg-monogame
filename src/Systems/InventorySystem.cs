@@ -2,7 +2,11 @@ public class InventorySystem
 {
 
     private EntityManager _entityManager;
+
     private InventoryComponent _inventory;
+    public InventoryComponent Inventory => _inventory;
+
+    public int Coins = 500;
 
     public InventorySystem(EntityManager entityManager)
     {

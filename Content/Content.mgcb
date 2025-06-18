@@ -92,6 +92,13 @@
 /processorParam:TextureFormat=Color
 /build:Master File.png
 
+#begin moneyFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:moneyFont.spritefont
+
 #begin new_player_body.png
 /importer:TextureImporter
 /processor:TextureProcessor

@@ -49,9 +49,9 @@ public class GameInitializer
         _interactionSystem = new InteractionSystem(_currentEntityManager, _animationSystem, _camera, _inventorySystem);
         _sleepSystem = new SleepSystem(_currentEntityManager, _interactionSystem);
         _dialogueSystem = new DialogueSystem(_sleepSystem);
-        _shopSystem = new ShopSystem(_currentEntityManager, _inventorySystem);
+        _shopSystem = new ShopSystem(_currentEntityManager, _inventorySystem, _inventoryUI);
 
-        RenderSystem = new RenderSystem(_spriteBatch, _currentEntityManager, _camera, _graphicsDevice, _inventoryUI, _dialogueSystem, _shopSystem);
+        RenderSystem = new RenderSystem(_spriteBatch, _currentEntityManager, _camera, _graphicsDevice, _inventoryUI, _dialogueSystem, _shopSystem, _inventorySystem);
 
         if (PlayerController != null)
             PlayerController.UpdateEntityManager(_currentEntityManager);

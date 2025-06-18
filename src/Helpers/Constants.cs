@@ -116,6 +116,21 @@ public static class Constants
         };
     }
 
+    public static class Value
+    {
+        public static readonly Dictionary<string, int> NameToValue = new()
+        {
+            // Crops
+            { Items.Potato.Name,  100},
+            { Items.Pumpkin.Name,  300},
+
+            // Seeds
+            { Items.PotatoSeeds.Name,  50},
+            { Items.PumpkinSeeds.Name,  100},
+        };
+
+    }
+
     public static class SeedCropMapping
     {
         public static readonly Dictionary<string, CropConfig> SeedNameToCrop = new()

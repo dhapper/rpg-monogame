@@ -78,6 +78,10 @@ public class PlantInteractions
         {
             CropFactory.CreateCrop(cropConfig, tileComp.Row, tileComp.Col, _entityManager, tilePos);
             _entityManager.RefreshFilteredLists();
+
+            _entityManager.DeleteEntity(seed);
+            var activeItemIndices = _inventorySystem.Inventory.activeItemIndices;
+            _inventorySystem.Inventory.InventoryItems[activeItemIndices.Item1][activeItemIndices.Item2] = null;
         }
 
     }

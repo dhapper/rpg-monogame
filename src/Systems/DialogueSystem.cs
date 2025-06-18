@@ -42,6 +42,11 @@ public class DialogueSystem
             Choice = Choice > 0 ? --Choice : Choice;
         else if (inputs.Enter)
             ComputeChoice();
+
+        if (inputs.Escape)
+        {
+            GameStateManager.SetState(GameState.Playing);
+        }
     }
 
     public void ComputeChoice()
