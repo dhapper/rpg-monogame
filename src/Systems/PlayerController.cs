@@ -7,7 +7,6 @@ public class PlayerController
 {
     private Entity _player;
     private CollisionSystem _collisionSystem;
-    private MovementSystem _movementSystem;
     private AnimationSystem _animationSystem;
     private MapSystem _mapSystem;
     private bool[] dir = [false, false, false, false];
@@ -20,6 +19,9 @@ public class PlayerController
     GameInitializer _gameInitializer;
 
     private bool isAnimationLocked = false;
+
+    private MovementSystem _movementSystem;
+    public MovementSystem MovementSystem => _movementSystem;
 
     public PlayerController(GameInitializer gameInitializer, Entity player, AnimationSystem animationSystem, MapSystem mapSystem, Camera2D camera, EntityManager entityManager, InventorySystem inventorySystem, InteractionSystem interactionSystem)
     {
@@ -122,6 +124,7 @@ public class PlayerController
         Vector2 speedVector = _movementSystem.CalculateSpeed(movement.Speed, dir);
         // Vector2 speedVector = _movementSystem.CalculateSpeed(2.66f, dir);
         _collisionSystem.Move(speedVector.X, speedVector.Y, _camera.WorldWidthInPixels, _camera.WorldHeightInPixels);
+        PositionSystem.UpdateCurrentTilePos(_player);
 
         if (inputs.MoveLeft)
         {

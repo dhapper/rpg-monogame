@@ -51,7 +51,7 @@ public class GameInitializer
         _dialogueSystem = new DialogueSystem(_sleepSystem);
         _shopSystem = new ShopSystem(_currentEntityManager, _inventorySystem, _inventoryUI);
 
-        RenderSystem = new RenderSystem(_spriteBatch, _currentEntityManager, _camera, _graphicsDevice, _inventoryUI, _dialogueSystem, _shopSystem, _inventorySystem);
+        RenderSystem = new RenderSystem(_spriteBatch, _currentEntityManager, _camera, _graphicsDevice, _inventoryUI, _dialogueSystem, _shopSystem, _inventorySystem, _interactionSystem);
 
         if (PlayerController != null)
             PlayerController.UpdateEntityManager(_currentEntityManager);
@@ -89,6 +89,7 @@ public class GameInitializer
             case GameState.Playing:
                 PlayerController.Update();
                 _animationSystem.Update(gameTime);
+                _interactionSystem.PlacingSystem.Update(PlayerEntity);
                 break;
             case GameState.Inventory:
                 _inventoryUI.Update();

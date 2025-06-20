@@ -12,6 +12,7 @@ public class RenderSystem
     private Camera2D _camera;
     private GraphicsDevice _graphicsDevice;
     private InventoryUI _inventoryUI;
+    private InteractionSystem _interactionSystem;
     // private GameStateManager _gameStateManager;
     // private InputSystem _inputSystem;
 
@@ -19,13 +20,14 @@ public class RenderSystem
 
     private Rectangle _cameraView;
 
-    public RenderSystem(SpriteBatch spriteBatch, EntityManager entityManager, Camera2D camera, GraphicsDevice graphicsDevice, InventoryUI inventoryUI, DialogueSystem dialogueSystem, ShopSystem shopSystem, InventorySystem inventorySystem)
+    public RenderSystem(SpriteBatch spriteBatch, EntityManager entityManager, Camera2D camera, GraphicsDevice graphicsDevice, InventoryUI inventoryUI, DialogueSystem dialogueSystem, ShopSystem shopSystem, InventorySystem inventorySystem, InteractionSystem interactionSystem)
     {
         _spriteBatch = spriteBatch;
         _entityManager = entityManager;
         _camera = camera;
         _graphicsDevice = graphicsDevice;
         _inventoryUI = inventoryUI;
+        _interactionSystem = interactionSystem;
         // _gameStateManager = gameStateManager;
         // _inputSystem = inputSystem;
 
@@ -94,7 +96,7 @@ public class RenderSystem
         // Draw render above tiles
         foreach (var entity in _entityManager.TileEntities)
         {
-            if(entity.GetComponent<TileComponent>().Type != Tile.RenderAboveSpritesSheedIndex) { continue; }
+            if (entity.GetComponent<TileComponent>().Type != Tile.RenderAboveSpritesSheedIndex) { continue; }
 
             // if (entity.GetComponent<TileComponent>().Background != default)
             //     DrawTile(entity, true);
@@ -121,6 +123,13 @@ public class RenderSystem
             _spriteBatch.Draw(redTexture, new Rectangle((int)pos.X, (int)pos.Y, collision.Hitbox.Width, collision.Hitbox.Height), redColor);
 
             redTexture.Dispose();
+        }
+
+        // Draw interacting tile
+        if (_interactionSystem.PlacingSystem.DefaultPlacingtTile != null)
+        {
+            var rect = _interactionSystem.PlacingSystem.DefaultPlacingtTile.GetComponent<CollisionComponent>().Hitbox;
+            DrawRectangle(_spriteBatch, rect, new Color(0, 0, 0, 100));
         }
 
         _spriteBatch.End();
@@ -192,6 +201,13 @@ public class RenderSystem
             ScaleFactor,
             effects,
             0f);
+    }
+
+    public void DrawRectangle(SpriteBatch spriteBatch, Rectangle rect, Color color)
+    {
+        Texture2D whitePixel = new Texture2D(spriteBatch.GraphicsDevice, 1, 1);
+        whitePixel.SetData(new[] { Color.White });
+        spriteBatch.Draw(whitePixel, rect, color);
     }
 
     public void DrawHitbox(SpriteBatch spriteBatch, Rectangle hitbox)

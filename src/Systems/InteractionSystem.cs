@@ -45,68 +45,66 @@ public class InteractionSystem
         var inv = player.GetComponent<InventoryComponent>();
         var colIndex = inputs.Number ?? 0;
         inv.activeItemIndices = inputs.IsNumberChanging ? (colIndex, 0) : inv.activeItemIndices;
-
         var activeItemEntity = inv.InventoryItems[inv.activeItemIndices.Item1][inv.activeItemIndices.Item2];
 
+        // interacts
+        if (!inputs.Interact) { return; }
 
+        if (_farmingSystem.HarvestCrop(this, player.GetComponent<InventoryComponent>()))
+            return;
 
-        if (activeItemEntity != null)
+        // null checks
+        if (activeItemEntity == null) { return; }
+        var activeItemConfig = inv.InventoryItems[inv.activeItemIndices.Item1][inv.activeItemIndices.Item2].GetComponent<ItemComponent>().Config;
+        if (activeItemConfig == null) { return; }
+
+        if (activeItemConfig.Type == ItemType.Plantable)
         {
-            var activeItemConfig = inv.InventoryItems[inv.activeItemIndices.Item1][inv.activeItemIndices.Item2].GetComponent<ItemComponent>().Config;
-            if (inputs.Interact && activeItemConfig != null)
-            {
-                if (_farmingSystem.HarvestCrop(this, player.GetComponent<InventoryComponent>()))
-                    return;
+            _farmingSystem.PlantCrop(activeItemEntity, this);
+            return;
+        }
 
-                if (activeItemConfig.Type == ItemType.Plantable)
+        var aniVars = _animationSystem.GetAniInitVars(lastDir);
+        switch (activeItemConfig.Name)
+        {
+            case Pickaxe:
+                _animationSystem.SetAnimation(player, Constants.Animations.Pickaxe, aniVars.aniDirIndex, aniVars.mirrored);
+                isAnimationLocked = true;
+                break;
+            case WateringCan:
+                if (!isAnimationLocked)
                 {
-                    _farmingSystem.PlantCrop(activeItemEntity, this);
-                    return;
-                }
+                    var wateredTile = GetTile(InputSystem.GetMouseLocation());
+                    if (wateredTile == null) { return; }
+                    var wateredTileComp = wateredTile.GetComponent<TileComponent>();
 
-                var aniVars = _animationSystem.GetAniInitVars(lastDir);
-                switch (activeItemConfig.Name)
-                {
-                    case Pickaxe:
-                        _animationSystem.SetAnimation(player, Constants.Animations.Pickaxe, aniVars.aniDirIndex, aniVars.mirrored);
-                        isAnimationLocked = true;
-                        break;
-                    case WateringCan:
-                        if (!isAnimationLocked)
+                    // TODO: check if tile is within range?
+
+                    // check if tile is waterable
+                    if (wateredTileComp.Type == Constants.Tile.PathsSheetName && Constants.Tile.DrySoilTiles.Contains(wateredTileComp.Id))
+                    {
+                        var comp = activeItemEntity.GetComponent<LimitedUsageComponent>();
+
+                        if (new LimitedUsageSystem().CanUseItem(comp))
                         {
-                            var wateredTile = GetTile(InputSystem.GetMouseLocation());
-                            if (wateredTile == null) { return; }
-                            var wateredTileComp = wateredTile.GetComponent<TileComponent>();
-
-                            // TODO: check if tile is within range?
-
-                            // check if tile is waterable
-                            if (wateredTileComp.Type == Constants.Tile.PathsSheetName && Constants.Tile.DrySoilTiles.Contains(wateredTileComp.Id))
-                            {
-                                var comp = activeItemEntity.GetComponent<LimitedUsageComponent>();
-
-                                if (new LimitedUsageSystem().CanUseItem(comp))
-                                {
-                                    isAnimationLocked = true;
-                                    _animationSystem.SetAnimation(player, Constants.Animations.Watering, aniVars.aniDirIndex, aniVars.mirrored);
-                                    _entityManager.ChangeTile(wateredTile, Constants.Tile.PathsSheetName, Constants.Tile.WaterSoilTransform[wateredTileComp.Id]);
-                                    new LimitedUsageSystem().UseItem(comp);
-                                }
-                            }
+                            isAnimationLocked = true;
+                            _animationSystem.SetAnimation(player, Constants.Animations.Watering, aniVars.aniDirIndex, aniVars.mirrored);
+                            _entityManager.ChangeTile(wateredTile, Constants.Tile.PathsSheetName, Constants.Tile.WaterSoilTransform[wateredTileComp.Id]);
+                            new LimitedUsageSystem().UseItem(comp);
                         }
-                        break;
-                    case Juicer:
-                    case JamJar:
-                    case PickleJar:
-                    case Keg:
-                        var itemName = activeItemEntity.GetComponent<ItemComponent>().Config.Name;
-                        var config = Constants.Machines.NameToConfig[itemName];
-                        Action<int, int> placingAction = (x, y) => MachineFactory.CreateMachine(config, _entityManager, x, y);
-                        _placingSystem.PlaceObjectInRange(player, placingAction);
-                        break;
-
+                    }
                 }
-            }
+                break;
+            case Juicer:
+            case JamJar:
+            case PickleJar:
+            case Keg:
+                var itemName = activeItemEntity.GetComponent<ItemComponent>().Config.Name;
+                var config = Constants.Machines.NameToConfig[itemName];
+                Action<int, int> placingAction = (x, y) => MachineFactory.CreateMachine(config, _entityManager, x, y);
+                _placingSystem.PlaceObjectInRange(player, placingAction);
+                break;
+
         }
     }
 

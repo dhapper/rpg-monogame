@@ -24,14 +24,14 @@ public class FarmingSystem
         var tilePosComp = tile.GetComponent<PositionComponent>();
         // var tilePos = (tilePosComp.X, tilePosComp.Y);
         // var tilePos = (tileComp.Col, tileComp.Row);
-
+        
         // check if there is fully grown planted crop
         foreach (var entity in _entityManager.CropEntities)
         {
             var plantedCropConfig = entity.GetComponent<CropComponent>().config;
             var plantedCropPos = entity.GetComponent<PositionComponent>();
             // if (plantedCropConfig.TilePosition == tilePos)
-            if (plantedCropPos.Col == tileComp.Col && plantedCropPos.Row == tileComp.Row )
+            if (plantedCropPos.Col == tileComp.Col && plantedCropPos.Row == tileComp.Row)
             {
                 // check growth stage
                 if (plantedCropConfig.CurrentStage >= plantedCropConfig.Stages)
