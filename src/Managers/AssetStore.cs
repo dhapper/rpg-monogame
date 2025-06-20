@@ -12,7 +12,7 @@ public static class AssetStore
     public static Texture2D PlayerBody, PlayerHair, PlayerTools;
     public static Texture2D BackgroundTiles, PathTiles, WaterTiles, CollisionTiles, RenderAboveSprites;
     public static Texture2D UIsheet, IconSheet;
-    public static Texture2D CropSprites;
+    public static Texture2D CropSprites, MachineSprites;
     public static Texture2D PlayerSheet;
     private static ContentManager _content;
 
@@ -53,6 +53,7 @@ public static class AssetStore
         IconSheet = _content.Load<Texture2D>("icons");
 
         CropSprites = _content.Load<Texture2D>("farming");
+        MachineSprites = _content.Load<Texture2D>("machines");
 
         PlayerSheet = _content.Load<Texture2D>("Master File");
 

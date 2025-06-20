@@ -2,13 +2,12 @@ using System;
 using System.Linq;
 using Microsoft.Xna.Framework;
 
-public class PlantInteractions
+public class FarmingSystem
 {
-
     private EntityManager _entityManager;
     private InventorySystem _inventorySystem;
 
-    public PlantInteractions(EntityManager entityManager, InventorySystem inventorySystem)
+    public FarmingSystem(EntityManager entityManager, InventorySystem inventorySystem)
     {
         _entityManager = entityManager;
         _inventorySystem = inventorySystem;
@@ -23,18 +22,22 @@ public class PlantInteractions
         if (!(tileComp.Type == Constants.Tile.PathsSheetName && Constants.Tile.PlantableTiles.Contains(tileComp.Id))) { return false; }
 
         var tilePosComp = tile.GetComponent<PositionComponent>();
-        var tilePos = (tilePosComp.X, tilePosComp.Y);
+        // var tilePos = (tilePosComp.X, tilePosComp.Y);
+        // var tilePos = (tileComp.Col, tileComp.Row);
 
         // check if there is fully grown planted crop
         foreach (var entity in _entityManager.CropEntities)
         {
             var plantedCropConfig = entity.GetComponent<CropComponent>().config;
-            if (plantedCropConfig.TilePosition == tilePos)
+            var plantedCropPos = entity.GetComponent<PositionComponent>();
+            // if (plantedCropConfig.TilePosition == tilePos)
+            if (plantedCropPos.Col == tileComp.Col && plantedCropPos.Row == tileComp.Row )
             {
                 // check growth stage
                 if (plantedCropConfig.CurrentStage >= plantedCropConfig.Stages)
                 {
                     var cropName = plantedCropConfig.Name;
+                    Console.WriteLine($"Harvested and deleted entity {entity.Id} at ({plantedCropPos.Col},{plantedCropPos.Row})");
                     _entityManager.DeleteEntity(entity);
                     // var slot = _inventorySystem.GetNextEmptySlot();
                     if (Constants.SeedCropMapping.PlantedCropNameToCrop.TryGetValue(cropName, out var itemConfig))
@@ -85,7 +88,7 @@ public class PlantInteractions
                 return;
         }
 
-        var itemName = seed.GetComponent<ItemComponent>().config.Name;
+        var itemName = seed.GetComponent<ItemComponent>().Config.Name;
         if (Constants.SeedCropMapping.SeedNameToCrop.TryGetValue(itemName, out var cropConfig))
         {
             CropFactory.CreateCrop(cropConfig, tileComp.Row, tileComp.Col, _entityManager, tilePos);
@@ -108,11 +111,12 @@ public class PlantInteractions
             {
                 if (flag) { break; }
                 var tileComp = tile.GetComponent<TileComponent>();
-                if (tileComp.Col == cropComp.Col && tileComp.Row == cropComp.Row)
+                var posComp = entity.GetComponent<PositionComponent>();
+                if (tileComp.Col == posComp.Col && tileComp.Row == posComp.Row)
                 {
                     if (tileComp.Type == Constants.Tile.PathsSheetName && Constants.Tile.WetSoilTiles.Contains(tileComp.Id))
                     {
-                        Console.WriteLine(tileComp.Type + " " + tileComp.Id + " " + cropComp.config.CurrentStage + " " + cropComp.config.Stages);
+                        // Console.WriteLine(tileComp.Type + " " + tileComp.Id + " " + cropComp.config.CurrentStage + " " + cropComp.config.Stages);
                         if (cropComp.config.CurrentStage < cropComp.config.Stages)
                         {
                             var spriteComp = entity.GetComponent<SpriteComponent>();

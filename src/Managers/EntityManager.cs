@@ -11,13 +11,17 @@ public class EntityManager
     private List<Entity> _spriteEntities = new List<Entity>();
     private List<Entity> _dropperdOverworldItems = new List<Entity>();
     private List<Entity> _cropEntities = new List<Entity>();
+    private List<Entity> _machineEntities = new List<Entity>();
     private List<Entity> _zones = new List<Entity>();
+    private List<Entity> _placedEntities = new List<Entity>();
 
     public IReadOnlyList<Entity> TileEntities => _tileEntities.AsReadOnly();
     public IReadOnlyList<Entity> SpriteEntities => _spriteEntities.AsReadOnly();
     public IReadOnlyList<Entity> DroppedOverworldItems => _dropperdOverworldItems.AsReadOnly();
     public IReadOnlyList<Entity> CropEntities => _cropEntities.AsReadOnly();
+    public IReadOnlyList<Entity> MachineEntities => _machineEntities.AsReadOnly();
     public IReadOnlyList<Entity> Zones => _zones.AsReadOnly();
+    public IReadOnlyList<Entity> PlacedEntities => _placedEntities.AsReadOnly();
     
     public void RefreshFilteredLists()  // not zones
     {
@@ -25,6 +29,8 @@ public class EntityManager
         _spriteEntities.Clear();
         _dropperdOverworldItems.Clear();
         _cropEntities.Clear();
+        _machineEntities.Clear();
+        _placedEntities.Clear();
 
         foreach (var entity in _entities)
         {
@@ -32,10 +38,14 @@ public class EntityManager
                 _tileEntities.Add(entity);
             if (entity.HasComponent<PositionComponent>() && entity.HasComponent<SpriteComponent>() && entity.HasComponent<CharacterComponent>())
                 _spriteEntities.Add(entity);
-            if (entity.HasComponent<ItemComponent>() && entity.GetComponent<ItemComponent>().config.IsInOverworld)
+            if (entity.HasComponent<ItemComponent>() && entity.GetComponent<ItemComponent>().Config.IsInOverworld)
                 _dropperdOverworldItems.Add(entity);
             if (entity.HasComponent<CropComponent>())
                 _cropEntities.Add(entity);
+            if (entity.HasComponent<MachineComponent>())
+                _machineEntities.Add(entity);
+            if (entity.HasComponent<MachineComponent>() || entity.HasComponent<CropComponent>())
+                _placedEntities.Add(entity);
             // if (entity.HasComponent<ZoneComponent>())
             //     _zones.Add(entity);
 
@@ -126,7 +136,6 @@ public class EntityManager
 
     public void DeleteEntity(Entity entity)
     {
-        Console.WriteLine("Deleted");
         _entities.Remove(entity);
         RefreshFilteredLists();
     }

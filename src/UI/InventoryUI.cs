@@ -68,7 +68,7 @@ public class InventoryUI
     public void DropItem()
     {
         var item = _inventory.InventoryItems[_draggedItemCol][_draggedItemRow];
-        var config = item.GetComponent<ItemComponent>().config;
+        var config = item.GetComponent<ItemComponent>().Config;
         var pos = item.GetComponent<PositionComponent>();
         config.IsInOverworld = true;
         var (x, y) = InputSystem.GetMouseLocationRelativeCamera(_camera);
@@ -97,7 +97,7 @@ public class InventoryUI
                 if (_draggedItem != null)
                 {
                     DraggedItem = _draggedItem;
-                    _draggedItem.GetComponent<ItemComponent>().config.BeingDragged = true;
+                    _draggedItem.GetComponent<ItemComponent>().Config.BeingDragged = true;
                     CurrentlyDragging = true;
                 }
             }
@@ -120,7 +120,7 @@ public class InventoryUI
                 } else if (!hoveredItemIndices.HasValue) {
                     DropItem();
                 }
-                DraggedItem.GetComponent<ItemComponent>().config.BeingDragged = false;
+                DraggedItem.GetComponent<ItemComponent>().Config.BeingDragged = false;
             }
             _draggedItem = null;
             DraggedItem = null;

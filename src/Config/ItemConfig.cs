@@ -50,4 +50,11 @@ public class ItemConfig
 
 }
 
-public enum ItemType { Tool, Plantable, Crop, Empty }
+public enum ItemType
+{
+    Tool,
+    Plantable,
+    Crop,
+    Artisan,
+    Machine
+}

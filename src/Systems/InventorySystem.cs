@@ -19,17 +19,26 @@ public class InventorySystem
     {
         _inventory = inventory;
 
-        var wateringCan = ItemFactory.CreateItem(Constants.Items.WateringCan, _entityManager);
-        var pickaxe = ItemFactory.CreateItem(Constants.Items.Pickaxe, _entityManager);
-        var seeds1 = ItemFactory.CreateItem(Constants.Items.PumpkinSeeds, _entityManager);
-        var seeds2 = ItemFactory.CreateItem(Constants.Items.PotatoSeeds, _entityManager);
-        var seeds3 = ItemFactory.CreateItem(Constants.Items.PotatoSeeds, _entityManager);
+        var wateringCan = ItemFactory.CreateItem(Constants.Items.Config.WateringCan, _entityManager);
+        var pickaxe = ItemFactory.CreateItem(Constants.Items.Config.Pickaxe, _entityManager);
+        var seeds1 = ItemFactory.CreateItem(Constants.Items.Config.PumpkinSeeds, _entityManager);
+        var seeds2 = ItemFactory.CreateItem(Constants.Items.Config.PotatoSeeds, _entityManager);
+        var seeds3 = ItemFactory.CreateItem(Constants.Items.Config.PotatoSeeds, _entityManager);
+        var m1 = ItemFactory.CreateItem(Constants.Items.Config.Juicer, _entityManager);
+        var m2 = ItemFactory.CreateItem(Constants.Items.Config.JamJar, _entityManager);
+        var m3 = ItemFactory.CreateItem(Constants.Items.Config.PickleJar, _entityManager);
+        var m4 = ItemFactory.CreateItem(Constants.Items.Config.Keg, _entityManager);
 
-        inventory.InventoryItems[0][0] = wateringCan;
-        inventory.InventoryItems[1][0] = pickaxe;
-        inventory.InventoryItems[2][0] = seeds1;
+        inventory.InventoryItems[0][2] = wateringCan;
+        inventory.InventoryItems[1][2] = pickaxe;
+        inventory.InventoryItems[2][2] = seeds1;
         inventory.InventoryItems[7][2] = seeds2;
-        inventory.InventoryItems[3][0] = seeds3;
+        inventory.InventoryItems[3][2] = seeds3;
+
+        inventory.InventoryItems[0][0] = m1;
+        inventory.InventoryItems[1][0] = m2;
+        inventory.InventoryItems[2][0] = m3;
+        inventory.InventoryItems[3][0] = m4;
     }
 
     public (int j, int i)? GetNextEmptySlot()
@@ -47,8 +56,8 @@ public class InventorySystem
 
     public bool PlaceItemInInventory(Entity item)
     {
-        Console.WriteLine("Stackable: " + item.GetComponent<ItemComponent>().config.Stackable);
-        if (item.GetComponent<ItemComponent>().config.Stackable)
+        Console.WriteLine("Stackable: " + item.GetComponent<ItemComponent>().Config.Stackable);
+        if (item.GetComponent<ItemComponent>().Config.Stackable)
         {
             if (PlaceInAvailableStack(item))
             {
@@ -76,9 +85,9 @@ public class InventorySystem
             {
                 if (_inventory.InventoryItems[j][i] == null) { continue; }
                 var slotItem = _inventory.InventoryItems[j][i].GetComponent<ItemComponent>();
-                if (slotItem.config.Name == itemComp.config.Name)
+                if (slotItem.Config.Name == itemComp.Config.Name)
                 {
-                    if (slotItem.Quantity < itemComp.config.StackLimit)
+                    if (slotItem.Quantity < itemComp.Config.StackLimit)
                     {
                         slotItem.Quantity++;
                         return true;
@@ -108,7 +117,7 @@ public class InventorySystem
 
                 if (_inventory.InventoryItems[slots.Value.j][slots.Value.i] == null)
                 {
-                    item.GetComponent<ItemComponent>().config.IsInOverworld = false;
+                    item.GetComponent<ItemComponent>().Config.IsInOverworld = false;
                     _inventory.InventoryItems[slots.Value.j][slots.Value.i] = item;
                     _entityManager.RefreshFilteredLists();
                     return;

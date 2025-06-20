@@ -25,7 +25,7 @@ public class SleepSystem
         Console.WriteLine("StartSleepCycle");
 
         // grow plants
-        _interactionSystem.PlantInteractions.GrowPlants();
+        _interactionSystem.FarmingSystem.GrowPlants();
 
         // make soil dry overnight
         var sheet = Constants.Tile.PathsSheetName;

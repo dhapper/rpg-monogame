@@ -6,7 +6,7 @@ public class ItemFactory
     {
         var item = entityManager.CreateEntity();
 
-        item.AddComponent(new ItemComponent { config = itemConfig.Clone() });
+        item.AddComponent(new ItemComponent { Config = itemConfig.Clone() });
         item.AddComponent(new PositionComponent(-1, -1, 32, 32));
         item.AddComponent(new SpriteComponent(AssetStore.IconSheet, itemConfig.SourceRectangle) { Color = Color.White });
         item.AddComponent(new CollisionComponent(

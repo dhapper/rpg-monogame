@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 using Microsoft.Xna.Framework;
 
@@ -15,7 +16,7 @@ public class PlayerController
     private EntityManager _entityManager;
     private InventorySystem _inventorySystem;
     private InteractionSystem _interactionSystem;
-    // private PlantInteractions _plantInteractions;
+    // private FarmingSystem _farmingSystem;
     GameInitializer _gameInitializer;
 
     private bool isAnimationLocked = false;
@@ -31,10 +32,13 @@ public class PlayerController
         _entityManager = entityManager;
         _collisionSystem = new CollisionSystem(_player, _entityManager);
         _interactionSystem = interactionSystem;
-        // _plantInteractions = new PlantInteractions(_entityManager);
+        // _farmingSystem = new FarmingSystem(_entityManager);
         _gameInitializer = gameInitializer;
 
         _inventorySystem = inventorySystem;
+
+        // MachineFactory.CreateMachine(Constants.Machines.JamJar, _entityManager, 8, 2);
+        // _entityManager.RefreshFilteredLists();
     }
 
     public void Update()
@@ -62,6 +66,14 @@ public class PlayerController
             InitMovement(Constants.Directions.Left);
         if (inputs.MoveRight)
             InitMovement(Constants.Directions.Right);
+
+        // if (inputs.MoveUp)
+        //     MachineFactory.CreateMachine(Constants.Machines.JamJar, _entityManager, 2, 2);
+
+        // if (InputSystem.IsMousePressed(InputSystem.MouseButton.Left))
+        // {
+            
+        // }
 
         if (inputs.changeLocation1)
         {
@@ -96,7 +108,7 @@ public class PlayerController
         var movement = _player.GetComponent<MovementComponent>();
         _interactionSystem.HandleInteractions(_player, inputs, facingRight, ref isAnimationLocked, movement.LastDir);
 
-        // _interactionSystem.PlantInteractions.HarvestCrop(_interactionSystem, _inputSystem, _camera, _assets, _player.GetComponent<InventoryComponent>());
+        // _interactionSystem.FarmingSystem.HarvestCrop(_interactionSystem, _inputSystem, _camera, _assets, _player.GetComponent<InventoryComponent>());
     }
 
     public void UpdateAnimation(InputState inputs, MovementComponent movement)

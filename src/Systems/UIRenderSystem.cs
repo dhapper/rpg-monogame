@@ -153,7 +153,7 @@ public class UIRenderSystem
                     _spriteBatch.Draw(
                         AssetStore.IconSheet,
                         _inventoryUI.InventoryIconPositions[i][j],
-                        itemComp.config.SourceRectangle,
+                        itemComp.Config.SourceRectangle,
                         Color.White,
                         0f,
                         Vector2.Zero,
@@ -161,7 +161,7 @@ public class UIRenderSystem
                         SpriteEffects.None,
                         0f);
 
-                    if (itemComp.config.Stackable && itemComp.Quantity > 1)
+                    if (itemComp.Config.Stackable && itemComp.Quantity > 1)
                     {
                         _spriteBatch.DrawString(AssetStore.MoneyFont, "x" + itemComp.Quantity, _inventoryUI.InventoryIconPositions[i][j], Color.White);
                     }
@@ -214,7 +214,7 @@ public class UIRenderSystem
                 _spriteBatch.Draw(
                     AssetStore.IconSheet,
                     _inventoryUI.InventoryIconPositions[i][0],
-                    inv.InventoryItems[i][0].GetComponent<ItemComponent>().config.SourceRectangle,
+                    inv.InventoryItems[i][0].GetComponent<ItemComponent>().Config.SourceRectangle,
                     Color.White,
                     0f,
                     Vector2.Zero,
@@ -222,7 +222,7 @@ public class UIRenderSystem
                     SpriteEffects.None,
                     0f);
 
-                if (itemComp.config.Stackable && itemComp.Quantity > 1)
+                if (itemComp.Config.Stackable && itemComp.Quantity > 1)
                 {
                     _spriteBatch.DrawString(AssetStore.MoneyFont, "x" + itemComp.Quantity, _inventoryUI.InventoryIconPositions[i][0], Color.White);
                 }

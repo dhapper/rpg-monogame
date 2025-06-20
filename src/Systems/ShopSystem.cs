@@ -22,8 +22,8 @@ public class ShopSystem
         InitShop(
             "Need for seed?",
             [
-                Constants.Items.PumpkinSeeds,
-                Constants.Items.PotatoSeeds,
+                Constants.Items.Config.PumpkinSeeds,
+                Constants.Items.Config.PotatoSeeds,
                 // Constants.Items.WateringCan,
             ]
         );
@@ -58,7 +58,7 @@ public class ShopSystem
                 if (mousePressed)
                 {
                     var item = ItemFactory.CreateItem(Options[Choice], _entityManager);
-                    var itemName = item.GetComponent<ItemComponent>().config.Name;
+                    var itemName = item.GetComponent<ItemComponent>().Config.Name;
                     var value = Constants.Value.NameToValue[itemName];
                     if(value > _inventorySystem.Coins) { continue; }
                     _inventorySystem.PlaceItemInInventory(item);
@@ -80,7 +80,7 @@ public class ShopSystem
 
                 if (rightClicked)
                 {
-                    var itemName = item.GetComponent<ItemComponent>().config.Name;
+                    var itemName = item.GetComponent<ItemComponent>().Config.Name;
                     Console.WriteLine(itemName);
                     if (!Constants.Value.NameToValue.ContainsKey(itemName)) { continue; }
                     var value = Constants.Value.NameToValue[itemName];

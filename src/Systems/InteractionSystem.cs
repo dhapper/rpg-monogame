@@ -1,6 +1,8 @@
 using System;
 using System.Linq;
 
+using static Constants.Items.Name;
+
 public class InteractionSystem
 {
     private EntityManager _entityManager;
@@ -8,8 +10,11 @@ public class InteractionSystem
     private Camera2D _camera;
     private InventorySystem _inventorySystem;
 
-    private PlantInteractions _plantInteractions;
-    public PlantInteractions PlantInteractions => _plantInteractions;
+    private FarmingSystem _farmingSystem;
+    public FarmingSystem FarmingSystem => _farmingSystem;
+
+    private PlacingSystem _placingSystem;
+    public PlacingSystem PlacingSystem => _placingSystem;
 
     public InteractionSystem(EntityManager entityManager, AnimationSystem animationSystem, Camera2D camera, InventorySystem inventorySystem)
     {
@@ -18,7 +23,8 @@ public class InteractionSystem
         _camera = camera;
         _inventorySystem = inventorySystem;
 
-        _plantInteractions = new PlantInteractions(_entityManager, _inventorySystem);
+        _farmingSystem = new FarmingSystem(_entityManager, _inventorySystem);
+        _placingSystem = new PlacingSystem(_entityManager, this, _inventorySystem);
     }
 
     public void MiscControls(Entity player, InputState inputs)
@@ -29,7 +35,7 @@ public class InteractionSystem
         // if (inputs.Save)
         //     SaveManager.SaveData(player);
         if (inputs.Grow)
-            _plantInteractions.GrowPlants();
+            _farmingSystem.GrowPlants();
         if (inputs.ToggleInventory)
             GameStateManager.SetState(GameState.Inventory);
     }
@@ -41,30 +47,31 @@ public class InteractionSystem
         inv.activeItemIndices = inputs.IsNumberChanging ? (colIndex, 0) : inv.activeItemIndices;
 
         var activeItemEntity = inv.InventoryItems[inv.activeItemIndices.Item1][inv.activeItemIndices.Item2];
+
+
+
         if (activeItemEntity != null)
         {
-            var activeItemConfig = inv.InventoryItems[inv.activeItemIndices.Item1][inv.activeItemIndices.Item2].GetComponent<ItemComponent>().config;
+            var activeItemConfig = inv.InventoryItems[inv.activeItemIndices.Item1][inv.activeItemIndices.Item2].GetComponent<ItemComponent>().Config;
             if (inputs.Interact && activeItemConfig != null)
             {
-
-                if (_plantInteractions.HarvestCrop(this, player.GetComponent<InventoryComponent>()))
+                if (_farmingSystem.HarvestCrop(this, player.GetComponent<InventoryComponent>()))
                     return;
 
                 if (activeItemConfig.Type == ItemType.Plantable)
                 {
-                    _plantInteractions.PlantCrop(activeItemEntity, this);
+                    _farmingSystem.PlantCrop(activeItemEntity, this);
                     return;
                 }
 
                 var aniVars = _animationSystem.GetAniInitVars(lastDir);
                 switch (activeItemConfig.Name)
                 {
-                    case "Pickaxe":
+                    case Pickaxe:
                         _animationSystem.SetAnimation(player, Constants.Animations.Pickaxe, aniVars.aniDirIndex, aniVars.mirrored);
                         isAnimationLocked = true;
                         break;
-                    case "WateringCan":
-                        // _animationSystem.SetAnimation(player, Constants.Animations.Watering, aniVars.aniDirIndex, aniVars.mirrored);
+                    case WateringCan:
                         if (!isAnimationLocked)
                         {
                             var wateredTile = GetTile(InputSystem.GetMouseLocation());
@@ -73,37 +80,31 @@ public class InteractionSystem
 
                             // TODO: check if tile is within range?
 
-                            // check capacity
-
-                            // Action action = () => _entityManager.ChangeTile(wateredTile, Constants.Tile.PathsSheetName, Constants.Tile.WaterSoilTransform[wateredTileComp.Id]);
-                            // new LimitedUsageSystem().UseItem(activeItemEntity, action);
-
                             // check if tile is waterable
                             if (wateredTileComp.Type == Constants.Tile.PathsSheetName && Constants.Tile.DrySoilTiles.Contains(wateredTileComp.Id))
                             {
-                                // _entityManager.ChangeTile(wateredTile, Constants.Tile.PathsSheetName, Constants.Tile.WaterSoilTransform[wateredTileComp.Id]);
+                                var comp = activeItemEntity.GetComponent<LimitedUsageComponent>();
 
-                                if (new LimitedUsageSystem().CanUseItem(activeItemEntity.GetComponent<LimitedUsageComponent>())) {
-                                    isAnimationLocked = true;
-                                }
-
-                                Action action = () =>
+                                if (new LimitedUsageSystem().CanUseItem(comp))
                                 {
+                                    isAnimationLocked = true;
                                     _animationSystem.SetAnimation(player, Constants.Animations.Watering, aniVars.aniDirIndex, aniVars.mirrored);
-                                    // isAnimationLocked = true;
-
                                     _entityManager.ChangeTile(wateredTile, Constants.Tile.PathsSheetName, Constants.Tile.WaterSoilTransform[wateredTileComp.Id]);
-                                };
-
-                                // if (new LimitedUsageSystem().CanUseItem(activeItemEntity.GetComponent<LimitedUsageComponent>())) {
-                                //     isAnimationLocked = true;
-                                // }
-
-                                new LimitedUsageSystem().UseItem(activeItemEntity, action);
+                                    new LimitedUsageSystem().UseItem(comp);
+                                }
                             }
                         }
-                        // isAnimationLocked = true;
                         break;
+                    case Juicer:
+                    case JamJar:
+                    case PickleJar:
+                    case Keg:
+                        var itemName = activeItemEntity.GetComponent<ItemComponent>().Config.Name;
+                        var config = Constants.Machines.NameToConfig[itemName];
+                        Action<int, int> placingAction = (x, y) => MachineFactory.CreateMachine(config, _entityManager, x, y);
+                        _placingSystem.PlaceObjectInRange(player, placingAction);
+                        break;
+
                 }
             }
         }

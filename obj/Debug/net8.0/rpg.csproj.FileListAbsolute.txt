@@ -47,3 +47,4 @@ c:\Users\Dhaarshan. P\Desktop\main\Coding\VS projects\C#\MonoGame\rpg\bin\Debug\
 c:\Users\Dhaarshan. P\Desktop\main\Coding\VS projects\C#\MonoGame\rpg\bin\Debug\net8.0\Content\Master File.xnb
 c:\Users\Dhaarshan. P\Desktop\main\Coding\VS projects\C#\MonoGame\rpg\bin\Debug\net8.0\Content\RenderAboveSprites.xnb
 c:\Users\Dhaarshan. P\Desktop\main\Coding\VS projects\C#\MonoGame\rpg\bin\Debug\net8.0\Content\moneyFont.xnb
+c:\Users\Dhaarshan. P\Desktop\main\Coding\VS projects\C#\MonoGame\rpg\bin\Debug\net8.0\Content\machines.xnb

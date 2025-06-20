@@ -9,16 +9,10 @@ public class LimitedUsageSystem
         return false;
     }
 
-    public void UseItem(Entity item, Action action)
+    public void UseItem(LimitedUsageComponent comp)
     {
-        var comp = item.GetComponent<LimitedUsageComponent>();
-        if (CanUseItem(comp))
-        {
-            // idek item action
-            action();
-            comp.CurrentCapacity--;
-            Console.WriteLine(comp.CurrentCapacity+" uses left");
-        }
+        comp.CurrentCapacity--;
+        Console.WriteLine(comp.CurrentCapacity+" uses left");
     }
 
     public void RefillToCapacity(Entity item)

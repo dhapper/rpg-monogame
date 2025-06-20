@@ -25,14 +25,14 @@ public class SaveManager
         {
             var cropComponent = crop.GetComponent<CropComponent>();
             var cropCompConfig = cropComponent.config;
-            // var posComponent = crop.GetComponent<PositionComponent>(); // or Row/Col in CropComponent
+            var posComponent = crop.GetComponent<PositionComponent>();
 
             var cropData = new CropData
             {
                 Name = cropCompConfig.Name,
                 Stage = cropCompConfig.CurrentStage,
-                Row = cropComponent.Row,
-                Col = cropComponent.Col
+                Row = posComponent.Row,
+                Col = posComponent.Col
             };
 
             var entityData = new EntitySaveData

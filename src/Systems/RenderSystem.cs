@@ -57,7 +57,7 @@ public class RenderSystem
 
             DrawTile(entity);
 
-            if (GameInitializer.ShowHitbox && entity.HasComponent<CollisionComponent>())
+            if (GameInitializer.ShowHitbox && entity.HasComponent<CollisionComponent>() && entity.GetComponent<CollisionComponent>().IsSolid)
                 DrawHitbox(_spriteBatch, entity.GetComponent<CollisionComponent>().Hitbox);
         }
 
@@ -72,6 +72,12 @@ public class RenderSystem
 
         // Draw crops
         foreach (var entity in _entityManager.CropEntities)
+        {
+            DrawEntity(entity);
+        }
+
+        // Draw machines
+        foreach (var entity in _entityManager.MachineEntities)
         {
             DrawEntity(entity);
         }
@@ -190,6 +196,8 @@ public class RenderSystem
 
     public void DrawHitbox(SpriteBatch spriteBatch, Rectangle hitbox)
     {
+
+
         if (!RenderHelper.IsRectangleInCameraView(hitbox, _cameraView)) { return; }
 
         Texture2D whitePixel = new Texture2D(spriteBatch.GraphicsDevice, 1, 1);

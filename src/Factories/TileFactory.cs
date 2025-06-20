@@ -36,6 +36,8 @@ public static class TileFactory
 
         if (Array.IndexOf(Constants.Tile.SolidTilesets, type) != -1)
             tile.AddComponent(new CollisionComponent(tile.GetComponent<PositionComponent>(), 0, 0, size, size));
+        else
+            tile.AddComponent(new CollisionComponent(tile.GetComponent<PositionComponent>(), 0, 0, size, size, false));
 
         if (background.HasValue)
             SetBackground(sheetWidth, background, tile);
