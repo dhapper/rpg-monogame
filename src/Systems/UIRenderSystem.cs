@@ -145,7 +145,7 @@ public class UIRenderSystem
                 // Draw inventory items
                 // var inv = _entityManager.EntitiesWithComponent<InventoryComponent>().First().GetComponent<InventoryComponent>();
                 var inv = _inventorySystem.Inventory;
-                if (inv.InventoryItems[i][j] != null)
+                if (inv.InventoryItems[i][j] != null && inv.InventoryItems[i][j] != _inventoryUI.DraggedItem)
                 {
 
                     var itemComp = inv.InventoryItems[i][j].GetComponent<ItemComponent>();

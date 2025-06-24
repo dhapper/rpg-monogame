@@ -130,7 +130,8 @@ public class PlacingSystem
         Console.WriteLine($"Placing obj at: ({tileComp.Col},{tileComp.Row})");
 
         var activeItemIndices = _inventorySystem.Inventory.activeItemIndices;
-        _entityManager.DeleteEntity(_inventorySystem.Inventory.InventoryItems[activeItemIndices.Item1][activeItemIndices.Item2]);
-        _inventorySystem.Inventory.InventoryItems[activeItemIndices.Item1][activeItemIndices.Item2] = null;
+        _inventorySystem.RemoveOneFromSlot(activeItemIndices.Item1, activeItemIndices.Item2);
+        // _entityManager.DeleteEntity(_inventorySystem.Inventory.InventoryItems[activeItemIndices.Item1][activeItemIndices.Item2]);
+        // _inventorySystem.Inventory.InventoryItems[activeItemIndices.Item1][activeItemIndices.Item2] = null;
     }
 }

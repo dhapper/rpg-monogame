@@ -36,8 +36,10 @@ public class ArtisanSystem
 
         // remove Item from inv
         var activeItemIndices = _inventorySystem.Inventory.activeItemIndices;
-        _entityManager.DeleteEntity(_inventorySystem.Inventory.InventoryItems[activeItemIndices.Item1][activeItemIndices.Item2]);
-        _inventorySystem.Inventory.InventoryItems[activeItemIndices.Item1][activeItemIndices.Item2] = null;
+        // _entityManager.DeleteEntity(_inventorySystem.Inventory.InventoryItems[activeItemIndices.Item1][activeItemIndices.Item2]);
+        // _inventorySystem.Inventory.InventoryItems[activeItemIndices.Item1][activeItemIndices.Item2] = null;
+
+        _inventorySystem.RemoveOneFromSlot(activeItemIndices.Item1, activeItemIndices.Item2);
     }
 
     public bool GetProcessedCrop()
@@ -70,6 +72,7 @@ public class ArtisanSystem
     public Entity GetMachine()
     {
         var tile = _interactionSystem.GetTile(InputSystem.GetMouseLocation());
+        if(tile == null) { return null; }
         var tileComp = tile.GetComponent<TileComponent>();
         foreach (var machine in _entityManager.MachineEntities)
         {
