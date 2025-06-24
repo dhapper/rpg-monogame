@@ -192,6 +192,14 @@ public static class Constants
             { PickleJar.Name, PickleJar },
             { Keg.Name, Keg },
         };
+
+        public static readonly Dictionary<string, ItemConfig> MachineToArtisanGood = new()
+        {
+            { Juicer.Name, Items.Config.Juice },
+            { JamJar.Name, Items.Config.FruitJam },
+            { PickleJar.Name, Items.Config.PickledVeggie },
+            { Keg.Name, Items.Config.Wine },
+        };
     }
 
     public static class Value

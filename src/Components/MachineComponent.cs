@@ -4,5 +4,6 @@ public class MachineComponent
     public Entity CurrentItem;
     public int DaysToProcess;
     public int CurrentDay;
-    public bool InProgress;
+    public bool Active = false;
+    public bool ProcessComplete = false;
 }

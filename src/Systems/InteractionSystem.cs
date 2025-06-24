@@ -13,6 +13,9 @@ public class InteractionSystem
     private FarmingSystem _farmingSystem;
     public FarmingSystem FarmingSystem => _farmingSystem;
 
+    private ArtisanSystem _artisanSystem;
+    public ArtisanSystem ArtisanSystem => _artisanSystem;
+
     private PlacingSystem _placingSystem;
     public PlacingSystem PlacingSystem => _placingSystem;
 
@@ -24,6 +27,7 @@ public class InteractionSystem
         _inventorySystem = inventorySystem;
 
         _farmingSystem = new FarmingSystem(_entityManager, _inventorySystem);
+        _artisanSystem = new ArtisanSystem(entityManager, this, _inventorySystem);
         _placingSystem = new PlacingSystem(_entityManager, this, _inventorySystem);
     }
 
@@ -53,6 +57,9 @@ public class InteractionSystem
         if (_farmingSystem.HarvestCrop(this, player.GetComponent<InventoryComponent>()))
             return;
 
+        if (_artisanSystem.GetProcessedCrop())
+            return;
+
         // null checks
         if (activeItemEntity == null) { return; }
         var activeItemConfig = inv.InventoryItems[inv.activeItemIndices.Item1][inv.activeItemIndices.Item2].GetComponent<ItemComponent>().Config;
@@ -62,6 +69,10 @@ public class InteractionSystem
         {
             _farmingSystem.PlantCrop(activeItemEntity, this);
             return;
+        }
+
+        if (activeItemConfig.Type == ItemType.Crop) {
+            _artisanSystem.ProcessCrop(activeItemEntity);
         }
 
         var aniVars = _animationSystem.GetAniInitVars(lastDir);
