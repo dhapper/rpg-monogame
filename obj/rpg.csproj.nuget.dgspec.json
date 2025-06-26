@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\Dhaarshan. P\\Desktop\\main\\Coding\\VS projects\\C#\\MonoGame\\rpg\\rpg.csproj": {}
+    "C:\\Users\\Dhaarshan. P\\Desktop\\main\\Coding\\VS projects\\C#\\MonoGame\\rpg\\rpg.csproj": {}
   },
   "projects": {
-    "c:\\Users\\Dhaarshan. P\\Desktop\\main\\Coding\\VS projects\\C#\\MonoGame\\rpg\\rpg.csproj": {
+    "C:\\Users\\Dhaarshan. P\\Desktop\\main\\Coding\\VS projects\\C#\\MonoGame\\rpg\\rpg.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\Dhaarshan. P\\Desktop\\main\\Coding\\VS projects\\C#\\MonoGame\\rpg\\rpg.csproj",
+        "projectUniqueName": "C:\\Users\\Dhaarshan. P\\Desktop\\main\\Coding\\VS projects\\C#\\MonoGame\\rpg\\rpg.csproj",
         "projectName": "rpg",
-        "projectPath": "c:\\Users\\Dhaarshan. P\\Desktop\\main\\Coding\\VS projects\\C#\\MonoGame\\rpg\\rpg.csproj",
+        "projectPath": "C:\\Users\\Dhaarshan. P\\Desktop\\main\\Coding\\VS projects\\C#\\MonoGame\\rpg\\rpg.csproj",
         "packagesPath": "C:\\Users\\Dhaarshan. P\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\Dhaarshan. P\\Desktop\\main\\Coding\\VS projects\\C#\\MonoGame\\rpg\\obj\\",
+        "outputPath": "C:\\Users\\Dhaarshan. P\\Desktop\\main\\Coding\\VS projects\\C#\\MonoGame\\rpg\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "E:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

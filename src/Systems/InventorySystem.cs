@@ -38,6 +38,9 @@ public class InventorySystem
         var potato8 = ItemFactory.CreateItem(Constants.Items.Config.Potato.Clone(), _entityManager);
         var potato9 = ItemFactory.CreateItem(Constants.Items.Config.Potato.Clone(), _entityManager);
 
+        potato1.GetComponent<ItemComponent>().Quantity = 8;
+        potato2.GetComponent<ItemComponent>().Quantity = 6;
+
         inventory.InventoryItems[0][2] = wateringCan;
         inventory.InventoryItems[1][2] = pickaxe;
         inventory.InventoryItems[2][2] = seeds1;
@@ -106,18 +109,27 @@ public class InventorySystem
                 if (slotItem.Config.Name == itemComp.Config.Name)
                 {
                     // var additionalQuantity = itemComp.Quantity;
-                    if (slotItem.Quantity + itemComp.Quantity < itemComp.Config.StackLimit)
+                    if (slotItem.Quantity + itemComp.Quantity <= itemComp.Config.StackLimit)
                     {
+                        // Console.WriteLine(itemComp.Quantity);
                         slotItem.Quantity += itemComp.Quantity;
                         return true;
                     }
-                    else
+                    else if (slotItem.Quantity != itemComp.Config.StackLimit)
                     {
-                        // not sure about this stacking logic
-                        itemComp.Quantity = itemComp.Config.Capacity - slotItem.Quantity;
-                        slotItem.Quantity = itemComp.Config.Capacity; 
-                        return false;
+                        var addedToStack = itemComp.Config.StackLimit - slotItem.Quantity;
+                        itemComp.Quantity -= addedToStack;
+                        // Console.WriteLine(itemComp.Config.StackLimit + " | " + slotItem.Quantity);
+                        slotItem.Quantity = itemComp.Config.StackLimit;
+                        if(itemComp.Quantity == 0) { return true; }
                     }
+                    // else
+                    // {
+                    //     // not sure about this stacking logic
+                    //     itemComp.Quantity = itemComp.Config.Capacity - slotItem.Quantity;
+                    //     slotItem.Quantity = itemComp.Config.Capacity; 
+                    //     return false;
+                    // }
                 }
             }
         }
@@ -139,9 +151,11 @@ public class InventorySystem
             var inCollectionBox = item.GetComponent<CollisionComponent>().Hitbox.Intersects(hitbox);
             if (inCollectionBox)
             {
+                var itemComp = item.GetComponent<ItemComponent>(); 
+                Console.WriteLine("Picking up item | Stackable: "+itemComp.Config.Stackable+" | Quantity: "+itemComp.Quantity);
                 // var quantity = item.GetComponent
                 PlaceItemInInventory(item);
-                item.GetComponent<ItemComponent>().Config.IsInOverworld = false;
+                itemComp.Config.IsInOverworld = false;
                 _entityManager.RefreshFilteredLists();
                 return;
 
