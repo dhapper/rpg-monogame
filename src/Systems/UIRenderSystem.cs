@@ -114,7 +114,7 @@ public class UIRenderSystem
         _spriteBatch.Draw(
             AssetStore.IconSheet,
             new Vector2(x, y),
-            _inventoryUI.DraggedItem.GetComponent<SpriteComponent>().SourceRectangle,
+            _inventoryUI.DraggedItem2.GetComponent<SpriteComponent>().SourceRectangle,
             Color.White,
             0f,
             Vector2.Zero,
@@ -145,7 +145,7 @@ public class UIRenderSystem
                 // Draw inventory items
                 // var inv = _entityManager.EntitiesWithComponent<InventoryComponent>().First().GetComponent<InventoryComponent>();
                 var inv = _inventorySystem.Inventory;
-                if (inv.InventoryItems[i][j] != null && inv.InventoryItems[i][j] != _inventoryUI.DraggedItem)
+                if (inv.InventoryItems[i][j] != null && inv.InventoryItems[i][j] != _inventoryUI.DraggedItem2)
                 {
 
                     var itemComp = inv.InventoryItems[i][j].GetComponent<ItemComponent>();

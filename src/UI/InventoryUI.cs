@@ -1,6 +1,4 @@
 using System;
-using System.Linq;
-using System.Numerics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -18,11 +16,13 @@ public class InventoryUI
 
     public Vector2[][] InventorySlotPositions, InventoryIconPositions;
     public Rectangle[][] InventorySlotRectangles;
-    public Entity DraggedItem = null;
+    public Entity DraggedItem = null, DraggedItem2 = null;
     public bool CurrentlyDragging = false;
 
     private int _draggedItemCol, _draggedItemRow;
     private Entity _draggedItem;
+    private (int, int)? _originalSlotPos;
+    private bool _consectutiveSwap = false;
 
     public InventoryUI(Camera2D camera, Viewport viewport, EntityManager entityManager)
     {
@@ -46,7 +46,8 @@ public class InventoryUI
 
     public void Update()
     {
-        DraggingItemLogic();
+        // DraggingItemLogic();
+        DraggingItemLogic2();
         HandleInputs();
     }
 
@@ -77,6 +78,67 @@ public class InventoryUI
         item.GetComponent<CollisionComponent>().Hitbox = new Rectangle(x, y, CollectBoxSize, CollectBoxSize);
         _inventory.InventoryItems[_draggedItemCol][_draggedItemRow] = null;
         _entityManager.RefreshFilteredLists();
+    }
+
+    public void DraggingItemLogic2()
+    {
+        // idk if this is necessary
+        if (GameStateManager.CurrentGameState != GameState.Inventory)
+            return;
+
+
+        var mouseClicked = InputSystem.IsMousePressed(InputSystem.MouseButton.Left);
+        if (!mouseClicked) { return; }
+        var slotPos = IsHoveringSlot();
+
+        // check to see if item is already dragged
+        // swap, place or drop
+
+        if (slotPos == null) { return; }
+
+        if (CurrentlyDragging)
+        {
+            // empty slot
+            if (_inventory.InventoryItems[slotPos.Value.Item1][slotPos.Value.Item2] == null)
+            {
+                _inventory.InventoryItems[slotPos.Value.Item1][slotPos.Value.Item2] = DraggedItem2;
+                CurrentlyDragging = false;
+                DraggedItem2 = null;
+                Console.WriteLine("Placed in emtpy slot");
+                if (!_consectutiveSwap)
+                    _inventory.InventoryItems[_originalSlotPos.Value.Item1][_originalSlotPos.Value.Item2] = null;
+                _consectutiveSwap = false;
+            }
+            // occupied slot
+            else if (_inventory.InventoryItems[slotPos.Value.Item1][slotPos.Value.Item2] != null)
+            {
+                var temp = _inventory.InventoryItems[slotPos.Value.Item1][slotPos.Value.Item2];
+                _inventory.InventoryItems[slotPos.Value.Item1][slotPos.Value.Item2] = DraggedItem2;
+                DraggedItem2 = temp;
+                Console.WriteLine("Swapped");
+                if (!_consectutiveSwap)
+                    _inventory.InventoryItems[_originalSlotPos.Value.Item1][_originalSlotPos.Value.Item2] = null;
+                _originalSlotPos = slotPos;
+                _consectutiveSwap = true;
+            }
+        }
+        // check to see if item is clicked?
+        // set to draggedItem?
+        else
+        {
+            DraggedItem2 = _inventory.InventoryItems[slotPos.Value.Item1][slotPos.Value.Item2];
+            if (DraggedItem2 != null)
+            {
+                CurrentlyDragging = true;
+                _originalSlotPos = slotPos;
+                // _inventory.InventoryItems[slotPos.Value.Item1][slotPos.Value.Item2] = null;
+                Console.WriteLine(DraggedItem2.GetComponent<ItemComponent>().Config.Name);
+            }
+            else
+            {
+                CurrentlyDragging = false;
+            }
+        }
     }
 
     public void DraggingItemLogic()
@@ -112,12 +174,18 @@ public class InventoryUI
                 var hoveredItemIndices = IsHoveringSlot();
                 if (hoveredItemIndices.HasValue && hoveredItemIndices != (_draggedItemCol, _draggedItemRow)) // Swap guard
                 {
+
+                    // add to stack?
+
+
                     var inv = _inventory.InventoryItems;
                     var temp = inv[hoveredItemIndices.Value.Item1][hoveredItemIndices.Value.Item2];
                     inv[hoveredItemIndices.Value.Item1][hoveredItemIndices.Value.Item2] = inv[_draggedItemCol][_draggedItemRow];
                     inv[_draggedItemCol][_draggedItemRow] = temp;
 
-                } else if (!hoveredItemIndices.HasValue) {
+                }
+                else if (!hoveredItemIndices.HasValue)
+                {
                     DropItem();
                 }
                 DraggedItem.GetComponent<ItemComponent>().Config.BeingDragged = false;

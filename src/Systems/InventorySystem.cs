@@ -108,10 +108,8 @@ public class InventorySystem
                 var slotItem = _inventory.InventoryItems[j][i].GetComponent<ItemComponent>();
                 if (slotItem.Config.Name == itemComp.Config.Name)
                 {
-                    // var additionalQuantity = itemComp.Quantity;
                     if (slotItem.Quantity + itemComp.Quantity <= itemComp.Config.StackLimit)
                     {
-                        // Console.WriteLine(itemComp.Quantity);
                         slotItem.Quantity += itemComp.Quantity;
                         return true;
                     }
@@ -119,17 +117,9 @@ public class InventorySystem
                     {
                         var addedToStack = itemComp.Config.StackLimit - slotItem.Quantity;
                         itemComp.Quantity -= addedToStack;
-                        // Console.WriteLine(itemComp.Config.StackLimit + " | " + slotItem.Quantity);
                         slotItem.Quantity = itemComp.Config.StackLimit;
                         if(itemComp.Quantity == 0) { return true; }
                     }
-                    // else
-                    // {
-                    //     // not sure about this stacking logic
-                    //     itemComp.Quantity = itemComp.Config.Capacity - slotItem.Quantity;
-                    //     slotItem.Quantity = itemComp.Config.Capacity; 
-                    //     return false;
-                    // }
                 }
             }
         }
@@ -153,20 +143,10 @@ public class InventorySystem
             {
                 var itemComp = item.GetComponent<ItemComponent>(); 
                 Console.WriteLine("Picking up item | Stackable: "+itemComp.Config.Stackable+" | Quantity: "+itemComp.Quantity);
-                // var quantity = item.GetComponent
                 PlaceItemInInventory(item);
                 itemComp.Config.IsInOverworld = false;
                 _entityManager.RefreshFilteredLists();
                 return;
-
-                // var slots = GetNextEmptySlot();
-                // if (_inventory.InventoryItems[slots.Value.j][slots.Value.i] == null)
-                // {
-                //     item.GetComponent<ItemComponent>().Config.IsInOverworld = false;
-                //     _inventory.InventoryItems[slots.Value.j][slots.Value.i] = item;
-                //     _entityManager.RefreshFilteredLists();
-                //     return;
-                // }
             }
         }
     }
@@ -187,8 +167,6 @@ public class InventorySystem
             _entityManager.DeleteEntity(_inventory.InventoryItems[col][row]);
             _inventory.InventoryItems[col][row] = null;
         }
-
-        // Console.WriteLine(itemComp.Quantity--);
     }
 
 
