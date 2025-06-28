@@ -122,6 +122,12 @@ public class UIRenderSystem
             SpriteEffects.None,
             0f);
 
+        var itemComp = _inventoryUI.DraggedItem2.GetComponent<ItemComponent>();
+        if (itemComp.Config.Stackable && itemComp.Quantity > 1)
+        {
+            _spriteBatch.DrawString(AssetStore.MoneyFont, "x" + itemComp.Quantity, new Vector2(x, y), Color.White); ///////////////////////
+        }
+
     }
 
     public void DrawInventory()
