@@ -245,6 +245,16 @@ public static class Constants
             public const int IconOffset = (int)(3 * Constants.ScaleFactor);
 
             public const int CollectBoxSize = (int)(Constants.DefaultTileSize * Constants.DroppedItemScaleFactor);
+
+            public class DraggingActions
+            {
+                public const int NOT_CURRENTLY_DRAGGING = 0;
+                public const int PLACING_IN_EMPTY_SLOT = 1;
+                public const int PLACING_IN_OCCUPIED_SLOT = 2;
+                public const int PARTIALLY_ADDING_TO_STACK = 3;
+                public const int FULLY_ADDING_TO_STACK = 4;
+            }
+
         }
     }
 

@@ -1,4 +1,5 @@
 using System;
+using Microsoft.VisualBasic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -47,7 +48,7 @@ public class InventoryUI
     public void Update()
     {
         // DraggingItemLogic();
-        DraggingItemLogic2();
+        DraggingItemLogic3();
         HandleInputs();
     }
 
@@ -80,171 +81,137 @@ public class InventoryUI
         _entityManager.RefreshFilteredLists();
     }
 
-    // public void DraggingItemLogic3()
-    // {
-    //     // checks
-    //     if (GameStateManager.CurrentGameState != GameState.Inventory)   // idk if this is necessary
-    //         return;
-    //     var mouseClicked = InputSystem.IsMousePressed(InputSystem.MouseButton.Left);
-    //     if (!mouseClicked) { return; }
-    //     var slotPos = IsHoveringSlot();
-    //     if (slotPos == null) { return; }
+    // new attempt
+    public void DraggingItemLogic3()
+    {
+        // Only allow dragging when in the Inventory state
+        if (GameStateManager.CurrentGameState != GameState.Inventory)
+            return;
 
-    //     // local vars
-    //     // var targetItem = _inventory.InventoryItems[slotPos.Value.Item1][slotPos.Value.Item2];
-    //     // var targetItemComp = targetItem.GetComponent<ItemComponent>();
-    //     // var draggedItemComp = DraggedItem2.GetComponent<ItemComponent>();
+        // Only run logic when left mouse is pressed
+        if (!InputSystem.IsMousePressed(InputSystem.MouseButton.Left))
+            return;
 
-    //     // if already dragging item ***************************************************************
-    //     if (CurrentlyDragging)
-    //     {
-    //         //  // if empty, place ********************************************************************
-    //         if (_inventory.InventoryItems[slotPos.Value.Item1][slotPos.Value.Item2] == null)
-    //         {
-    //             _inventory.InventoryItems[slotPos.Value.Item1][slotPos.Value.Item2] = DraggedItem2;
-    //             CurrentlyDragging = false;
-    //             DraggedItem2 = null;
-    //             Console.WriteLine("Placed in emtpy slot");
-    //             if (!_consectutiveSwap)
-    //                 _inventory.InventoryItems[_originalSlotPos.Value.Item1][_originalSlotPos.Value.Item2] = null;
-    //             _consectutiveSwap = false;
-    //         }
-    //         //  // else if same item + stackable ******************************************************
-    //         else if (draggedItemComp.Config.Stackable && draggedItemComp.Config.Name == targetItemComp.Config.Name)
-    //         {
-    //             //  //  // if less than stack *************************************************************
-    //             //  //  // if more then stack *************************************************************
-    //         }
-    //         //  // else if unstackable/different item, swap *******************************************
-    //         else
-    //         {
-    //             var temp = _inventory.InventoryItems[slotPos.Value.Item1][slotPos.Value.Item2];
-    //             _inventory.InventoryItems[slotPos.Value.Item1][slotPos.Value.Item2] = DraggedItem2;
-    //             DraggedItem2 = temp;
-    //             Console.WriteLine("Swapped");
-    //             if (!_consectutiveSwap)
-    //                 _inventory.InventoryItems[_originalSlotPos.Value.Item1][_originalSlotPos.Value.Item2] = null;
-    //             _originalSlotPos = slotPos;
-    //             _consectutiveSwap = true;
-    //         }
-    //     }
-    //     // else not already dragging item *********************************************************
-    //     else
-    //     {
-    //         DraggedItem2 = _inventory.InventoryItems[slotPos.Value.Item1][slotPos.Value.Item2];
-    //         if (DraggedItem2 != null)
-    //         {
-    //             CurrentlyDragging = true;
-    //             _originalSlotPos = slotPos;
-    //             // _inventory.InventoryItems[slotPos.Value.Item1][slotPos.Value.Item2] = null;
-    //             Console.WriteLine(DraggedItem2.GetComponent<ItemComponent>().Config.Name);
-    //         }
-    //         else
-    //         {
-    //             CurrentlyDragging = false;
-    //         }
-    //     }
+        // Get the currently hovered slot (row, column)
+        // var slotPos = IsHoveringSlot();
+        slotPos = IsHoveringSlot();
+        if (slotPos == null)
+            return;
 
-    // }
+        // Extract slot coordinates
+        int row = slotPos.Value.Item1;
+        int col = slotPos.Value.Item2;
+        var slotItem = _inventory.InventoryItems[row][col];
 
-    // public void DraggingItemLogic2()
-    // {
-    //     // idk if this is necessary
-    //     if (GameStateManager.CurrentGameState != GameState.Inventory)
-    //         return;
+        var caseType = -1;
 
+        if (CurrentlyDragging && DraggedItem2 != null)
+        {
+            var draggedComp = DraggedItem2.GetComponent<ItemComponent>();
+            if (slotItem == null || slotItem == DraggedItem2)
+            {
+                caseType = DraggingActions.PLACING_IN_EMPTY_SLOT;
+            }
+            else
+            {
+                var targetComp = slotItem.GetComponent<ItemComponent>();
+                if (targetComp != null)
+                {
+                    if (draggedComp.Config.Stackable && draggedComp.Config.Name == targetComp.Config.Name)  // if placing on stack
+                    {
+                        int totalQuantity = draggedComp.Quantity + targetComp.Quantity;
+                        if (totalQuantity <= draggedComp.Config.StackLimit)
+                            caseType = DraggingActions.FULLY_ADDING_TO_STACK;
+                        else
+                            caseType = DraggingActions.PARTIALLY_ADDING_TO_STACK;
+                    }
+                    else    // swapping item
+                    {
+                        caseType = DraggingActions.PLACING_IN_OCCUPIED_SLOT;
+                    }
+                }
+                // else
+                // {
+                //     caseType = DraggingActions.PLACING_IN_OCCUPIED_SLOT;
+                // }
+            }
+        }
+        else
+        {
+            caseType = DraggingActions.NOT_CURRENTLY_DRAGGING;
+        }
 
-    //     var mouseClicked = InputSystem.IsMousePressed(InputSystem.MouseButton.Left);
-    //     if (!mouseClicked) { return; }
-    //     var slotPos = IsHoveringSlot();
+        Console.WriteLine("Case: " + caseType);
+        switch (caseType)
+        {
+            case DraggingActions.NOT_CURRENTLY_DRAGGING:
+                NotCurrentlyDraggingLogic();
+                break;
+            case DraggingActions.PLACING_IN_EMPTY_SLOT:
+                PlacingInEmptySlotLogic();
+                break;
+            case DraggingActions.PLACING_IN_OCCUPIED_SLOT:
+                var draggedItemComp = DraggedItem2.GetComponent<ItemComponent>();
+                var targetItemComp = slotItem.GetComponent<ItemComponent>();
+                SwappingItemsLogic(draggedItemComp, targetItemComp);
+                break;
+            case DraggingActions.FULLY_ADDING_TO_STACK:
+                break;
+            case DraggingActions.PARTIALLY_ADDING_TO_STACK:
+                break;
+        }
+    }
 
-    //     // check to see if item is already dragged
-    //     // swap, place or drop
+    (int, int)? slotPos;
 
-    //     if (slotPos == null) { return; }
+    public void NotCurrentlyDraggingLogic()
+    {
+        DraggedItem2 = _inventory.InventoryItems[slotPos.Value.Item1][slotPos.Value.Item2];
+        if (DraggedItem2 != null)
+        {
+            CurrentlyDragging = true;
+            _originalSlotPos = slotPos;
+            Console.WriteLine(DraggedItem2.GetComponent<ItemComponent>().Config.Name);
+        }
+        else
+        {
+            CurrentlyDragging = false;
+        }
+    }
 
-    //     if (CurrentlyDragging)
-    //     {
-    //         // empty slot
-    //         if (_inventory.InventoryItems[slotPos.Value.Item1][slotPos.Value.Item2] == null)
-    //         {
-    //             _inventory.InventoryItems[slotPos.Value.Item1][slotPos.Value.Item2] = DraggedItem2;
-    //             CurrentlyDragging = false;
-    //             DraggedItem2 = null;
-    //             Console.WriteLine("Placed in emtpy slot");
-    //             if (!_consectutiveSwap)
-    //                 _inventory.InventoryItems[_originalSlotPos.Value.Item1][_originalSlotPos.Value.Item2] = null;
-    //             _consectutiveSwap = false;
-    //         }
-    //         // occupied slot
-    //         else if (_inventory.InventoryItems[slotPos.Value.Item1][slotPos.Value.Item2] != null)
-    //         {
-    //             // var draggedItem =
-    //             var targetItem = _inventory.InventoryItems[slotPos.Value.Item1][slotPos.Value.Item2];
-    //             var targetItemComp = targetItem.GetComponent<ItemComponent>();
-    //             var draggedItemComp = DraggedItem2.GetComponent<ItemComponent>();
-    //             if (draggedItemComp.Config.Stackable && draggedItemComp.Config.Name == targetItemComp.Config.Name)
-    //             {
-    //                 // if quantity + quantity < stackLimit
-    //                 var lessThanStack = draggedItemComp.Quantity + targetItemComp.Quantity <= draggedItemComp.Config.StackLimit;
+    public void PlacingInEmptySlotLogic()
+    {
+        // var temp = DraggedItem2;
 
-    //                 if (lessThanStack)
-    //                 {
-    //                     targetItemComp.Quantity += draggedItemComp.Quantity;
-    //                     // DraggedItem2 = null;
-    //                     // _inventory.InventoryItems[slotPos.Value.Item1][slotPos.Value.Item2] = DraggedItem2;
-    //                     CurrentlyDragging = false;
-    //                     DraggedItem2 = null;
+        if (!_consectutiveSwap)
+        {
+            _inventory.InventoryItems[_originalSlotPos.Value.Item1][_originalSlotPos.Value.Item2] = null;
+            Console.WriteLine("Consecutive swaps");
+        }
 
-    //                     if (!_consectutiveSwap)
-    //                         _inventory.InventoryItems[_originalSlotPos.Value.Item1][_originalSlotPos.Value.Item2] = null;
-    //                     _consectutiveSwap = false;
-    //                 }
-    //                 else
-    //                 {
+        _inventory.InventoryItems[slotPos.Value.Item1][slotPos.Value.Item2] = DraggedItem2;
+        CurrentlyDragging = false;
+        DraggedItem2 = null;
+        Console.WriteLine("Placed in emtpy slot");
+        // if (!_consectutiveSwap)
+        // {
+        //     _inventory.InventoryItems[_originalSlotPos.Value.Item1][_originalSlotPos.Value.Item2] = null;
+        //     Console.WriteLine("Consecutive swaps");   
+        // }
+        _consectutiveSwap = false;
+    }
 
-    //                     var difference = draggedItemComp.Config.StackLimit - targetItemComp.Quantity;
-    //                     targetItemComp.Quantity = draggedItemComp.Config.StackLimit;
-    //                     draggedItemComp.Quantity -= difference;
+    public void SwappingItemsLogic(ItemComponent draggedItemComp, ItemComponent targetItemComp)
+    {
+        var difference = draggedItemComp.Config.StackLimit - targetItemComp.Quantity;
+        targetItemComp.Quantity = draggedItemComp.Config.StackLimit;
+        draggedItemComp.Quantity -= difference;
 
-    //                     if (!_consectutiveSwap)
-    //                         _inventory.InventoryItems[_originalSlotPos.Value.Item1][_originalSlotPos.Value.Item2] = null;
-    //                     _consectutiveSwap = false;
-    //                 }
-    //                 _consectutiveSwap = true;
+        if (!_consectutiveSwap)
+            _inventory.InventoryItems[_originalSlotPos.Value.Item1][_originalSlotPos.Value.Item2] = null;
+        _consectutiveSwap = false;
+    }
 
-    //             }
-    //             else
-    //             {
-    //                 var temp = _inventory.InventoryItems[slotPos.Value.Item1][slotPos.Value.Item2];
-    //                 _inventory.InventoryItems[slotPos.Value.Item1][slotPos.Value.Item2] = DraggedItem2;
-    //                 DraggedItem2 = temp;
-    //                 Console.WriteLine("Swapped");
-    //                 if (!_consectutiveSwap)
-    //                     _inventory.InventoryItems[_originalSlotPos.Value.Item1][_originalSlotPos.Value.Item2] = null;
-    //                 _originalSlotPos = slotPos;
-    //                 _consectutiveSwap = true;
-    //             }
-    //         }
-    //     }
-    //     // check to see if item is clicked?
-    //     // set to draggedItem?
-    //     else
-    //     {
-    //         DraggedItem2 = _inventory.InventoryItems[slotPos.Value.Item1][slotPos.Value.Item2];
-    //         if (DraggedItem2 != null)
-    //         {
-    //             CurrentlyDragging = true;
-    //             _originalSlotPos = slotPos;
-    //             // _inventory.InventoryItems[slotPos.Value.Item1][slotPos.Value.Item2] = null;
-    //             Console.WriteLine(DraggedItem2.GetComponent<ItemComponent>().Config.Name);
-    //         }
-    //         else
-    //         {
-    //             CurrentlyDragging = false;
-    //         }
-    //     }
-    // }
 
     public void DraggingItemLogic2()
     {
