@@ -151,14 +151,23 @@ public class InventoryUI
                 PlacingInEmptySlotLogic();
                 break;
             case DraggingActions.PLACING_IN_OCCUPIED_SLOT:
-                var draggedItemComp = DraggedItem2.GetComponent<ItemComponent>();
-                var targetItemComp = slotItem.GetComponent<ItemComponent>();
-                SwappingItemsLogic(draggedItemComp, targetItemComp);
+                SwappingItemsLogic();
                 break;
             case DraggingActions.FULLY_ADDING_TO_STACK:
-                break;
+                {
+                    var draggedItemComp = DraggedItem2.GetComponent<ItemComponent>();
+                    var targetItemComp = slotItem.GetComponent<ItemComponent>();
+                    FullyAddingToStack(draggedItemComp, targetItemComp);
+                    break;
+
+                }
             case DraggingActions.PARTIALLY_ADDING_TO_STACK:
-                break;
+                {
+                    var draggedItemComp = DraggedItem2.GetComponent<ItemComponent>();
+                    var targetItemComp = slotItem.GetComponent<ItemComponent>();
+                    PartiallyAddingToStack(draggedItemComp, targetItemComp);
+                    break;
+                }
         }
     }
 
@@ -193,24 +202,67 @@ public class InventoryUI
         CurrentlyDragging = false;
         DraggedItem2 = null;
         Console.WriteLine("Placed in emtpy slot");
-        // if (!_consectutiveSwap)
-        // {
-        //     _inventory.InventoryItems[_originalSlotPos.Value.Item1][_originalSlotPos.Value.Item2] = null;
-        //     Console.WriteLine("Consecutive swaps");   
-        // }
         _consectutiveSwap = false;
     }
 
-    public void SwappingItemsLogic(ItemComponent draggedItemComp, ItemComponent targetItemComp)
+    public void SwappingItemsLogic()
     {
-        var difference = draggedItemComp.Config.StackLimit - targetItemComp.Quantity;
-        targetItemComp.Quantity = draggedItemComp.Config.StackLimit;
-        draggedItemComp.Quantity -= difference;
+        if (!_consectutiveSwap)
+        {
+            _inventory.InventoryItems[_originalSlotPos.Value.Item1][_originalSlotPos.Value.Item2] = null;
+            Console.WriteLine("Consecutive swaps");
+        }
 
+        var temp = DraggedItem2;
+        DraggedItem2 = _inventory.InventoryItems[slotPos.Value.Item1][slotPos.Value.Item2];
+        _inventory.InventoryItems[slotPos.Value.Item1][slotPos.Value.Item2] = temp;
+        // CurrentlyDragging = false;
+        // DraggedItem2 = null;
+        Console.WriteLine("SwappedItems");
+
+        _consectutiveSwap = true;
+    }
+
+    public void FullyAddingToStack(ItemComponent draggedItemComp, ItemComponent targetItemComp)
+    {
         if (!_consectutiveSwap)
             _inventory.InventoryItems[_originalSlotPos.Value.Item1][_originalSlotPos.Value.Item2] = null;
         _consectutiveSwap = false;
+
+        // _inventory.InventoryItems[slotPos.Value.Item1][slotPos.Value.Item2] = DraggedItem2;
+        targetItemComp.Quantity += draggedItemComp.Quantity;
+        CurrentlyDragging = false;
+        DraggedItem2 = null;
+        Console.WriteLine("fully added to stack");
+        _consectutiveSwap = false;
     }
+
+    public void PartiallyAddingToStack(ItemComponent draggedItemComp, ItemComponent targetItemComp)
+    {
+        if (!_consectutiveSwap)
+            _inventory.InventoryItems[_originalSlotPos.Value.Item1][_originalSlotPos.Value.Item2] = null;
+        _consectutiveSwap = false;
+
+        // _inventory.InventoryItems[slotPos.Value.Item1][slotPos.Value.Item2] = DraggedItem2;
+        var difference = targetItemComp.Config.StackLimit - targetItemComp.Quantity;
+        targetItemComp.Quantity = targetItemComp.Config.StackLimit;
+        draggedItemComp.Quantity -= difference;
+        // CurrentlyDragging = false;
+        // DraggedItem2 = null;
+        Console.WriteLine("partially added to stack");
+        _consectutiveSwap = true;
+    }
+
+    // public void SwappingItemsLogic(ItemComponent draggedItemComp, ItemComponent targetItemComp)
+    // {
+    //     var difference = draggedItemComp.Config.StackLimit - targetItemComp.Quantity;
+    //     targetItemComp.Quantity = draggedItemComp.Config.StackLimit;
+    //     draggedItemComp.Quantity -= difference;
+
+    //     if (!_consectutiveSwap)
+    //         _inventory.InventoryItems[_originalSlotPos.Value.Item1][_originalSlotPos.Value.Item2] = null;
+    //     _consectutiveSwap = false;
+    // }
 
 
     public void DraggingItemLogic2()
